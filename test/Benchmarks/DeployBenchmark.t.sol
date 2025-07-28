@@ -9,8 +9,10 @@ import {console2 as console} from "lib/forge-std/src/Test.sol";
 contract DeployBenchmark is BaseBenchmark {
     function test_DeployOPFMain() public {
         vm.pauseGasMetering();
+        _beginTest("DeployBenchmark", "test_DeployOPFMain");
+        _beginMode("Direct");
 
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
             vm.resumeGasMetering();
@@ -62,7 +64,7 @@ contract DeployBenchmark is BaseBenchmark {
             }
 
             uint256 usdE8 = FeeCalc.toUsdE8(weiCost, ethPriceUsdE8);
-            string memory usdHuman = FeeCalc.usdE8ToString(usdE8, 2);
+            string memory usdHuman = FeeCalc.usdE8ToString(usdE8, 4);
 
             console.log("Deploying on %s", rpcs[i].name);
             console.log("Used Gas Deploy OPFMain: %s", gasUsedLocal);
@@ -70,9 +72,13 @@ contract DeployBenchmark is BaseBenchmark {
             console.log("usd: %s$", usdHuman);
             console.log("==================================================");
             console.log("==================================================");
+
+            _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
+
             unchecked {
                 ++i;
             }
+        _flushTo("test/Output/Deploy/test_DeployOPFMain.json");
         }
     }
 }

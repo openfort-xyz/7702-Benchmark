@@ -1,0 +1,33 @@
+{
+	"remappings": [
+		"@openzeppelin/=node_modules/@openzeppelin/",
+		"account-abstraction/=lib/account-abstraction/contracts/",
+		"ds-test/=lib/forge-std/lib/ds-test/src/",
+		"eth-gas-reporter/=node_modules/eth-gas-reporter/",
+		"forge-std/=lib/forge-std/src/",
+		"hardhat/=node_modules/hardhat/"
+	],
+	"optimizer": {
+		"enabled": true,
+		"runs": 1000000
+	},
+	"metadata": {
+		"useLiteralContent": false,
+		"bytecodeHash": "ipfs",
+		"appendCBOR": true
+	},
+	"outputSelection": {
+		"*": {
+			"*": [
+				"evm.bytecode",
+				"evm.deployedBytecode",
+				"devdoc",
+				"userdoc",
+				"metadata",
+				"abi"
+			]
+		}
+	},
+	"evmVersion": "paris",
+	"libraries": {}
+}

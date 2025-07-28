@@ -50,7 +50,11 @@ library FeeCalc {
         total = l2Cost + l1Cost;
     }
 
-    function countData(bytes memory data) internal pure returns (uint256 zeroBytes, uint256 nonZeroBytes) {
+    function countData(bytes memory data)
+        internal
+        pure
+        returns (uint256 zeroBytes, uint256 nonZeroBytes)
+    {
         uint256 len = data.length;
         for (uint256 i; i < len; i++) {
             if (data[i] == 0) zeroBytes++;

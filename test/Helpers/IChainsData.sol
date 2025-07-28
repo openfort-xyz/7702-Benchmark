@@ -11,7 +11,7 @@ interface IChainsData is Interfaces {
         view
         returns (
             uint256 gasPrice,
-            bool    isOPStack,
+            bool isOPStack,
             uint256 l2GasPrice,
             uint256 l1BaseFee,
             uint256 l1BaseFeeScalar,

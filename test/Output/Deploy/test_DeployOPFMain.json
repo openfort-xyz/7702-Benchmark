@@ -1,0 +1,1 @@
+{"DeployBenchmark":{"test_DeployOPFMain":{"Direct":{"MAINNET":{"Used Gas":4973383,"weiCost":4442709451591027,"usd":"16.3935"},"BASE":{"Used Gas":4974518,"weiCost":34482351066077,"usd":"0.1272"},"ARBITRUM":{"Used Gas":4979720,"weiCost":416419125560000,"usd":"1.5365"},"OPTIMISM":{"Used Gas":4984975,"weiCost":6433916676257,"usd":"0.0237"}}}}}

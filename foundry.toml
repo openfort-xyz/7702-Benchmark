@@ -6,6 +6,9 @@ via-ir = true
 optimizer = true
 optimizer_runs = 800
 
+fs_permissions = [
+  { access = "write", path = "test/Output" }
+]
+
 [fmt]
 line_length = 100
-# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

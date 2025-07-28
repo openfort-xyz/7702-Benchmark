@@ -1,0 +1,1 @@
+{"BatchExecution_Benchmark":{"test_BatchExecution":{"Direct":{"MAINNET":{"Used Gas":7434,"weiCost":6640771897746,"usd":"0.0245"},"BASE":{"Used Gas":35158,"weiCost":246329364739,"usd":"0.0009"},"ARBITRUM":{"Used Gas":35158,"weiCost":2940017434000,"usd":"0.0108"},"OPTIMISM":{"Used Gas":35158,"weiCost":50648651018,"usd":"0.0001"}}}}}

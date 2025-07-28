@@ -1,0 +1,1 @@
+{"NativeTransfer_Benchmark":{"test_SendETH":{"Direct":{"MAINNET":{"Used Gas":40172,"weiCost":35885537890268,"usd":"0.1324"},"BASE":{"Used Gas":40172,"weiCost":276002900915,"usd":"0.0010"},"ARBITRUM":{"Used Gas":40172,"weiCost":3359303156000,"usd":"0.0123"},"OPTIMISM":{"Used Gas":40172,"weiCost":46942927444,"usd":"0.0001"}}}}}
