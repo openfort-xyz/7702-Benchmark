@@ -5,23 +5,23 @@ pragma solidity ^0.8.29;
 import {BaseData} from "test/BaseData.sol";
 import {OPFMain} from "src/core/OPFMain.sol";
 import {MockERC20} from "src/mocks/MockERC20.sol";
+import {Paymaster} from "src/paymaster/paymaster.sol";
 import {ChainsData} from "test/helpers/ChainsData.sol";
 import {RecoverSigner} from "test/Helpers/RecoverSigner.sol";
 import {WebAuthnVerifierV2} from "src/utils/WebAuthnVerifierV2.sol";
 import {Test, console2 as console} from "lib/forge-std/src/Test.sol";
 import {EntryPoint} from "lib/account-abstraction/contracts/core/EntryPoint.sol";
 import {IEntryPoint} from "lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
-import {OpenfortPaymasterV2} from "src/OpenfortPaymasterV2/contracts/paymaster/OpenfortPaymasterV2.sol";
 import {PackedUserOperation} from
     "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 import {MessageHashUtils} from
     "lib/openzeppelin-contracts/contracts/utils/cryptography/MessageHashUtils.sol";
 
 contract BaseBenchmark is ChainsData, BaseData, RecoverSigner {
-    EntryPoint internal ep;
+    IEntryPoint internal ep;
     WebAuthnVerifierV2 internal webAuthn;
     MockERC20 internal erc20;
-    OpenfortPaymasterV2 internal pm;
+    Paymaster internal pm;
 
     OPFMain public account;
     OPFMain public implementation;
@@ -32,37 +32,44 @@ contract BaseBenchmark is ChainsData, BaseData, RecoverSigner {
     uint256 internal sessionKeyPk = vm.envUint("PRIVATE_KEY_SESSIONKEY");
     address internal sessionKey = vm.addr(sessionKeyPk);
 
+    uint256 internal senderPK = vm.envUint("PRIVATE_KEY_SENDER");
+    address internal sender = vm.addr(senderPK);
+
     uint256 internal pmPK;
     address internal pmAddr;
 
     function setUp() public virtual override {
         super.setUp();
-        ep = new EntryPoint();
+        // ep = new EntryPoint();
+        ep = IEntryPoint(payable(ENTRYPOINT));
         erc20 = new MockERC20();
         webAuthn = new WebAuthnVerifierV2();
 
         (pmAddr, pmPK) = makeAddrAndKey("paymaster");
-        pm = new OpenfortPaymasterV2(address(ep), pmAddr);
-        
+        // vm.prank(pmAddr);
+        // pm = new Paymaster(IEntryPoint(ep));
+        // _paymaster();
+
         initialGuardian = keccak256(abi.encodePacked(makeAddr("initialGuardian")));
     }
 
     function _buildUserOp() internal view returns (PackedUserOperation memory) {
         return PackedUserOperation({
             sender: owner,
-            nonce: _getNonce(owner, 0),
-            initCode: hex"7702",
+            nonce: 0,
+            initCode: hex"",
             callData: hex"",
-            accountGasLimits: hex"",
-            preVerificationGas: 0,
-            gasFees: hex"",
-            paymasterAndData: hex"",
+            accountGasLimits: _packAccountGasLimits(600000, 400000),
+            preVerificationGas: 800000,
+            gasFees: _packGasFees(80 gwei, 15 gwei),
+            // paymasterAndData: abi.encodePacked(address(pm)),
+            paymasterAndData:  hex"",
             signature: hex""
         });
     }
 
     function _getNonce(address _owner, uint192 _k) internal view returns (uint256) {
-        return IEntryPoint(ep).getNonce(_owner, _k);
+        return ep.getNonce(_owner, _k);
     }
 
     function _getUserOpHash(PackedUserOperation memory _userOp) internal view returns (bytes32) {
@@ -75,7 +82,7 @@ contract BaseBenchmark is ChainsData, BaseData, RecoverSigner {
         returns (bytes memory)
     {
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(ownerPK, _getUserOpHash(_userOp));
-        return abi.encodePacked(r, s, v);
+        return account.encodeEOASignature(abi.encodePacked(r, s, v));
     }
 
     function _signInitialize() internal view returns (bytes memory sig, bytes32 digest) {
@@ -153,5 +160,19 @@ contract BaseBenchmark is ChainsData, BaseData, RecoverSigner {
 
     function _deal(address _account, uint256 _amount) internal {
         deal(_account, _amount);
+    }
+
+    // function _paymaster() internal {
+    //     _deal(pmAddr, 10e18);
+    //     vm.startPrank(pmAddr);
+    //     pm.addStake{value: 1e18}(8600);
+    //     pm.deposit{value: 2e18}();
+    //     vm.stopPrank();
+    // }
+    function _paymaster() internal {
+        _deal(pmAddr, 10e18);
+        vm.startPrank(pmAddr);
+        ep.depositTo{value: 0.09e18}(owner);
+        vm.stopPrank();
     }
 }

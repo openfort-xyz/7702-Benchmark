@@ -1,15 +1,15 @@
 # 🚀 Blockchain Network Benchmark Results
 
-📅 Generated: 7/25/2025, 7:38:29 PM
+📅 Generated: 7/28/2025, 4:35:19 PM
 
 ## 📊 Deploy Benchmarks
 
 | Test Name  | Network  | Gas Used  | Wei Cost     | USD Cost |
 | ---------- | -------- | --------- | ------------ | -------- |
-| Deploy OPF | MAINNET  | 4,973,383 | 4.44M Gwei   | 16.3935  |
-| Deploy OPF | BASE     | 4,974,518 | 34.48K Gwei  | 0.1272   |
-| Deploy OPF | ARBITRUM | 4,979,720 | 416.42K Gwei | 1.5365   |
-| Deploy OPF | OPTIMISM | 4,984,975 | 6.43K Gwei   | 0.0237   |
+| Deploy OPF | MAINNET  | 5,001,063 | 4.47M Gwei   | 16.4848  |
+| Deploy OPF | BASE     | 5,002,249 | 34.67K Gwei  | 0.1279   |
+| Deploy OPF | ARBITRUM | 5,007,503 | 418.74K Gwei | 1.5451   |
+| Deploy OPF | OPTIMISM | 5,012,809 | 6.47K Gwei   | 0.0238   |
 
 ## 📊 Initialize Benchmarks
 
@@ -19,10 +19,10 @@
 | Initialize TX            | BASE     | 356,932  | 2.44K Gwei   | 0.0089   |
 | Initialize TX            | ARBITRUM | 356,932  | 29.85K Gwei  | 0.1101   |
 | Initialize TX            | OPTIMISM | 356,932  | 390.19 Gwei  | 0.0014   |
-| Initialize + Session Key | MAINNET  | 655,119  | 585.22K Gwei | 2.1594   |
-| Initialize + Session Key | BASE     | 655,119  | 4.46K Gwei   | 0.0164   |
-| Initialize + Session Key | ARBITRUM | 655,119  | 54.78K Gwei  | 0.2021   |
-| Initialize + Session Key | OPTIMISM | 655,119  | 692.80 Gwei  | 0.0025   |
+| Initialize + Session Key | MAINNET  | 658,262  | 588.02K Gwei | 2.1698   |
+| Initialize + Session Key | BASE     | 658,262  | 4.49K Gwei   | 0.0165   |
+| Initialize + Session Key | ARBITRUM | 658,262  | 55.05K Gwei  | 0.2031   |
+| Initialize + Session Key | OPTIMISM | 658,262  | 695.95 Gwei  | 0.0025   |
 
 ## 📊 Register-Key Benchmarks
 
@@ -45,9 +45,9 @@
 
 | Test                       | MAINNET   | BASE      | ARBITRUM  | OPTIMISM  |
 | -------------------------- | --------- | --------- | --------- | --------- |
-| Deploy OPF                 | 4,973,383 | 4,974,518 | 4,979,720 | 4,984,975 |
+| Deploy OPF                 | 5,001,063 | 5,002,249 | 5,007,503 | 5,012,809 |
 | Initialize TX              | 356,932   | 356,932   | 356,932   | 356,932   |
-| Initialize + Session Key   | 655,119   | 655,119   | 655,119   | 655,119   |
+| Initialize + Session Key   | 658,262   | 658,262   | 658,262   | 658,262   |
 | Register EOA               | 222,841   | 222,841   | 222,841   | 222,841   |
 | Register P256              | 302,442   | 302,442   | 302,442   | 302,442   |
 | Register P256 (Non-Extrac) | 302,442   | 302,442   | 302,442   | 302,442   |
@@ -56,9 +56,9 @@
 
 | Test                       | MAINNET | BASE   | ARBITRUM | OPTIMISM | 🏆 Best      |
 | -------------------------- | ------- | ------ | -------- | -------- | ------------ |
-| Deploy OPF                 | 16.3935 | 0.1272 | 1.5365   | 0.0237   | **OPTIMISM** |
+| Deploy OPF                 | 16.4848 | 0.1279 | 1.5451   | 0.0238   | **OPTIMISM** |
 | Initialize TX              | 1.1765  | 0.0089 | 0.1101   | 0.0014   | **OPTIMISM** |
-| Initialize + Session Key   | 2.1594  | 0.0164 | 0.2021   | 0.0025   | **OPTIMISM** |
+| Initialize + Session Key   | 2.1698  | 0.0165 | 0.2031   | 0.0025   | **OPTIMISM** |
 | Register EOA               | 0.7345  | 0.0056 | 0.0687   | 0.0008   | **OPTIMISM** |
 | Register P256              | 0.9969  | 0.0076 | 0.0933   | 0.0011   | **OPTIMISM** |
 | Register P256 (Non-Extrac) | 0.9969  | 0.0076 | 0.0933   | 0.0011   | **OPTIMISM** |
@@ -68,9 +68,9 @@
 - 🌟 **Cheapest Network**: OPTIMISM consistently offers the lowest costs
 - 💸 **Most Expensive**: MAINNET has the highest transaction costs
 - ⛽ **Gas Consistency**: Gas usage remains the same across networks
-- 💡 **Cost Savings**: Using OPTIMISM vs MAINNET saves ~99.9% (Total: $22.4271)
-- 📊 **Price Variation**: Up to 734x difference between most/least expensive networks
-- 💰 **Total Costs**: MAINNET: $22.4577 | BASE: $0.1733 | ARBITRUM: $2.1040 | OPTIMISM: $0.0306
-- 🔥 **Most Expensive Operation**: "Deploy OPF" ($16.3935 on MAINNET)
+- 💡 **Cost Savings**: Using OPTIMISM vs MAINNET saves ~99.9% (Total: $22.5287)
+- 📊 **Price Variation**: Up to 735x difference between most/least expensive networks
+- 💰 **Total Costs**: MAINNET: $22.5594 | BASE: $0.1741 | ARBITRUM: $2.1136 | OPTIMISM: $0.0307
+- 🔥 **Most Expensive Operation**: "Deploy OPF" ($16.4848 on MAINNET)
 - ⚡ **Most Efficient Operation**: "Register EOA" (222,841 gas)
 

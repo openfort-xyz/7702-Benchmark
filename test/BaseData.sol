@@ -27,7 +27,8 @@ abstract contract BaseData is IKey {
     address constant DEAD_ADDRESS = 0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF;
     address constant TOKEN_ADDRESS = 0x9C0b94fb071Ed4066d7C18F4b68968e311A66209;
     address constant UNISWAP_V2 = 0xE592427A0AEce92De3Edee1F18E0157C05861564;
-
+    address constant ENTRYPOINT = 0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108;
+    
     bytes32 constant PUBLIC_KEY_X =
         hex"1a0b944bca1dd7ced19d36a5d4ef60564789bd611a445ae39f79aa7e384f0d19";
     bytes32 constant PUBLIC_KEY_Y =

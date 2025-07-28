@@ -11,7 +11,7 @@ contract ChainsData is JsonOut, Interfaces {
 
     string public MAINNET_RPC = "https://ethereum-rpc.publicnode.com";
     string public BASE_RPC = "https://base-rpc.publicnode.com";
-    string public ARB_RPC = "https://arbitrum-one-rpc.publicnode.com";
+    string public ARB_RPC = "https://arb-mainnet.g.alchemy.com/v2/EIOmdDtOw7ulufI5S27isOfZfW51PQXB";
     string public OP_RPC = "https://optimism-rpc.publicnode.com";
 
     function setUp() public virtual {
