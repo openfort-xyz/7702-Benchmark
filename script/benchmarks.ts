@@ -59,7 +59,7 @@ class EnhancedBenchmarkPresenter {
   }
 
   private loadBenchmarkFiles(): void {
-    // Updated folder structure based on actual tree
+    // Updated folder structure based on actual tree (all 33 files)
     const folders = [
       { 
         folder: 'Deploy', 
@@ -82,7 +82,8 @@ class EnhancedBenchmarkPresenter {
           'test_RegisterP256NonExtrac.json',
           'test_RegisterEOA_UOP.json',
           'test_RegisterP256_UOP.json',
-          'test_RegisterP256NonExtrac_UOP.json'
+          'test_RegisterP256NonExtrac_UOP.json',
+          'test_RegisterP256NonExtracWithMK_UOP.json'
         ] 
       },
       {
@@ -91,47 +92,32 @@ class EnhancedBenchmarkPresenter {
           'test_ApproveErc20.json',
           'test_TransferErc20.json',
           'test_ApproveErc20_UOP.json',
-          'test_TransferErc20_UOP.json'
+          'test_TransferErc20_UOP.json',
+          'test_ApproveErc20WithMK_UOP.json',
+          'test_ApproveErc20WithP256_UOP.json',
+          'test_TransferErc20WithMK_UOP.json',
+          'test_TransferErc20WithP256_UOP.json'
         ]
       },
       {
         folder: 'NativeTransfer',
         files: [
           'test_SendETH.json',
-      'test_SendETH_UOP.json',
-          'test_SendETH_UOP.json'
+          'test_SendETH_UOP.json',
+          'test_SendETHP256_UOP.json',
+          'test_SendETHWithMK_UOP.json',
+          'test_SendETHWithSKEOA_UOP.json'
         ]
       },
       {
         folder: 'Batch',
         files: [
           'test_BatchExecution.json',
-          'test_BatchExecution_UOP.json'
+          'test_BatchExecution_UOP.json',
+          'test_BatchExecutionWithMK_UOP.json',
+          'test_BatchExecutionWithP256_UOP.json'
         ]
       }
-    ];
-
-    // Also try loading files from current directory if folders don't exist
-    const allFiles = [
-      'test_DeployOPFMain.json',
-      'test_InitializeTX.json',
-      'test_InitializeTXWithRegisteringSessionKey.json',
-      'test_InitializeTX_UOP.json',
-      'test_InitializeTXWithRegisteringSessionKey_UOP.json',
-      'test_RegisterEOA.json',
-      'test_RegisterP256.json',
-      'test_RegisterP256NonExtrac.json',
-      'test_RegisterEOA_UOP.json',
-      'test_RegisterP256_UOP.json',
-      'test_RegisterP256NonExtrac_UOP.json',
-      'test_ApproveErc20.json',
-      'test_TransferErc20.json',
-      'test_ApproveErc20_UOP.json',
-      'test_TransferErc20_UOP.json',
-      'test_SendETH.json',
-      'test_SendETH_UOP.json',
-      'test_BatchExecution.json',
-      'test_BatchExecution_UOP.json'
     ];
 
     let loadedCount = 0;
@@ -156,6 +142,38 @@ class EnhancedBenchmarkPresenter {
     // If no files found in folders, try loading from current directory or BENCHMARK_DIR root
     if (loadedCount === 0) {
       console.log('📁 No files found in organized folders, trying root directory...');
+      
+      const allFiles = [
+        'test_DeployOPFMain.json',
+        'test_InitializeTX.json',
+        'test_InitializeTXWithRegisteringSessionKey.json',
+        'test_InitializeTX_UOP.json',
+        'test_InitializeTXWithRegisteringSessionKey_UOP.json',
+        'test_RegisterEOA.json',
+        'test_RegisterP256.json',
+        'test_RegisterP256NonExtrac.json',
+        'test_RegisterEOA_UOP.json',
+        'test_RegisterP256_UOP.json',
+        'test_RegisterP256NonExtrac_UOP.json',
+        'test_RegisterP256NonExtracWithMK_UOP.json',
+        'test_ApproveErc20.json',
+        'test_TransferErc20.json',
+        'test_ApproveErc20_UOP.json',
+        'test_TransferErc20_UOP.json',
+        'test_ApproveErc20WithMK_UOP.json',
+        'test_ApproveErc20WithP256_UOP.json',
+        'test_TransferErc20WithMK_UOP.json',
+        'test_TransferErc20WithP256_UOP.json',
+        'test_SendETH.json',
+        'test_SendETH_UOP.json',
+        'test_SendETHP256_UOP.json',
+        'test_SendETHWithMK_UOP.json',
+        'test_SendETHWithSKEOA_UOP.json',
+        'test_BatchExecution.json',
+        'test_BatchExecution_UOP.json',
+        'test_BatchExecutionWithMK_UOP.json',
+        'test_BatchExecutionWithP256_UOP.json'
+      ];
       
       allFiles.forEach(filename => {
         // Try current directory first
@@ -223,14 +241,24 @@ class EnhancedBenchmarkPresenter {
       'RegisterP256_UOP': 'Register P256 (UOP)',
       'RegisterP256NonExtrac': 'Register P256 (Non-Extrac)',
       'RegisterP256NonExtrac_UOP': 'Register P256 (Non-Extrac UOP)',
+      'RegisterP256NonExtracWithMK_UOP': 'Register P256 (Non-Extrac w/ MK UOP)',
       'ApproveErc20': 'Approve ERC20',
       'ApproveErc20_UOP': 'Approve ERC20 (UOP)',
+      'ApproveErc20WithMK_UOP': 'Approve ERC20 w/ MK (UOP)',
+      'ApproveErc20WithP256_UOP': 'Approve ERC20 w/ P256 (UOP)',
       'TransferErc20': 'Transfer ERC20',
       'TransferErc20_UOP': 'Transfer ERC20 (UOP)',
-      'SendETH_UOP': 'Send ETH (UOP)',
+      'TransferErc20WithMK_UOP': 'Transfer ERC20 w/ MK (UOP)',
+      'TransferErc20WithP256_UOP': 'Transfer ERC20 w/ P256 (UOP)',
       'SendETH': 'Send ETH',
+      'SendETH_UOP': 'Send ETH (UOP)',
+      'SendETHP256_UOP': 'Send ETH P256 (UOP)',
+      'SendETHWithMK_UOP': 'Send ETH w/ MK (UOP)',
+      'SendETHWithSKEOA_UOP': 'Send ETH w/ SK-EOA (UOP)',
       'BatchExecution': 'Batch Execution',
-      'BatchExecution_UOP': 'Batch Execution (UOP)'
+      'BatchExecution_UOP': 'Batch Execution (UOP)',
+      'BatchExecutionWithMK_UOP': 'Batch Execution w/ MK (UOP)',
+      'BatchExecutionWithP256_UOP': 'Batch Execution w/ P256 (UOP)'
     };
 
     return nameMap[cleanName] || cleanName.replace(/([A-Z])/g, ' $1').trim();
@@ -325,6 +353,7 @@ class EnhancedBenchmarkPresenter {
 
     // Display comprehensive analysis
     this.displayDirectVsSponsoredComparison(processedTests);
+    this.displaySignatureMethodComparison(processedTests);
     this.displayCategoryTables(categories);
     this.generateGasUsageSummary(processedTests);
     this.generateCostComparison(processedTests);
@@ -391,6 +420,74 @@ class EnhancedBenchmarkPresenter {
     
     this.printAlignedTable(tableData);
     console.log('');
+  }
+
+  private displaySignatureMethodComparison(tests: ProcessedTest[]): void {
+    console.log('## 🔐 Signature Method Comparison\n');
+    
+    // Group tests by operation type and signature method
+    const operationGroups: { [key: string]: ProcessedTest[] } = {};
+    
+    tests.forEach(test => {
+      // Extract base operation name (without signature method suffix)
+      let baseOp = test.testName
+        .replace(' (UOP)', '')
+        .replace(' w/ MK', '')
+        .replace(' w/ P256', '')
+        .replace(' w/ SK-EOA', '')
+        .replace(' P256', '');
+        
+      if (!operationGroups[baseOp]) {
+        operationGroups[baseOp] = [];
+      }
+      operationGroups[baseOp].push(test);
+    });
+
+    // Display comparison for operations that have multiple signature methods
+    Object.entries(operationGroups).forEach(([baseOp, testGroup]) => {
+      const signatureMethods = testGroup.filter(t => 
+        t.testName.includes('w/ MK') || 
+        t.testName.includes('w/ P256') || 
+        t.testName.includes('w/ SK-EOA') ||
+        t.testName.includes('P256') ||
+        t.testName.includes('(UOP)')
+      );
+      
+      if (signatureMethods.length > 1) {
+        console.log(`### ${baseOp} - Signature Methods\n`);
+        
+        const tableData: string[][] = [
+          ['Method', 'MAINNET', 'BASE', 'ARBITRUM', 'OPTIMISM', 'Gas Used']
+        ];
+        
+        signatureMethods.forEach(test => {
+          const data = test.sponsoredData || test.directData;
+          if (data) {
+            const methodType = this.extractSignatureMethod(test.testName);
+            tableData.push([
+              methodType,
+              `$${data.MAINNET.usd}`,
+              `$${data.BASE.usd}`,
+              `$${data.ARBITRUM.usd}`,
+              `$${data.OPTIMISM.usd}`,
+              this.formatNumber(data.MAINNET['Used Gas'])
+            ]);
+          }
+        });
+        
+        this.printAlignedTable(tableData);
+        console.log('');
+      }
+    });
+  }
+
+  private extractSignatureMethod(testName: string): string {
+    if (testName.includes('w/ MK')) return 'Master Key';
+    if (testName.includes('w/ P256')) return 'P256 Signature';
+    if (testName.includes('w/ SK-EOA')) return 'Session Key EOA';
+    if (testName.includes('P256') && testName.includes('UOP')) return 'P256 Direct';
+    if (testName.includes('(UOP)')) return 'Standard UOP';
+    return 'Direct';
   }
 
   private displayCategoryTables(categories: { [key: string]: ProcessedTest[] }): void {
@@ -548,15 +645,6 @@ class EnhancedBenchmarkPresenter {
     console.log('## 🔍 Direct vs Sponsored Analysis\n');
     
     // Find comparable test pairs
-    const comparisons: Array<{
-      testName: string;
-      directCost: number;
-      sponsoredCost: number;
-      gasDirectMainnet: number;
-      gasSponsoredMainnet: number;
-      network: string;
-    }> = [];
-
     const testPairs: { [key: string]: { direct?: ProcessedTest; sponsored?: ProcessedTest } } = {};
     
     tests.forEach(test => {
@@ -681,11 +769,18 @@ class EnhancedBenchmarkPresenter {
     console.log(`- **UX Trade-off**: Sponsored transactions provide better UX but at higher operational cost`);
     console.log('');
 
+    console.log('### 🔐 Signature Method Analysis');
+    console.log(`- **Standard UOP**: Most common sponsored transaction method`);
+    console.log(`- **Master Key (MK)**: Alternative signature method with different gas characteristics`);
+    console.log(`- **P256 Signatures**: Advanced cryptographic signature method`);
+    console.log(`- **Session Key EOA**: Session-based signing for improved UX`);
+    console.log('');
+
     console.log('### 💰 Total Cost Comparison');
     NETWORKS.forEach(network => {
       const directCost = totals.direct[network];
       const sponsoredCost = totals.sponsored[network];
-      console.log(`- **${network}**: Direct: $${directCost.toFixed(4)} | Sponsored: $${sponsoredCost.toFixed(4)}`);
+      console.log(`- **${network}**: Direct: ${directCost.toFixed(4)} | Sponsored: ${sponsoredCost.toFixed(4)}`);
     });
     console.log('');
 
@@ -709,19 +804,22 @@ class EnhancedBenchmarkPresenter {
       return ops;
     });
 
-    const mostExpensive = allOperations.reduce((max, op) => op.cost > max.cost ? op : max);
-    const mostGasIntensive = allOperations.reduce((max, op) => op.gas > max.gas ? op : max);
+    if (allOperations.length > 0) {
+      const mostExpensive = allOperations.reduce((max, op) => op.cost > max.cost ? op : max);
+      const mostGasIntensive = allOperations.reduce((max, op) => op.gas > max.gas ? op : max);
 
-    console.log('### 🔥 Operation Highlights');
-    console.log(`- **Most Expensive**: ${mostExpensive.name} ($${mostExpensive.cost} on MAINNET)`);
-    console.log(`- **Most Gas Intensive**: ${mostGasIntensive.name} (${this.formatNumber(mostGasIntensive.gas)} gas)`);
-    console.log('');
+      console.log('### 🔥 Operation Highlights');
+      console.log(`- **Most Expensive**: ${mostExpensive.name} (${mostExpensive.cost} on MAINNET)`);
+      console.log(`- **Most Gas Intensive**: ${mostGasIntensive.name} (${this.formatNumber(mostGasIntensive.gas)} gas)`);
+      console.log('');
+    }
 
     console.log('### 💡 Recommendations');
     console.log(`- **For Cost Optimization**: Use OPTIMISM network for ~90% cost savings vs MAINNET`);
     console.log(`- **For User Experience**: Consider sponsored transactions for better UX, budget ~${avgGasOverhead.toFixed(0)}% extra gas`);
     console.log(`- **For Development**: BASE offers good cost-performance balance for testing and development`);
     console.log(`- **For High-Volume Operations**: The gas overhead of sponsored transactions can be significant at scale`);
+    console.log(`- **Signature Methods**: Test different signature methods (MK, P256, Session Keys) to optimize for your use case`);
   }
 
   private showExpectedStructure(): void {
@@ -739,18 +837,28 @@ class EnhancedBenchmarkPresenter {
     console.log('│   ├── test_RegisterP256NonExtrac.json');
     console.log('│   ├── test_RegisterEOA_UOP.json');
     console.log('│   ├── test_RegisterP256_UOP.json');
-    console.log('│   └── test_RegisterP256NonExtrac_UOP.json');
+    console.log('│   ├── test_RegisterP256NonExtrac_UOP.json');
+    console.log('│   └── test_RegisterP256NonExtracWithMK_UOP.json');
     console.log('├── ERC20/');
     console.log('│   ├── test_ApproveErc20.json');
     console.log('│   ├── test_TransferErc20.json');
     console.log('│   ├── test_ApproveErc20_UOP.json');
-    console.log('│   └── test_TransferErc20_UOP.json');
+    console.log('│   ├── test_TransferErc20_UOP.json');
+    console.log('│   ├── test_ApproveErc20WithMK_UOP.json');
+    console.log('│   ├── test_ApproveErc20WithP256_UOP.json');
+    console.log('│   ├── test_TransferErc20WithMK_UOP.json');
+    console.log('│   └── test_TransferErc20WithP256_UOP.json');
     console.log('├── NativeTransfer/');
     console.log('│   ├── test_SendETH.json');
-    console.log('│   └── test_SendETH_UOP.json');
+    console.log('│   ├── test_SendETH_UOP.json');
+    console.log('│   ├── test_SendETHP256_UOP.json');
+    console.log('│   ├── test_SendETHWithMK_UOP.json');
+    console.log('│   └── test_SendETHWithSKEOA_UOP.json');
     console.log('└── Batch/');
     console.log('    ├── test_BatchExecution.json');
-    console.log('    └── test_BatchExecution_UOP.json');
+    console.log('    ├── test_BatchExecution_UOP.json');
+    console.log('    ├── test_BatchExecutionWithMK_UOP.json');
+    console.log('    └── test_BatchExecutionWithP256_UOP.json');
   }
 
   public saveMarkdownReport(): void {

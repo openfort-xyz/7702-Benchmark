@@ -260,9 +260,6 @@ contract NativeTransfer is BaseBenchmark {
 
             userOp.nonce = ep.getNonce(owner, 1);
             userOp.callData = callData;
-            
-            PubKey memory pubKeyExecuteBatch =
-                PubKey({x: keyData.x, y: keyData.y});
 
             bytes memory _signature = account.encodeWebAuthnSignature(
                 true,
@@ -272,7 +269,7 @@ contract NativeTransfer is BaseBenchmark {
                 keyData.typeIndex,
                 keyData.r,
                 keyData.s,
-                pubKeyExecuteBatch
+                PubKey({x: keyData.x, y: keyData.y})
             );
 
             // console.log(rpcs[i].name);
@@ -340,5 +337,106 @@ contract NativeTransfer is BaseBenchmark {
             unchecked { ++i; }
         }
         _flushTo("test/Output/NativeTransfer/test_SendETHWithMK_UOP.json");
+    }
+
+    function test_SendETHP256_UOP() public {
+        vm.pauseGasMetering();
+        _beginTest("NativeTransfer_Benchmark", "test_SendETHP256_UOP");
+        _beginMode("Sponsored");
+
+        PackedUserOperation memory userOp = _buildUserOp();
+
+        for (uint256 i = 0; i < rpcs.length; ) {
+            uint256 forkId = vm.createFork(rpcs[i].url);
+            vm.selectFork(forkId);
+
+            KeyDatJson memory keyData = _getP256KeyData("ETHTransferP256", rpcs[i].name);
+
+            _deploy();
+            _attach7702();
+            _initializeWithP256(keyData.x, keyData.y, address(erc20));
+            _paymaster();
+            _deal(owner, 1e18);
+
+            Call[] memory calls = new Call[](1);
+            calls[0] = Call({target: pmAddr, value: 0.01 ether, data: hex""});
+
+            bytes32 mode = bytes32(uint256(0x01000000000000000000) << (22 * 8));
+            bytes memory executionData = abi.encode(calls);
+
+            bytes memory callData =
+            abi.encodeWithSelector(bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData);
+
+            userOp.nonce = ep.getNonce(owner, 1);
+            userOp.callData = callData;
+
+            bytes memory _signature = account.encodeP256Signature(
+                keyData.r,
+                keyData.s,
+                PubKey({x: keyData.x, y: keyData.y}),
+                KeyType.P256
+            );
+
+            // console.log(rpcs[i].name);
+            // console.logBytes32(_getUserOpHash(userOp));
+            // console.logBytes32(keyData.x);
+            // console.logBytes32(keyData.y);
+
+            userOp.signature = _signature;
+
+            bool isValid = webAuthn.verifyP256Signature(
+                _getUserOpHash(userOp),
+                keyData.r,
+                keyData.s,
+                keyData.x,
+                keyData.y
+            );
+            console.log("isValid Test", isValid);
+
+            PackedUserOperation[] memory ops = new PackedUserOperation[](1);
+            ops[0] = userOp;
+
+            vm.resumeGasMetering();
+            uint256 g0 = gasleft();
+
+            vm.prank(pmAddr);
+            ep.handleOps(ops, payable(pmAddr));
+
+            uint256 gasUsedLocal = g0 - gasleft();
+            vm.pauseGasMetering();
+
+            (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
+            
+            bytes32 k = keccak256(bytes(rpcs[i].name));
+            ChainFees storage f = fees[k];
+
+            uint256 weiCost = !f.isOPStack
+                ? FeeCalc.ethOrArbCostWei(gasUsedLocal, f.gasPrice)
+                : FeeCalc.opStackCostWeiEcotone(
+                    gasUsedLocal,
+                    f.op.l2GasPrice,
+                    zeros,
+                    nonZeros,
+                    f.op.l1BaseFee,
+                    f.op.l1BaseFeeScalar,
+                    f.op.blobBaseFee,
+                    f.op.blobBaseFeeScalar
+                );
+
+            uint256 usdE8 = FeeCalc.toUsdE8(weiCost, ethPriceUsdE8);
+            string memory usdHuman = FeeCalc.usdE8ToString(usdE8, 4);
+
+            console.log("Send ETH with MK on %s", rpcs[i].name);
+            console.log("Used Gas execute(): %s", gasUsedLocal);
+            console.log("weiCost: %s", weiCost);
+            console.log("usd: %s$", usdHuman);
+            console.log("==================================================");
+            console.log("==================================================");
+
+            _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
+
+            unchecked { ++i; }
+        }
+        _flushTo("test/Output/NativeTransfer/test_SendETHP256_UOP.json");
     }
 }

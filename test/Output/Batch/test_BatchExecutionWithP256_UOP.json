@@ -1,0 +1,1 @@
+{"BatchExecution_Benchmark":{"test_BatchExecutionWithP256_UOP":{"Sponsored":{"MAINNET":{"Used Gas":261864,"weiCost":233922396049416,"usd":"0.8631"},"BASE":{"Used Gas":287836,"weiCost":1961423234287,"usd":"0.0072"},"ARBITRUM":{"Used Gas":288274,"weiCost":24106336702000,"usd":"0.0889"},"OPTIMISM":{"Used Gas":289150,"weiCost":305294680418,"usd":"0.0011"}}}}}

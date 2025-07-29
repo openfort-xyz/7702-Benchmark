@@ -1,0 +1,76 @@
+{
+    "MAINNET":{    
+        "challenge": "0x24eadaac7c180fddc200cf37233ebcf234779f8520b842cc0d2fe9fe0b70a7b0",
+        
+            "x": "0x1cf26eb554576759149404aa5270474416d9e94c30b346f26e91aa672ddf2cf6",
+            "y": "0xeeb063347db55aa1804b4e9bff32635ce9ed3cd9f2a5a0322c948faa2c4188e2",
+            
+                "metadata": {
+                    "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                    "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"JOrarHwYD93CAM83Iz688jR3n4UguELMDS_p_gtwp7A\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false,\"other_keys_can_be_added_here\":\"do not compare clientDataJSON against a template. See https://goo.gl/yabPex\"}",
+                    "challengeIndex": 23,
+                    "typeIndex": 1,
+                    "userVerificationRequired": true
+                },
+                "signature": {
+                    "r": "0x040760884105c7ee7b1c72114a5b6eb491c0eaa0e44ca40f40c3d6ffaabf2ffc",
+                    "s": "0x7d1c844e1fe200448e86a7589a1a9c67a5b596bf9962ab6dad5ea3e09a08074d"
+                }
+            
+        },
+    "BASE":{    
+        "challenge": "0xbb9303afda86dbf78919f6ca18213db3b3bae2ad92e73fead5488f573125b800",
+        
+        "x": "0x1cf26eb554576759149404aa5270474416d9e94c30b346f26e91aa672ddf2cf6",
+        "y": "0xeeb063347db55aa1804b4e9bff32635ce9ed3cd9f2a5a0322c948faa2c4188e2",
+        
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"u5MDr9qG2_eJGfbKGCE9s7O64q2S5z_q1UiPVzEluAA\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false,\"other_keys_can_be_added_here\":\"do not compare clientDataJSON against a template. See https://goo.gl/yabPex\"}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x29f28bc791c48919d5927dbc9ba4a7b1c0af4004eee662758c1c5b23cd53b037",
+                "s": "0x0684a85d4783a2a365a8809e6d28a00a47ee2808402303debbe3cf0f0d06c1a3"
+            }
+        
+        },
+    "ARBITRUM":{    
+        "challenge": "0x2b8b43c7df208f706bab33bc3245e444b004b269ae4168fb9be8b2a99ab7a43c",
+        "x": "0x1cf26eb554576759149404aa5270474416d9e94c30b346f26e91aa672ddf2cf6",
+        "y": "0xeeb063347db55aa1804b4e9bff32635ce9ed3cd9f2a5a0322c948faa2c4188e2",
+        
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"K4tDx98gj3BrqzO8MkXkRLAEsmmuQWj7m-iyqZq3pDw\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x4088c4528627b64bc8017d87145ae4fe717acbfe5dd6132014ef6a9508d0bf03",
+                "s": "0x7a26a8d731608235abbf9b3c477c4d88579bc51aeb1f64e87305d586826e56a2"
+            }
+        
+        },
+    "OPTIMISM":{    
+        "challenge": "0xba1ecdf6684389e5b980a175d8d5e78c73f4b0bf0d294d1e61c81821491185ee",
+        "x": "0x1cf26eb554576759149404aa5270474416d9e94c30b346f26e91aa672ddf2cf6",
+        "y": "0xeeb063347db55aa1804b4e9bff32635ce9ed3cd9f2a5a0322c948faa2c4188e2",
+        
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"uh7N9mhDieW5gKF12NXnjHP0sL8NKU0eYcgYIUkRhe4\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x37a3ba8e32acec62e0926356a418f95b7ae6b2b6c3e6264502865ea697ab938a",
+                "s": "0x43ca0995fc23b2bd120e2847e5150c4192d858b7f1b30221ed241b5e3dc02676"
+            }
+        
+        }
+}

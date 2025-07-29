@@ -151,6 +151,14 @@ contract BaseBenchmark is BaseData, RecoverSigner {
         account.initialize(keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian);
     }
 
+    function _initializeWithP256(bytes32 _x, bytes32 _y, address _token) internal {
+        (Key memory keyMK, KeyReg memory keyRegMK) = _getMK();
+        (Key memory keySK, KeyReg memory keyRegSK) = _getSKP256({_x: _x, _y: _y, _token: _token});
+        (bytes memory sig,) = _signInitialize();
+        vm.prank(owner);
+        account.initialize(keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian);
+    }
+
     function _initialize(bytes32 _x, bytes32 _y) internal {
         (Key memory keyMK, KeyReg memory keyRegMK) = _getMK({_x: _x, _y: _y});
         (Key memory keySK, KeyReg memory keyRegSK) = _getSK();
@@ -202,6 +210,24 @@ contract BaseBenchmark is BaseData, RecoverSigner {
             typeIndex: stdJson.readUint(json, string.concat(basePath, ".metadata.typeIndex")),
             r: stdJson.readBytes32(json, string.concat(basePath, ".signature.r")),
             s: stdJson.readBytes32(json, string.concat(basePath, ".signature.s")),
+            x: stdJson.readBytes32(json, string.concat(basePath, ".x")),
+            y: stdJson.readBytes32(json, string.concat(basePath, ".y"))
+        });
+    }
+
+    function _getP256KeyData(string memory _keyid, string memory _name) internal view returns (KeyDatJson memory keyData)  {
+        string memory jsonPath = jsonPaths[_keyid];
+        string memory json = vm.readFile(jsonPath);
+
+        string memory basePath = string.concat(".", _name);
+
+        keyData = KeyDatJson({
+            authenticatorData: hex"",
+            clientDataJSON: "",
+            challengeIndex: 0,
+            typeIndex: 0,
+            r: stdJson.readBytes32(json, string.concat(basePath, ".r")),
+            s: stdJson.readBytes32(json, string.concat(basePath, ".s")),
             x: stdJson.readBytes32(json, string.concat(basePath, ".x")),
             y: stdJson.readBytes32(json, string.concat(basePath, ".y"))
         });

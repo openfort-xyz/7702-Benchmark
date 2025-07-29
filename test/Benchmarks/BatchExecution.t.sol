@@ -157,5 +157,219 @@ contract BatchExecution is BaseBenchmark {
         }
         _flushTo("test/Output/Batch/test_BatchExecution_UOP.json");
     }
+
+    function test_BatchExecutionWithMK_UOP() public {
+        vm.pauseGasMetering();
+
+        _beginTest("BatchExecution_Benchmark", "test_BatchExecutionWithMK_UOP");
+        _beginMode("Sponsored");
+        _mintErc20(owner, 10e18);
+        
+        PackedUserOperation memory userOp = _buildUserOp();
+
+        for (uint256 i = 0; i < rpcs.length; ) {
+            uint256 forkId = vm.createFork(rpcs[i].url);
+            vm.selectFork(forkId);
+
+            KeyDatJson memory keyData = _getMasterKeyData("BatchExecution", rpcs[i].name);
+
+            _deploy();
+            _attach7702();
+            _initialize(keyData.x, keyData.y);
+            _paymaster();
+
+            Call[] memory calls = new Call[](2);
+            bytes memory dataHex = abi.encodeWithSelector(erc20.mint.selector, owner, 10e18);
+            bytes memory dataHex2 = abi.encodeWithSelector(IERC20.transfer.selector, sessionKey, 2e18);
+            calls[0] = Call({target: address(erc20), value: 0, data: dataHex});
+            calls[1] = Call({target: address(erc20), value: 0, data: dataHex2});
+
+            bytes32 mode = bytes32(uint256(0x01000000000000000000) << (22 * 8));
+            bytes memory executionData = abi.encode(calls);
+
+            bytes memory callData =
+            abi.encodeWithSelector(bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData);
+
+            userOp.nonce = _getNonce(owner, 0);
+            userOp.callData = callData;
+
+            bytes memory _signature = account.encodeWebAuthnSignature(
+                true,
+                keyData.authenticatorData,
+                keyData.clientDataJSON,
+                keyData.challengeIndex,
+                keyData.typeIndex,
+                keyData.r,
+                keyData.s,
+                PubKey({x: keyData.x, y: keyData.y})
+            );
+
+            // console.log(rpcs[i].name);
+            // console.logBytes32(_getUserOpHash(userOp));
+            // console.logBytes32(keyData.x);
+
+            userOp.signature = _signature;
+
+            bool isValid = webAuthn.verifySignature(
+                _getUserOpHash(userOp),
+                true,
+                keyData.authenticatorData,
+                keyData.clientDataJSON,
+                keyData.challengeIndex,
+                keyData.typeIndex,
+                keyData.r,
+                keyData.s,
+                keyData.x,
+                keyData.y
+            );
+            console.log("isValid", isValid);
+
+            PackedUserOperation[] memory ops = new PackedUserOperation[](1);
+            ops[0] = userOp;
+            
+            vm.resumeGasMetering();
+            uint256 g0 = gasleft();
+            vm.prank(pmAddr);
+            ep.handleOps(ops, payable(pmAddr));
+            uint256 gasUsedLocal = g0 - gasleft();
+            vm.pauseGasMetering();
+
+            (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
+
+            bytes32 k = keccak256(bytes(rpcs[i].name));
+            ChainFees storage f = fees[k];
+
+            uint256 weiCost = !f.isOPStack
+                ? FeeCalc.ethOrArbCostWei(gasUsedLocal, f.gasPrice)
+                : FeeCalc.opStackCostWeiEcotone(
+                    gasUsedLocal,
+                    f.op.l2GasPrice,
+                    zeros,
+                    nonZeros,
+                    f.op.l1BaseFee,
+                    f.op.l1BaseFeeScalar,
+                    f.op.blobBaseFee,
+                    f.op.blobBaseFeeScalar
+                );
+
+            uint256 usdE8 = FeeCalc.toUsdE8(weiCost, ethPriceUsdE8);
+            string memory usdHuman = FeeCalc.usdE8ToString(usdE8, 4);
+
+            console.log("Batch Execute on %s", rpcs[i].name);
+            console.log("Used Gas execute(): %s", gasUsedLocal);
+            console.log("weiCost: %s", weiCost);
+            console.log("usd: %s$", usdHuman);
+            console.log("==================================================");
+            console.log("==================================================");
+
+            _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
+
+            unchecked { ++i; }
+        }
+        _flushTo("test/Output/Batch/test_BatchExecutionWithMK_UOP.json");
+    }
+
+    function test_BatchExecutionWithP256_UOP() public {
+        vm.pauseGasMetering();
+
+        _beginTest("BatchExecution_Benchmark", "test_BatchExecutionWithP256_UOP");
+        _beginMode("Sponsored");
+        _mintErc20(owner, 10e18);
+        
+        PackedUserOperation memory userOp = _buildUserOp();
+
+        for (uint256 i = 0; i < rpcs.length; ) {
+            uint256 forkId = vm.createFork(rpcs[i].url);
+            vm.selectFork(forkId);
+
+            KeyDatJson memory keyData = _getP256KeyData("BatchP256", rpcs[i].name);
+
+            _deploy();
+            _attach7702();
+            _initializeWithP256(keyData.x, keyData.y, address(erc20));
+            _paymaster();
+
+            Call[] memory calls = new Call[](2);
+            bytes memory dataHex = abi.encodeWithSelector(erc20.mint.selector, owner, 10e18);
+            bytes memory dataHex2 = abi.encodeWithSelector(IERC20.transfer.selector, sessionKey, 2e18);
+            calls[0] = Call({target: address(erc20), value: 0, data: dataHex});
+            calls[1] = Call({target: address(erc20), value: 0, data: dataHex2});
+
+            bytes32 mode = bytes32(uint256(0x01000000000000000000) << (22 * 8));
+            bytes memory executionData = abi.encode(calls);
+
+            bytes memory callData =
+            abi.encodeWithSelector(bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData);
+
+            userOp.nonce = _getNonce(owner, 0);
+            userOp.callData = callData;
+
+            bytes memory _signature = account.encodeP256Signature(
+                keyData.r,
+                keyData.s,
+                PubKey({x: keyData.x, y: keyData.y}),
+                KeyType.P256
+            );
+
+            // console.log(rpcs[i].name);
+            // console.logBytes32(_getUserOpHash(userOp));
+            console.logBytes32(keyData.x);
+            console.logBytes32(keyData.y);
+
+            userOp.signature = _signature;
+
+            bool isValid = webAuthn.verifyP256Signature(
+                _getUserOpHash(userOp),
+                keyData.r,
+                keyData.s,
+                keyData.x,
+                keyData.y
+            );
+            console.log("isValid Test", isValid);
+
+            PackedUserOperation[] memory ops = new PackedUserOperation[](1);
+            ops[0] = userOp;
+            
+            vm.resumeGasMetering();
+            uint256 g0 = gasleft();
+            vm.prank(pmAddr);
+            ep.handleOps(ops, payable(pmAddr));
+            uint256 gasUsedLocal = g0 - gasleft();
+            vm.pauseGasMetering();
+
+            (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
+
+            bytes32 k = keccak256(bytes(rpcs[i].name));
+            ChainFees storage f = fees[k];
+
+            uint256 weiCost = !f.isOPStack
+                ? FeeCalc.ethOrArbCostWei(gasUsedLocal, f.gasPrice)
+                : FeeCalc.opStackCostWeiEcotone(
+                    gasUsedLocal,
+                    f.op.l2GasPrice,
+                    zeros,
+                    nonZeros,
+                    f.op.l1BaseFee,
+                    f.op.l1BaseFeeScalar,
+                    f.op.blobBaseFee,
+                    f.op.blobBaseFeeScalar
+                );
+
+            uint256 usdE8 = FeeCalc.toUsdE8(weiCost, ethPriceUsdE8);
+            string memory usdHuman = FeeCalc.usdE8ToString(usdE8, 4);
+
+            console.log("Batch Execute on %s", rpcs[i].name);
+            console.log("Used Gas execute(): %s", gasUsedLocal);
+            console.log("weiCost: %s", weiCost);
+            console.log("usd: %s$", usdHuman);
+            console.log("==================================================");
+            console.log("==================================================");
+
+            _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
+
+            unchecked { ++i; }
+        }
+        _flushTo("test/Output/Batch/test_BatchExecutionWithP256_UOP.json");
+    }
 }
 

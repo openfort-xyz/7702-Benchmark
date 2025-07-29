@@ -1,0 +1,1 @@
+{"ERC20_Benchmark":{"test_ApproveErc20WithP256_UOP":{"Sponsored":{"MAINNET":{"Used Gas":255565,"weiCost":228295516551985,"usd":"0.8424"},"BASE":{"Used Gas":280995,"weiCost":1911925153077,"usd":"0.0070"},"ARBITRUM":{"Used Gas":279243,"weiCost":23351137389000,"usd":"0.0861"},"OPTIMISM":{"Used Gas":281433,"weiCost":291421363191,"usd":"0.0010"}}}}}
