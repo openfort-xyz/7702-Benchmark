@@ -4,14 +4,26 @@ pragma solidity ^0.8.29;
 
 import {IKey} from "src/interfaces/IKey.sol";
 import {SpendLimit} from "src/utils/SpendLimit.sol";
+import {ChainsData} from "test/helpers/ChainsData.sol";
 
-abstract contract BaseData is IKey {
+abstract contract BaseData is IKey, ChainsData {
     struct Call {
         address target;
         uint256 value;
         bytes data;
     }
 
+    struct KeyDatJson {
+        bytes authenticatorData;
+        string clientDataJSON;
+        uint256 challengeIndex;
+        uint256 typeIndex;
+        bytes32 r;
+        bytes32 s;
+        bytes32 x;
+        bytes32 y;
+    }
+    
     bytes32 constant RECOVER_TYPEHASH =
         0x9f7aca777caf11405930359f601a4db01fad1b2d79ef3f2f9e93c835e9feffa5;
 
@@ -44,11 +56,25 @@ abstract contract BaseData is IKey {
     bytes32 constant P256SK_PUBLIC_KEY_Y =
         hex"e543ea8ba58bd597ef592f834693973c8fcf227e58e446c9524074ceff850034";
 
+    uint256 internal ownerPK = vm.envUint("PRIVATE_KEY_OWNER");
+    address internal owner = vm.addr(ownerPK);
+
+    uint256 internal sessionKeyPk = vm.envUint("PRIVATE_KEY_SESSIONKEY");
+    address internal sessionKey = vm.addr(sessionKeyPk);
+
+    uint256 internal senderPK = vm.envUint("PRIVATE_KEY_SENDER");
+    address internal sender = vm.addr(senderPK);
+
+    uint256 internal pmPK;
+    address internal pmAddr;
+
     Key internal keyMK;
     PubKey internal pubKeyMK;
 
     Key internal keySK;
     PubKey internal pubKeySK;
+
+    PubKey internal pubKeyExecuteBatch;
 
     KeyReg internal keyReg;
     SpendLimit.SpendTokenInfo internal spendInfo;
@@ -57,8 +83,17 @@ abstract contract BaseData is IKey {
 
     uint256 internal gasUsed;
 
+    mapping(string PathId => string JsonPath) internal jsonPaths;
+
     function _getMK() internal returns (Key memory, KeyReg memory) {
         pubKeyMK = PubKey({x: PUBLIC_KEY_X, y: PUBLIC_KEY_Y});
+        keyMK = Key({pubKey: pubKeyMK, eoaAddress: address(0), keyType: KeyType.WEBAUTHN});
+        keyReg = _getKeyReg(type(uint48).max, 0, 0, false, DEAD_ADDRESS, DEAD_ADDRESS, 0, 0);
+        return (keyMK, keyReg);
+    }
+
+    function _getMK(bytes32 _x, bytes32 _y) internal returns (Key memory, KeyReg memory) {
+        pubKeyMK = PubKey({x: _x, y: _y});
         keyMK = Key({pubKey: pubKeyMK, eoaAddress: address(0), keyType: KeyType.WEBAUTHN});
         keyReg = _getKeyReg(type(uint48).max, 0, 0, false, DEAD_ADDRESS, DEAD_ADDRESS, 0, 0);
         return (keyMK, keyReg);
@@ -93,9 +128,9 @@ abstract contract BaseData is IKey {
 
     function _getSKEOA() internal returns (Key memory, KeyReg memory) {
         pubKeySK = PubKey({x: bytes32(0), y: bytes32(0)});
-        keySK = Key({pubKey: pubKeySK, eoaAddress: address(1111), keyType: KeyType.EOA});
+        keySK = Key({pubKey: pubKeySK, eoaAddress: sessionKey, keyType: KeyType.EOA});
         keyReg = _getKeyReg(
-            uint48(1784980532), 0, uint48(10), true, UNISWAP_V2, TOKEN_ADDRESS, 10e18, 0.1 ether
+            uint48(1784980532), 0, uint48(10), true, pmAddr, TOKEN_ADDRESS, 10e18, 0.1 ether
         );
         return (keySK, keyReg);
     }
@@ -145,4 +180,10 @@ abstract contract BaseData is IKey {
         sel[1] = 0x40c10f19; // ERC20.mint
         sel[2] = 0x00000000; // sentinel/unused
     }
+
+    function _addJsonPath() internal {
+        jsonPaths["ETHTransfer"] = "test/Data/ETHTransfer.json";
+    }
+
+
 }

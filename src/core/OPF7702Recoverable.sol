@@ -27,8 +27,6 @@ import {ECDSA} from "lib/openzeppelin-contracts/contracts/utils/cryptography/ECD
 import {EIP712Upgradeable} from
     "lib/openzeppelin-contracts-upgradeable/contracts/utils/cryptography/EIP712Upgradeable.sol";
 
-import {console2 as console} from "lib/forge-std/src/Test.sol";
-
 /**
  * @title   Openfort Base Account 7702 with ERC-4337 Support
  * @author  Openfort@0xkoiner
@@ -157,10 +155,9 @@ contract OPF7702Recoverable is OPF7702, EIP712Upgradeable, ERC7201 {
         }
 
         if (!_sessionKey.checkKey()) {
-            console.log("_sessionKey");
-
             registerKey(_sessionKey, _sessionKeyData);
         }
+        
         initializeGuardians(_initialGuardian);
 
         emit IOPF7702.Initialized(_key);

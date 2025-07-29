@@ -7,7 +7,14 @@ optimizer = true
 optimizer_runs = 800
 
 fs_permissions = [
-  { access = "write", path = "test/Output" }
+    { access = "read", path = "test/Data" },
+    { access = "read", path = "test/Data/" },
+    { access = "read", path = "./test/Data" },
+    { access = "read", path = "./test/Data/" },
+    { access = "write", path = "test/Output" },
+    { access = "write", path = "test/Output/" },
+    { access = "write", path = "./test/Output" },
+    { access = "write", path = "./test/Output/" }
 ]
 
 [fmt]

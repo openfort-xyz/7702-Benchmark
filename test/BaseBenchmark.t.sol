@@ -2,11 +2,11 @@
 
 pragma solidity ^0.8.29;
 
+import "lib/forge-std/src/StdJson.sol";
 import {BaseData} from "test/BaseData.sol";
 import {OPFMain} from "src/core/OPFMain.sol";
 import {MockERC20} from "src/mocks/MockERC20.sol";
 import {Paymaster} from "src/paymaster/paymaster.sol";
-import {ChainsData} from "test/helpers/ChainsData.sol";
 import {RecoverSigner} from "test/Helpers/RecoverSigner.sol";
 import {WebAuthnVerifierV2} from "src/utils/WebAuthnVerifierV2.sol";
 import {Test, console2 as console} from "lib/forge-std/src/Test.sol";
@@ -17,7 +17,7 @@ import {PackedUserOperation} from
 import {MessageHashUtils} from
     "lib/openzeppelin-contracts/contracts/utils/cryptography/MessageHashUtils.sol";
 
-contract BaseBenchmark is ChainsData, BaseData, RecoverSigner {
+contract BaseBenchmark is BaseData, RecoverSigner {
     IEntryPoint internal ep;
     WebAuthnVerifierV2 internal webAuthn;
     MockERC20 internal erc20;
@@ -26,30 +26,17 @@ contract BaseBenchmark is ChainsData, BaseData, RecoverSigner {
     OPFMain public account;
     OPFMain public implementation;
 
-    uint256 internal ownerPK = vm.envUint("PRIVATE_KEY_OWNER");
-    address internal owner = vm.addr(ownerPK);
-
-    uint256 internal sessionKeyPk = vm.envUint("PRIVATE_KEY_SESSIONKEY");
-    address internal sessionKey = vm.addr(sessionKeyPk);
-
-    uint256 internal senderPK = vm.envUint("PRIVATE_KEY_SENDER");
-    address internal sender = vm.addr(senderPK);
-
-    uint256 internal pmPK;
-    address internal pmAddr;
-
     function setUp() public virtual override {
         super.setUp();
         // ep = new EntryPoint();
         ep = IEntryPoint(payable(ENTRYPOINT));
         erc20 = new MockERC20();
-        webAuthn = new WebAuthnVerifierV2();
 
         (pmAddr, pmPK) = makeAddrAndKey("paymaster");
         // vm.prank(pmAddr);
         // pm = new Paymaster(IEntryPoint(ep));
         // _paymaster();
-
+        _addJsonPath();
         initialGuardian = keccak256(abi.encodePacked(makeAddr("initialGuardian")));
     }
 
@@ -82,6 +69,15 @@ contract BaseBenchmark is ChainsData, BaseData, RecoverSigner {
         returns (bytes memory)
     {
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(ownerPK, _getUserOpHash(_userOp));
+        return account.encodeEOASignature(abi.encodePacked(r, s, v));
+    }
+
+    function _signUserOpWitSKEOA(PackedUserOperation memory _userOp)
+        internal
+        view
+        returns (bytes memory)
+    {
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(sessionKeyPk, _getUserOpHash(_userOp));
         return account.encodeEOASignature(abi.encodePacked(r, s, v));
     }
 
@@ -135,6 +131,7 @@ contract BaseBenchmark is ChainsData, BaseData, RecoverSigner {
     }
 
     function _deploy() internal {
+        webAuthn = new WebAuthnVerifierV2();
         implementation = new OPFMain(
             address(ep),
             address(webAuthn),
@@ -154,6 +151,22 @@ contract BaseBenchmark is ChainsData, BaseData, RecoverSigner {
         account.initialize(keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian);
     }
 
+    function _initialize(bytes32 _x, bytes32 _y) internal {
+        (Key memory keyMK, KeyReg memory keyRegMK) = _getMK({_x: _x, _y: _y});
+        (Key memory keySK, KeyReg memory keyRegSK) = _getSK();
+        (bytes memory sig,) = _signInitialize();
+        vm.prank(owner);
+        account.initialize(keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian);
+    }
+
+    function _initializeSKEOA() internal {
+        (Key memory keyMK, KeyReg memory keyRegMK) = _getMK();
+        (Key memory keySK, KeyReg memory keyRegSK) = _getSKEOA();
+        (bytes memory sig,) = _signInitialize();
+        vm.prank(owner);
+        account.initialize(keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian);
+    }
+    
     function _mintErc20(address _to, uint256 _amount) internal {
         erc20.mint(_to, _amount);
     }
@@ -174,5 +187,23 @@ contract BaseBenchmark is ChainsData, BaseData, RecoverSigner {
         vm.startPrank(pmAddr);
         ep.depositTo{value: 0.09e18}(owner);
         vm.stopPrank();
+    }
+
+    function _getMasterKeyData(string memory _keyid, string memory _name) internal view returns (KeyDatJson memory keyData) {
+        string memory jsonPath = jsonPaths[_keyid];
+        string memory json = vm.readFile(jsonPath);
+
+        string memory basePath = string.concat(".", _name);
+
+        keyData = KeyDatJson({
+            authenticatorData: stdJson.readBytes(json, string.concat(basePath, ".metadata.authenticatorData")),
+            clientDataJSON: stdJson.readString(json, string.concat(basePath, ".metadata.clientDataJSON")),
+            challengeIndex: stdJson.readUint(json, string.concat(basePath, ".metadata.challengeIndex")),
+            typeIndex: stdJson.readUint(json, string.concat(basePath, ".metadata.typeIndex")),
+            r: stdJson.readBytes32(json, string.concat(basePath, ".signature.r")),
+            s: stdJson.readBytes32(json, string.concat(basePath, ".signature.s")),
+            x: stdJson.readBytes32(json, string.concat(basePath, ".x")),
+            y: stdJson.readBytes32(json, string.concat(basePath, ".y"))
+        });
     }
 }
