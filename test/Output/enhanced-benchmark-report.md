@@ -1,8 +1,8 @@
-# 🚀 Enhanced Blockchain Network Benchmark Results
+# Enhanced Blockchain Network Benchmark Results
 
-📅 Generated: 7/29/2025, 3:04:21 PM
+Generated: 7/29/2025, 3:08:47 PM
 
-## 🔄 Direct vs Sponsored Transaction Comparison
+## Direct vs Sponsored Transaction Comparison
 
 | Test                                 | Type      | MAINNET  | BASE    | ARBITRUM | OPTIMISM | Gas Used  |
 | ------------------------------------ | --------- | -------- | ------- | -------- | -------- | --------- |
@@ -36,7 +36,7 @@
 | Batch Execution w/ MK                | Sponsored | $1.5848  | $0.0130 | $0.1578  | $0.0019  | 480,812   |
 | Batch Execution w/ P256              | Sponsored | $0.8631  | $0.0072 | $0.0889  | $0.0011  | 261,864   |
 
-## 🔐 Signature Method Comparison
+## Signature Method Comparison
 
 ### Register - Signature Methods
 
@@ -85,7 +85,7 @@
 | Master Key     | $1.5848 | $0.0130 | $0.1578  | $0.0019  | 480,812  |
 | P256 Signature | $0.8631 | $0.0072 | $0.0889  | $0.0011  | 261,864  |
 
-## 📊 Deploy Benchmarks
+## Deploy Benchmarks
 
 | Test Name  | Type   | Network  | Gas Used  | Wei Cost     | USD Cost |
 | ---------- | ------ | -------- | --------- | ------------ | -------- |
@@ -94,7 +94,7 @@
 | Deploy OPF | Direct | ARBITRUM | 4,979,720 | 416.42K Gwei | $1.5365  |
 | Deploy OPF | Direct | OPTIMISM | 4,984,975 | 6.43K Gwei   | $0.0237  |
 
-## 📊 Initialize Benchmarks
+## Initialize Benchmarks
 
 | Test Name                      | Type      | Network  | Gas Used | Wei Cost     | USD Cost |
 | ------------------------------ | --------- | -------- | -------- | ------------ | -------- |
@@ -115,7 +115,7 @@
 | Initialize + Session Key (UOP) | Sponsored | ARBITRUM | 454,215  | 37.98K Gwei  | $0.1401  |
 | Initialize + Session Key (UOP) | Sponsored | OPTIMISM | 454,215  | 492.91 Gwei  | $0.0018  |
 
-## 📊 Register-Key Benchmarks
+## Register-Key Benchmarks
 
 | Test Name                            | Type      | Network  | Gas Used | Wei Cost     | USD Cost |
 | ------------------------------------ | --------- | -------- | -------- | ------------ | -------- |
@@ -148,7 +148,7 @@
 | Register P256 (Non-Extrac w/ MK UOP) | Sponsored | ARBITRUM | 776,329  | 64.92K Gwei  | $0.2395  |
 | Register P256 (Non-Extrac w/ MK UOP) | Sponsored | OPTIMISM | 778,067  | 795.35 Gwei  | $0.0029  |
 
-## 📊 ERC20 Benchmarks
+## ERC20 Benchmarks
 
 | Test Name                    | Type      | Network  | Gas Used | Wei Cost     | USD Cost |
 | ---------------------------- | --------- | -------- | -------- | ------------ | -------- |
@@ -185,7 +185,7 @@
 | Transfer ERC20 w/ P256 (UOP) | Sponsored | ARBITRUM | 277,737  | 23.23K Gwei  | $0.0857  |
 | Transfer ERC20 w/ P256 (UOP) | Sponsored | OPTIMISM | 279,710  | 289.69 Gwei  | $0.0010  |
 
-## 📊 NativeTransfer Benchmarks
+## NativeTransfer Benchmarks
 
 | Test Name                | Type      | Network  | Gas Used | Wei Cost     | USD Cost |
 | ------------------------ | --------- | -------- | -------- | ------------ | -------- |
@@ -210,7 +210,7 @@
 | Send ETH w/ SK-EOA (UOP) | Sponsored | ARBITRUM | 72,231   | 6.04K Gwei   | $0.0222  |
 | Send ETH w/ SK-EOA (UOP) | Sponsored | OPTIMISM | 72,231   | 79.08 Gwei   | $0.0002  |
 
-## 📊 Batch Benchmarks
+## Batch Benchmarks
 
 | Test Name                     | Type      | Network  | Gas Used | Wei Cost     | USD Cost |
 | ----------------------------- | --------- | -------- | -------- | ------------ | -------- |
@@ -231,7 +231,7 @@
 | Batch Execution w/ P256 (UOP) | Sponsored | ARBITRUM | 288,274  | 24.11K Gwei  | $0.0889  |
 | Batch Execution w/ P256 (UOP) | Sponsored | OPTIMISM | 289,150  | 305.29 Gwei  | $0.0011  |
 
-## ⛽ Gas Usage Summary
+## Gas Usage Summary
 
 | Test                                 | Type      | MAINNET   | BASE      | ARBITRUM  | OPTIMISM  |
 | ------------------------------------ | --------- | --------- | --------- | --------- | --------- |
@@ -265,9 +265,9 @@
 | Batch Execution w/ MK (UOP)          | Sponsored | 480,812   | 521,524   | 511,553   | 509,195   |
 | Batch Execution w/ P256 (UOP)        | Sponsored | 261,864   | 287,836   | 288,274   | 289,150   |
 
-## 💰 Cost Comparison (USD)
+## Cost Comparison (USD)
 
-| Test                                 | Type      | MAINNET  | BASE    | ARBITRUM | OPTIMISM | 🏆 Best Network |
+| Test                                 | Type      | MAINNET  | BASE    | ARBITRUM | OPTIMISM |    Best Network |
 | ------------------------------------ | --------- | -------- | ------- | -------- | -------- | --------------- |
 | Deploy OPF                           | Direct    | $16.3935 | $0.1272 | $1.5365  | $0.0237  | **OPTIMISM**    |
 | Initialize TX                        | Direct    | $1.1775  | $0.0090 | $0.1102  | $0.0014  | **OPTIMISM**    |
@@ -299,7 +299,7 @@
 | Batch Execution w/ MK (UOP)          | Sponsored | $1.5848  | $0.0130 | $0.1578  | $0.0019  | **OPTIMISM**    |
 | Batch Execution w/ P256 (UOP)        | Sponsored | $0.8631  | $0.0072 | $0.0889  | $0.0011  | **OPTIMISM**    |
 
-## 🔍 Direct vs Sponsored Analysis
+## Direct vs Sponsored Analysis
 
 ### MAINNET Network Analysis
 
@@ -353,35 +353,35 @@
 | Send ETH                 | $0.0001     | $0.0003        | $0.0002 (200.0%)  | 40,178     | 91,970        | +51,792 (+128.9%)   |
 | Batch Execution          | $0.0001     | $0.0003        | $0.0002 (200.0%)  | 35,158     | 87,209        | +52,051 (+148.0%)   |
 
-## 🎯 Key Insights
+## Key Insights
 
-### 🌟 Network Cost Analysis
+### Network Cost Analysis
 - **Cheapest Network Overall**: OPTIMISM (consistently lowest costs across all operations)
 - **Most Expensive Network**: MAINNET (highest transaction costs across all networks)
 - **Best L2 Alternative**: BASE (good balance of cost and performance)
 
-### 🔄 Direct vs Sponsored Transaction Analysis
+### Direct vs Sponsored Transaction Analysis
 - **Average Gas Overhead**: Sponsored transactions use ~321.8% more gas than direct transactions
 - **Cost Premium**: Sponsored transactions cost more due to additional gas usage for UserOp handling
 - **UX Trade-off**: Sponsored transactions provide better UX but at higher operational cost
 
-### 🔐 Signature Method Analysis
+### Signature Method Analysis
 - **Standard UOP**: Most common sponsored transaction method
 - **Master Key (MK)**: Alternative signature method with different gas characteristics
 - **P256 Signatures**: Advanced cryptographic signature method
 - **Session Key EOA**: Session-based signing for improved UX
 
-### 💰 Total Cost Comparison
+### Total Cost Comparison
 - **MAINNET**: Direct: 22.6706 | Sponsored: 19.5270
 - **BASE**: Direct: 0.1768 | Sponsored: 0.1539
 - **ARBITRUM**: Direct: 2.1475 | Sponsored: 1.8984
 - **OPTIMISM**: Direct: 0.0310 | Sponsored: 0.0228
 
-### 🔥 Operation Highlights
+### Operation Highlights
 - **Most Expensive**: Deploy OPF (Direct) (16.3935 on MAINNET)
 - **Most Gas Intensive**: Deploy OPF (Direct) (4,973,383 gas)
 
-### 💡 Recommendations
+### Recommendations
 - **For Cost Optimization**: Use OPTIMISM network for ~90% cost savings vs MAINNET
 - **For User Experience**: Consider sponsored transactions for better UX, budget ~322% extra gas
 - **For Development**: BASE offers good cost-performance balance for testing and development

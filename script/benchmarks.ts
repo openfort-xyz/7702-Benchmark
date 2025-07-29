@@ -41,17 +41,21 @@ interface ProcessedTest {
   sponsoredData?: TestData['Sponsored'];
 }
 
-interface CostAnalysis {
-  network: string;
-  cost: number;
-  display: string;
+interface NetworkSpecificData {
+  testName: string;
+  category: string;
+  type: 'Direct' | 'Sponsored';
+  gasUsed: number;
+  weiCost: number;
+  usdCost: number;
+  signatureMethod: string;
 }
 
 // Configuration
 const BENCHMARK_DIR = './test/Output';
 const NETWORKS: ('MAINNET' | 'BASE' | 'ARBITRUM' | 'OPTIMISM')[] = ['MAINNET', 'BASE', 'ARBITRUM', 'OPTIMISM'];
 
-class EnhancedBenchmarkPresenter {
+class NetworkSpecificBenchmarkGenerator {
   private benchmarks: Map<string, { data: BenchmarkFile; category: string }> = new Map();
 
   constructor() {
@@ -139,77 +143,7 @@ class EnhancedBenchmarkPresenter {
       });
     });
 
-    // If no files found in folders, try loading from current directory or BENCHMARK_DIR root
-    if (loadedCount === 0) {
-      console.log('📁 No files found in organized folders, trying root directory...');
-      
-      const allFiles = [
-        'test_DeployOPFMain.json',
-        'test_InitializeTX.json',
-        'test_InitializeTXWithRegisteringSessionKey.json',
-        'test_InitializeTX_UOP.json',
-        'test_InitializeTXWithRegisteringSessionKey_UOP.json',
-        'test_RegisterEOA.json',
-        'test_RegisterP256.json',
-        'test_RegisterP256NonExtrac.json',
-        'test_RegisterEOA_UOP.json',
-        'test_RegisterP256_UOP.json',
-        'test_RegisterP256NonExtrac_UOP.json',
-        'test_RegisterP256NonExtracWithMK_UOP.json',
-        'test_ApproveErc20.json',
-        'test_TransferErc20.json',
-        'test_ApproveErc20_UOP.json',
-        'test_TransferErc20_UOP.json',
-        'test_ApproveErc20WithMK_UOP.json',
-        'test_ApproveErc20WithP256_UOP.json',
-        'test_TransferErc20WithMK_UOP.json',
-        'test_TransferErc20WithP256_UOP.json',
-        'test_SendETH.json',
-        'test_SendETH_UOP.json',
-        'test_SendETHP256_UOP.json',
-        'test_SendETHWithMK_UOP.json',
-        'test_SendETHWithSKEOA_UOP.json',
-        'test_BatchExecution.json',
-        'test_BatchExecution_UOP.json',
-        'test_BatchExecutionWithMK_UOP.json',
-        'test_BatchExecutionWithP256_UOP.json'
-      ];
-      
-      allFiles.forEach(filename => {
-        // Try current directory first
-        let filePath = `./${filename}`;
-        let category = this.getCategoryFromFilename(filename);
-        
-        if (!fs.existsSync(filePath)) {
-          // Try BENCHMARK_DIR root
-          filePath = path.join(BENCHMARK_DIR, filename);
-        }
-        
-        try {
-          if (fs.existsSync(filePath)) {
-            const content = fs.readFileSync(filePath, 'utf8');
-            const data: BenchmarkFile = JSON.parse(content);
-            this.benchmarks.set(filename, { data, category });
-            loadedCount++;
-            console.log(`✅ Loaded: ${filename} (${category})`);
-          }
-        } catch (error) {
-          console.error(`❌ Error loading ${filePath}:`, (error as Error).message);
-        }
-      });
-    }
-
-    console.log(`\n✅ Total loaded: ${loadedCount} benchmark files\n`);
-  }
-
-  private getCategoryFromFilename(filename: string): string {
-    if (filename.includes('Deploy')) return 'Deploy';
-    if (filename.includes('Initialize')) return 'Initialize';
-    if (filename.includes('Register')) return 'Register-Key';
-    if (filename.includes('Approve') || filename.includes('Transfer')) return 'ERC20';
-    if (filename.includes('SendETH')) return 'NativeTransfer';
-    if (filename.includes('BatchExecution')) return 'Batch';
-    return 'Other';
+    console.log(`✅ Total loaded: ${loadedCount} benchmark files\n`);
   }
 
   private formatNumber(num: number): string {
@@ -264,8 +198,17 @@ class EnhancedBenchmarkPresenter {
     return nameMap[cleanName] || cleanName.replace(/([A-Z])/g, ' $1').trim();
   }
 
-  private processTests(): ProcessedTest[] {
-    const processedTests: ProcessedTest[] = [];
+  private extractSignatureMethod(testName: string): string {
+    if (testName.includes('w/ MK')) return 'Master Key';
+    if (testName.includes('w/ P256')) return 'P256 Signature';
+    if (testName.includes('w/ SK-EOA')) return 'Session Key EOA';
+    if (testName.includes('P256') && testName.includes('UOP')) return 'P256 Direct';
+    if (testName.includes('(UOP)')) return 'Standard UOP';
+    return 'Direct';
+  }
+
+  private processTestsForNetwork(network: 'MAINNET' | 'BASE' | 'ARBITRUM' | 'OPTIMISM'): NetworkSpecificData[] {
+    const networkData: NetworkSpecificData[] = [];
 
     this.benchmarks.forEach((fileData, filename) => {
       const { data, category } = fileData;
@@ -276,620 +219,575 @@ class EnhancedBenchmarkPresenter {
         Object.keys(testData).forEach(testName => {
           const cleanTestName = this.extractTestName(filename, testName);
           const test = testData[testName];
+          const signatureMethod = this.extractSignatureMethod(cleanTestName);
 
-          // Handle special case where SendETH file contains UOP test but it's actually Sponsored
-          let hasDirectData = !!test.Direct;
-          let hasSponsoredData = !!test.Sponsored;
-          let directData = test.Direct;
-          let sponsoredData = test.Sponsored;
-
-          // Special handling for SendETH case
-          if (testName === 'test_SendETH_UOP' && test.Sponsored) {
-            hasSponsoredData = true;
-            hasDirectData = false;
+          // Add Direct data if available
+          if (test.Direct && test.Direct[network]) {
+            const directData = test.Direct[network];
+            networkData.push({
+              testName: cleanTestName,
+              category,
+              type: 'Direct',
+              gasUsed: directData['Used Gas'],
+              weiCost: directData.weiCost,
+              usdCost: parseFloat(directData.usd),
+              signatureMethod: 'Direct'
+            });
           }
 
-          // Validate data consistency
-          if (directData) {
-            this.validateNetworkData(directData, testName, 'Direct');
+          // Add Sponsored data if available
+          if (test.Sponsored && test.Sponsored[network]) {
+            const sponsoredData = test.Sponsored[network];
+            networkData.push({
+              testName: cleanTestName,
+              category,
+              type: 'Sponsored',
+              gasUsed: sponsoredData['Used Gas'],
+              weiCost: sponsoredData.weiCost,
+              usdCost: parseFloat(sponsoredData.usd),
+              signatureMethod
+            });
           }
-          if (sponsoredData) {
-            this.validateNetworkData(sponsoredData, testName, 'Sponsored');
-          }
-
-          processedTests.push({
-            testName: cleanTestName,
-            filename,
-            category,
-            hasDirectData,
-            hasSponsoredData,
-            directData,
-            sponsoredData
-          });
         });
       });
     });
 
-    return processedTests;
+    return networkData.sort((a, b) => a.category.localeCompare(b.category) || a.testName.localeCompare(b.testName));
   }
 
-  private validateNetworkData(networkData: any, testName: string, type: string): void {
-    const networks = Object.keys(networkData);
-    const gasUsages = networks.map(network => networkData[network]['Used Gas']);
-    const uniqueGasUsages = [...new Set(gasUsages)];
+  private generateNetworkReport(network: 'MAINNET' | 'BASE' | 'ARBITRUM' | 'OPTIMISM'): string {
+    const networkData = this.processTestsForNetwork(network);
+    let output = '';
+
+    // Header
+    output += `# 🚀 ${network} Network Benchmark Report\n\n`;
+    output += `📅 Generated: ${new Date().toLocaleString()}\n`;
+    output += `🌐 Network: **${network}**\n\n`;
+
+    // Network-specific insights
+    output += this.generateNetworkInsights(network, networkData);
+
+    // Overview table
+    output += `## 📊 Complete Operations Overview\n\n`;
+    output += this.generateOverviewTable(networkData);
+
+    // Category-specific analysis
+    output += this.generateCategoryAnalysis(networkData);
+
+    // Signature method comparison
+    output += this.generateSignatureMethodAnalysis(networkData);
+
+    // Cost analysis
+    output += this.generateCostAnalysis(network, networkData);
+
+    // Gas efficiency analysis
+    output += this.generateGasEfficiencyAnalysis(networkData);
+
+    // Recommendations
+    output += this.generateNetworkRecommendations(network, networkData);
+
+    return output;
+  }
+
+  private generateNetworkInsights(network: string, data: NetworkSpecificData[]): string {
+    let output = `## 🎯 ${network} Network Insights\n\n`;
+
+    const totalOperations = data.length;
+    const directOperations = data.filter(d => d.type === 'Direct').length;
+    const sponsoredOperations = data.filter(d => d.type === 'Sponsored').length;
+    const totalCost = data.reduce((sum, d) => sum + d.usdCost, 0);
+    const avgCost = totalCost / totalOperations;
+    const totalGas = data.reduce((sum, d) => sum + d.gasUsed, 0);
+    const avgGas = totalGas / totalOperations;
+
+    const mostExpensive = data.reduce((max, d) => d.usdCost > max.usdCost ? d : max);
+    const cheapest = data.reduce((min, d) => d.usdCost < min.usdCost ? d : min);
+    const mostGasIntensive = data.reduce((max, d) => d.gasUsed > max.gasUsed ? d : max);
+    const mostEfficient = data.reduce((min, d) => d.gasUsed < min.gasUsed ? d : min);
+
+    output += `- **Total Operations**: ${totalOperations} (${directOperations} Direct, ${sponsoredOperations} Sponsored)\n`;
+    output += `- **Total Cost**: $${totalCost.toFixed(4)}\n`;
+    output += `- **Average Cost**: $${avgCost.toFixed(4)} per operation\n`;
+    output += `- **Total Gas**: ${this.formatNumber(totalGas)} gas\n`;
+    output += `- **Average Gas**: ${this.formatNumber(Math.round(avgGas))} gas per operation\n\n`;
+
+    output += `### 🔥 Performance Highlights\n`;
+    output += `- **Most Expensive**: ${mostExpensive.testName} (${mostExpensive.type}) - $${mostExpensive.usdCost}\n`;
+    output += `- **Cheapest**: ${cheapest.testName} (${cheapest.type}) - $${cheapest.usdCost}\n`;
+    output += `- **Most Gas Intensive**: ${mostGasIntensive.testName} (${mostGasIntensive.type}) - ${this.formatNumber(mostGasIntensive.gasUsed)} gas\n`;
+    output += `- **Most Efficient**: ${mostEfficient.testName} (${mostEfficient.type}) - ${this.formatNumber(mostEfficient.gasUsed)} gas\n\n`;
+
+    return output;
+  }
+
+  private generateOverviewTable(data: NetworkSpecificData[]): string {
+    let output = `| Operation | Category | Type | Signature Method | Gas Used | Wei Cost | USD Cost |\n`;
+    output += `|-----------|----------|------|------------------|----------|----------|----------|\n`;
+
+    data.forEach(item => {
+      output += `| ${item.testName} | ${item.category} | ${item.type} | ${item.signatureMethod} | ${this.formatNumber(item.gasUsed)} | ${this.formatWei(item.weiCost)} | $${item.usdCost.toFixed(4)} |\n`;
+    });
+
+    output += '\n';
+    return output;
+  }
+
+  private generateCategoryAnalysis(data: NetworkSpecificData[]): string {
+    let output = `## 📈 Category Analysis\n\n`;
+
+    const categories = [...new Set(data.map(d => d.category))];
     
-    // Check for unusual gas variations (more than 1% difference between networks)
-    if (uniqueGasUsages.length > 1) {
-      const minGas = Math.min(...gasUsages);
-      const maxGas = Math.max(...gasUsages);
-      const variation = ((maxGas - minGas) / minGas) * 100;
+    categories.forEach(category => {
+      const categoryData = data.filter(d => d.category === category);
+      const totalCost = categoryData.reduce((sum, d) => sum + d.usdCost, 0);
+      const avgCost = totalCost / categoryData.length;
+      const totalGas = categoryData.reduce((sum, d) => sum + d.gasUsed, 0);
+      const avgGas = totalGas / categoryData.length;
+
+      output += `### ${category}\n\n`;
+      output += `- **Operations**: ${categoryData.length}\n`;
+      output += `- **Total Cost**: $${totalCost.toFixed(4)}\n`;
+      output += `- **Average Cost**: $${avgCost.toFixed(4)}\n`;
+      output += `- **Total Gas**: ${this.formatNumber(totalGas)}\n`;
+      output += `- **Average Gas**: ${this.formatNumber(Math.round(avgGas))}\n\n`;
+
+      // Category table
+      output += `| Operation | Type | Signature Method | Gas Used | USD Cost |\n`;
+      output += `|-----------|------|------------------|----------|----------|\n`;
       
-      if (variation > 1) {
-        console.warn(`⚠️  Gas usage variation detected in ${testName} (${type}): ${variation.toFixed(1)}% difference between networks`);
-      }
-    }
+      categoryData.forEach(item => {
+        output += `| ${item.testName} | ${item.type} | ${item.signatureMethod} | ${this.formatNumber(item.gasUsed)} | $${item.usdCost.toFixed(4)} |\n`;
+      });
+
+      output += '\n';
+    });
+
+    return output;
   }
 
-  public generateReport(): void {
-    console.log('# 🚀 Enhanced Blockchain Network Benchmark Results\n');
-    console.log(`📅 Generated: ${new Date().toLocaleString()}\n`);
+  private generateSignatureMethodAnalysis(data: NetworkSpecificData[]): string {
+    let output = `## 🔐 Signature Method Analysis\n\n`;
+
+    const methods = [...new Set(data.map(d => d.signatureMethod))];
+    
+    output += `| Signature Method | Operations | Avg Gas | Avg Cost | Total Cost |\n`;
+    output += `|------------------|------------|---------|----------|------------|\n`;
+
+    methods.forEach(method => {
+      const methodData = data.filter(d => d.signatureMethod === method);
+      const avgGas = methodData.reduce((sum, d) => sum + d.gasUsed, 0) / methodData.length;
+      const avgCost = methodData.reduce((sum, d) => sum + d.usdCost, 0) / methodData.length;
+      const totalCost = methodData.reduce((sum, d) => sum + d.usdCost, 0);
+
+      output += `| ${method} | ${methodData.length} | ${this.formatNumber(Math.round(avgGas))} | $${avgCost.toFixed(4)} | $${totalCost.toFixed(4)} |\n`;
+    });
+
+    output += '\n';
+
+    // Detailed signature method comparison
+    const sponsoredMethods = methods.filter(m => m !== 'Direct');
+    if (sponsoredMethods.length > 1) {
+      output += `### 🔍 Sponsored Transaction Methods Comparison\n\n`;
+      
+      sponsoredMethods.forEach(method => {
+        const methodData = data.filter(d => d.signatureMethod === method);
+        if (methodData.length > 0) {
+          const avgGas = methodData.reduce((sum, d) => sum + d.gasUsed, 0) / methodData.length;
+          const avgCost = methodData.reduce((sum, d) => sum + d.usdCost, 0) / methodData.length;
+          
+          output += `**${method}**:\n`;
+          output += `- Average Gas: ${this.formatNumber(Math.round(avgGas))}\n`;
+          output += `- Average Cost: $${avgCost.toFixed(4)}\n`;
+          output += `- Operations: ${methodData.length}\n\n`;
+        }
+      });
+    }
+
+    return output;
+  }
+
+  private generateCostAnalysis(network: string, data: NetworkSpecificData[]): string {
+    let output = `## 💰 Cost Analysis\n\n`;
+
+    // Cost distribution
+    const costRanges = [
+      { min: 0, max: 0.001, label: 'Ultra Low (< $0.001)' },
+      { min: 0.001, max: 0.01, label: 'Low ($0.001 - $0.01)' },
+      { min: 0.01, max: 0.1, label: 'Medium ($0.01 - $0.1)' },
+      { min: 0.1, max: 1, label: 'High ($0.1 - $1)' },
+      { min: 1, max: Infinity, label: 'Very High (> $1)' }
+    ];
+
+    output += `### 💵 Cost Distribution\n\n`;
+    output += `| Cost Range | Operations | Percentage |\n`;
+    output += `|------------|------------|------------|\n`;
+
+    costRanges.forEach(range => {
+      const opsInRange = data.filter(d => d.usdCost >= range.min && d.usdCost < range.max);
+      const percentage = (opsInRange.length / data.length * 100).toFixed(1);
+      output += `| ${range.label} | ${opsInRange.length} | ${percentage}% |\n`;
+    });
+
+    output += '\n';
+
+    // Direct vs Sponsored cost comparison
+    const directOps = data.filter(d => d.type === 'Direct');
+    const sponsoredOps = data.filter(d => d.type === 'Sponsored');
+
+    if (directOps.length > 0 && sponsoredOps.length > 0) {
+      const avgDirectCost = directOps.reduce((sum, d) => sum + d.usdCost, 0) / directOps.length;
+      const avgSponsoredCost = sponsoredOps.reduce((sum, d) => sum + d.usdCost, 0) / sponsoredOps.length;
+      const costMultiplier = avgSponsoredCost / avgDirectCost;
+
+      output += `### 🔄 Direct vs Sponsored Cost Impact\n\n`;
+      output += `- **Average Direct Cost**: $${avgDirectCost.toFixed(4)}\n`;
+      output += `- **Average Sponsored Cost**: $${avgSponsoredCost.toFixed(4)}\n`;
+      output += `- **Cost Multiplier**: ${costMultiplier.toFixed(2)}x\n`;
+      output += `- **Premium**: ${((costMultiplier - 1) * 100).toFixed(1)}% more expensive for sponsored transactions\n\n`;
+    }
+
+    return output;
+  }
+
+  private generateGasEfficiencyAnalysis(data: NetworkSpecificData[]): string {
+    let output = `## ⛽ Gas Efficiency Analysis\n\n`;
+
+    // Gas usage ranges
+    const gasRanges = [
+      { min: 0, max: 50000, label: 'Very Efficient (< 50K gas)' },
+      { min: 50000, max: 100000, label: 'Efficient (50K - 100K gas)' },
+      { min: 100000, max: 500000, label: 'Moderate (100K - 500K gas)' },
+      { min: 500000, max: 1000000, label: 'High (500K - 1M gas)' },
+      { min: 1000000, max: Infinity, label: 'Very High (> 1M gas)' }
+    ];
+
+    output += `### ⛽ Gas Usage Distribution\n\n`;
+    output += `| Gas Range | Operations | Percentage |\n`;
+    output += `|-----------|------------|------------|\n`;
+
+    gasRanges.forEach(range => {
+      const opsInRange = data.filter(d => d.gasUsed >= range.min && d.gasUsed < range.max);
+      const percentage = (opsInRange.length / data.length * 100).toFixed(1);
+      output += `| ${range.label} | ${opsInRange.length} | ${percentage}% |\n`;
+    });
+
+    output += '\n';
+
+    // Gas efficiency by category
+    const categories = [...new Set(data.map(d => d.category))];
+    
+    output += `### 📊 Gas Efficiency by Category\n\n`;
+    output += `| Category | Avg Gas | Most Efficient | Least Efficient |\n`;
+    output += `|----------|---------|----------------|------------------|\n`;
+
+    categories.forEach(category => {
+      const categoryData = data.filter(d => d.category === category);
+      const avgGas = categoryData.reduce((sum, d) => sum + d.gasUsed, 0) / categoryData.length;
+      const mostEfficient = categoryData.reduce((min, d) => d.gasUsed < min.gasUsed ? d : min);
+      const leastEfficient = categoryData.reduce((max, d) => d.gasUsed > max.gasUsed ? d : max);
+
+      output += `| ${category} | ${this.formatNumber(Math.round(avgGas))} | ${this.formatNumber(mostEfficient.gasUsed)} | ${this.formatNumber(leastEfficient.gasUsed)} |\n`;
+    });
+
+    output += '\n';
+
+    return output;
+  }
+
+  private generateNetworkRecommendations(network: string, data: NetworkSpecificData[]): string {
+    let output = `## 💡 ${network} Network Recommendations\n\n`;
+
+    const totalCost = data.reduce((sum, d) => sum + d.usdCost, 0);
+    const avgCost = totalCost / data.length;
+
+    // Network-specific recommendations
+    switch (network) {
+      case 'MAINNET':
+        output += `### 🌐 Mainnet Considerations\n`;
+        output += `- **High Cost Network**: Average operation costs $${avgCost.toFixed(4)}\n`;
+        output += `- **Use for Production**: Only for final production deployments\n`;
+        output += `- **Optimize Gas**: Every gas unit counts - optimize heavily before deploying\n`;
+        output += `- **Batch Operations**: Consider batching multiple operations to reduce total costs\n`;
+        output += `- **Monitor Gas Prices**: Deploy during low congestion periods\n\n`;
+        break;
+
+      case 'BASE':
+        output += `### 🔵 Base Network Considerations\n`;
+        output += `- **Cost-Effective L2**: Average operation costs $${avgCost.toFixed(4)}\n`;
+        output += `- **Good for Development**: Excellent cost-performance balance\n`;
+        output += `- **Production Ready**: Suitable for production applications\n`;
+        output += `- **Coinbase Ecosystem**: Leverage Coinbase integrations\n`;
+        output += `- **Fast Finality**: Quick transaction confirmations\n\n`;
+        break;
+
+      case 'ARBITRUM':
+        output += `### 🔴 Arbitrum Network Considerations\n`;
+        output += `- **Moderate Costs**: Average operation costs $${avgCost.toFixed(4)}\n`;
+        output += `- **Ethereum Compatibility**: High EVM compatibility\n`;
+        output += `- **Mature Ecosystem**: Well-established DeFi ecosystem\n`;
+        output += `- **Good for Complex Apps**: Suitable for complex smart contracts\n`;
+        output += `- **Established Infrastructure**: Robust tooling and support\n\n`;
+        break;
+
+      case 'OPTIMISM':
+        output += `### 🔴 Optimism Network Considerations\n`;
+        output += `- **Lowest Cost**: Average operation costs $${avgCost.toFixed(4)}\n`;
+        output += `- **Ideal for High-Volume**: Perfect for applications with many transactions\n`;
+        output += `- **Development Environment**: Excellent for testing and development\n`;
+        output += `- **Optimistic Rollup**: Understand the dispute resolution process\n`;
+        output += `- **Cost Optimization**: Best choice for cost-sensitive applications\n\n`;
+        break;
+    }
+
+    // Operation-specific recommendations
+    const expensiveOps = data.filter(d => d.usdCost > avgCost * 2).sort((a, b) => b.usdCost - a.usdCost);
+    const efficientOps = data.filter(d => d.usdCost < avgCost * 0.5).sort((a, b) => a.usdCost - b.usdCost);
+
+    if (expensiveOps.length > 0) {
+      output += `### 🚨 High-Cost Operations to Monitor\n`;
+      expensiveOps.slice(0, 5).forEach(op => {
+        output += `- **${op.testName}** (${op.type}): $${op.usdCost.toFixed(4)} - Consider optimization\n`;
+      });
+      output += '\n';
+    }
+
+    if (efficientOps.length > 0) {
+      output += `### ✅ Most Cost-Efficient Operations\n`;
+      efficientOps.slice(0, 5).forEach(op => {
+        output += `- **${op.testName}** (${op.type}): $${op.usdCost.toFixed(4)} - Great choice for high-frequency use\n`;
+      });
+      output += '\n';
+    }
+
+    // Signature method recommendations
+    const sponsoredMethods = [...new Set(data.filter(d => d.type === 'Sponsored').map(d => d.signatureMethod))];
+    if (sponsoredMethods.length > 1) {
+      output += `### 🔐 Signature Method Recommendations\n`;
+      
+      sponsoredMethods.forEach(method => {
+        const methodData = data.filter(d => d.signatureMethod === method);
+        const avgCost = methodData.reduce((sum, d) => sum + d.usdCost, 0) / methodData.length;
+        const avgGas = methodData.reduce((sum, d) => sum + d.gasUsed, 0) / methodData.length;
+        
+        output += `- **${method}**: Avg $${avgCost.toFixed(4)}, ${this.formatNumber(Math.round(avgGas))} gas\n`;
+      });
+      output += '\n';
+    }
+
+    return output;
+  }
+
+  public generateAllNetworkReports(): void {
+    console.log('🚀 Generating Network-Specific Benchmark Reports...\n');
 
     if (this.benchmarks.size === 0) {
       console.error('❌ No benchmark files found!');
-      this.showExpectedStructure();
       return;
     }
 
-    const processedTests = this.processTests();
-    
-    // Group by category
-    const categories: { [key: string]: ProcessedTest[] } = {};
-    processedTests.forEach(test => {
-      if (!categories[test.category]) {
-        categories[test.category] = [];
-      }
-      categories[test.category].push(test);
-    });
-
-    // Display comprehensive analysis
-    this.displayDirectVsSponsoredComparison(processedTests);
-    this.displaySignatureMethodComparison(processedTests);
-    this.displayCategoryTables(categories);
-    this.generateGasUsageSummary(processedTests);
-    this.generateCostComparison(processedTests);
-    this.generateDirectVsSponsoredAnalysis(processedTests);
-    this.generateInsights(processedTests);
-  }
-
-  private displayDirectVsSponsoredComparison(tests: ProcessedTest[]): void {
-    console.log('## 🔄 Direct vs Sponsored Transaction Comparison\n');
-    
-    // Find tests that have both Direct and Sponsored versions
-    const testPairs: { [key: string]: { direct?: ProcessedTest; sponsored?: ProcessedTest } } = {};
-    
-    tests.forEach(test => {
-      const baseName = test.testName.replace(' (UOP)', '');
-      if (!testPairs[baseName]) {
-        testPairs[baseName] = {};
-      }
-      
-      if (test.hasDirectData) {
-        testPairs[baseName].direct = test;
-      }
-      if (test.hasSponsoredData) {
-        testPairs[baseName].sponsored = test;
-      }
-    });
-
-    const tableData: string[][] = [
-      ['Test', 'Type', 'MAINNET', 'BASE', 'ARBITRUM', 'OPTIMISM', 'Gas Used']
-    ];
-
-    Object.entries(testPairs).forEach(([baseName, pair]) => {
-      if (pair.direct && pair.direct.directData) {
-        const directData = pair.direct.directData;
-        tableData.push([
-          baseName,
-          'Direct',
-          `$${directData.MAINNET.usd}`,
-          `$${directData.BASE.usd}`,
-          `$${directData.ARBITRUM.usd}`,
-          `$${directData.OPTIMISM.usd}`,
-          this.formatNumber(directData.MAINNET['Used Gas'])
-        ]);
-      }
-      
-      if (pair.sponsored && pair.sponsored.sponsoredData) {
-        const sponsoredData = pair.sponsored.sponsoredData;
-        tableData.push([
-          baseName,
-          'Sponsored',
-          `$${sponsoredData.MAINNET.usd}`,
-          `$${sponsoredData.BASE.usd}`,
-          `$${sponsoredData.ARBITRUM.usd}`,
-          `$${sponsoredData.OPTIMISM.usd}`,
-          this.formatNumber(sponsoredData.MAINNET['Used Gas'])
-        ]);
-      }
-      
-      // Add separator line
-      if (pair.direct && pair.sponsored) {
-        tableData.push(['---', '---', '---', '---', '---', '---', '---']);
-      }
-    });
-    
-    this.printAlignedTable(tableData);
-    console.log('');
-  }
-
-  private displaySignatureMethodComparison(tests: ProcessedTest[]): void {
-    console.log('## 🔐 Signature Method Comparison\n');
-    
-    // Group tests by operation type and signature method
-    const operationGroups: { [key: string]: ProcessedTest[] } = {};
-    
-    tests.forEach(test => {
-      // Extract base operation name (without signature method suffix)
-      let baseOp = test.testName
-        .replace(' (UOP)', '')
-        .replace(' w/ MK', '')
-        .replace(' w/ P256', '')
-        .replace(' w/ SK-EOA', '')
-        .replace(' P256', '');
-        
-      if (!operationGroups[baseOp]) {
-        operationGroups[baseOp] = [];
-      }
-      operationGroups[baseOp].push(test);
-    });
-
-    // Display comparison for operations that have multiple signature methods
-    Object.entries(operationGroups).forEach(([baseOp, testGroup]) => {
-      const signatureMethods = testGroup.filter(t => 
-        t.testName.includes('w/ MK') || 
-        t.testName.includes('w/ P256') || 
-        t.testName.includes('w/ SK-EOA') ||
-        t.testName.includes('P256') ||
-        t.testName.includes('(UOP)')
-      );
-      
-      if (signatureMethods.length > 1) {
-        console.log(`### ${baseOp} - Signature Methods\n`);
-        
-        const tableData: string[][] = [
-          ['Method', 'MAINNET', 'BASE', 'ARBITRUM', 'OPTIMISM', 'Gas Used']
-        ];
-        
-        signatureMethods.forEach(test => {
-          const data = test.sponsoredData || test.directData;
-          if (data) {
-            const methodType = this.extractSignatureMethod(test.testName);
-            tableData.push([
-              methodType,
-              `$${data.MAINNET.usd}`,
-              `$${data.BASE.usd}`,
-              `$${data.ARBITRUM.usd}`,
-              `$${data.OPTIMISM.usd}`,
-              this.formatNumber(data.MAINNET['Used Gas'])
-            ]);
-          }
-        });
-        
-        this.printAlignedTable(tableData);
-        console.log('');
-      }
-    });
-  }
-
-  private extractSignatureMethod(testName: string): string {
-    if (testName.includes('w/ MK')) return 'Master Key';
-    if (testName.includes('w/ P256')) return 'P256 Signature';
-    if (testName.includes('w/ SK-EOA')) return 'Session Key EOA';
-    if (testName.includes('P256') && testName.includes('UOP')) return 'P256 Direct';
-    if (testName.includes('(UOP)')) return 'Standard UOP';
-    return 'Direct';
-  }
-
-  private displayCategoryTables(categories: { [key: string]: ProcessedTest[] }): void {
-    Object.entries(categories).forEach(([category, tests]) => {
-      console.log(`## 📊 ${category} Benchmarks\n`);
-      
-      const tableData: string[][] = [
-        ['Test Name', 'Type', 'Network', 'Gas Used', 'Wei Cost', 'USD Cost']
-      ];
-      
-      tests.forEach(test => {
-        // Add Direct data if available
-        if (test.directData) {
-          NETWORKS.forEach(network => {
-            const networkData = test.directData![network];
-            if (networkData) {
-              tableData.push([
-                test.testName,
-                'Direct',
-                network,
-                this.formatNumber(networkData['Used Gas']),
-                this.formatWei(networkData.weiCost),
-                `$${networkData.usd}`
-              ]);
-            }
-          });
-        }
-        
-        // Add Sponsored data if available
-        if (test.sponsoredData) {
-          NETWORKS.forEach(network => {
-            const networkData = test.sponsoredData![network];
-            if (networkData) {
-              tableData.push([
-                test.testName,
-                'Sponsored',
-                network,
-                this.formatNumber(networkData['Used Gas']),
-                this.formatWei(networkData.weiCost),
-                `$${networkData.usd}`
-              ]);
-            }
-          });
-        }
-      });
-      
-      this.printAlignedTable(tableData);
-      console.log('');
-    });
-  }
-
-  private printAlignedTable(data: string[][]): void {
-    if (data.length === 0) return;
-    
-    const colWidths = data[0].map((_, colIndex) => 
-      Math.max(...data.map(row => row[colIndex]?.length || 0))
-    );
-    
-    const header = data[0];
-    const headerRow = '| ' + header.map((cell, i) => cell.padEnd(colWidths[i])).join(' | ') + ' |';
-    const separatorRow = '| ' + colWidths.map(width => '-'.repeat(width)).join(' | ') + ' |';
-    
-    console.log(headerRow);
-    console.log(separatorRow);
-    
-    data.slice(1).forEach(row => {
-      if (row[0] === '---') {
-        // Skip separator rows in table output
-        return;
-      }
-      const dataRow = '| ' + row.map((cell, i) => cell.padEnd(colWidths[i])).join(' | ') + ' |';
-      console.log(dataRow);
-    });
-  }
-
-  private generateGasUsageSummary(tests: ProcessedTest[]): void {
-    console.log('## ⛽ Gas Usage Summary\n');
-    
-    const tableData: string[][] = [
-      ['Test', 'Type', 'MAINNET', 'BASE', 'ARBITRUM', 'OPTIMISM']
-    ];
-
-    tests.forEach(test => {
-      if (test.directData) {
-        const gasUsage = NETWORKS.map(network => {
-          const networkData = test.directData![network];
-          return networkData ? this.formatNumber(networkData['Used Gas']) : 'N/A';
-        });
-        tableData.push([test.testName, 'Direct', ...gasUsage]);
-      }
-      
-      if (test.sponsoredData) {
-        const gasUsage = NETWORKS.map(network => {
-          const networkData = test.sponsoredData![network];
-          return networkData ? this.formatNumber(networkData['Used Gas']) : 'N/A';
-        });
-        tableData.push([test.testName, 'Sponsored', ...gasUsage]);
-      }
-    });
-    
-    this.printAlignedTable(tableData);
-    console.log('');
-  }
-
-  private generateCostComparison(tests: ProcessedTest[]): void {
-    console.log('## 💰 Cost Comparison (USD)\n');
-    
-    const tableData: string[][] = [
-      ['Test', 'Type', 'MAINNET', 'BASE', 'ARBITRUM', 'OPTIMISM', '🏆 Best Network']
-    ];
-
-    tests.forEach(test => {
-      if (test.directData) {
-        const costs: CostAnalysis[] = NETWORKS.map(network => {
-          const networkData = test.directData![network];
-          return networkData ? {
-            network,
-            cost: parseFloat(networkData.usd),
-            display: `$${networkData.usd}`
-          } : { network, cost: Infinity, display: 'N/A' };
-        });
-
-        const bestNetwork = costs.reduce((min, current) => 
-          current.cost < min.cost ? current : min
-        );
-
-        const costDisplays = costs.map(c => c.display);
-        tableData.push([test.testName, 'Direct', ...costDisplays, `**${bestNetwork.network}**`]);
-      }
-      
-      if (test.sponsoredData) {
-        const costs: CostAnalysis[] = NETWORKS.map(network => {
-          const networkData = test.sponsoredData![network];
-          return networkData ? {
-            network,
-            cost: parseFloat(networkData.usd),
-            display: `$${networkData.usd}`
-          } : { network, cost: Infinity, display: 'N/A' };
-        });
-
-        const bestNetwork = costs.reduce((min, current) => 
-          current.cost < min.cost ? current : min
-        );
-
-        const costDisplays = costs.map(c => c.display);
-        tableData.push([test.testName, 'Sponsored', ...costDisplays, `**${bestNetwork.network}**`]);
-      }
-    });
-    
-    this.printAlignedTable(tableData);
-    console.log('');
-  }
-
-  private generateDirectVsSponsoredAnalysis(tests: ProcessedTest[]): void {
-    console.log('## 🔍 Direct vs Sponsored Analysis\n');
-    
-    // Find comparable test pairs
-    const testPairs: { [key: string]: { direct?: ProcessedTest; sponsored?: ProcessedTest } } = {};
-    
-    tests.forEach(test => {
-      const baseName = test.testName.replace(' (UOP)', '');
-      if (!testPairs[baseName]) {
-        testPairs[baseName] = {};
-      }
-      
-      if (test.hasDirectData) {
-        testPairs[baseName].direct = test;
-      }
-      if (test.hasSponsoredData) {
-        testPairs[baseName].sponsored = test;
-      }
-    });
-
     NETWORKS.forEach(network => {
-      console.log(`### ${network} Network Analysis\n`);
+      console.log(`📊 Generating ${network} report...`);
       
-      const networkComparisons: string[][] = [
-        ['Test', 'Direct Cost', 'Sponsored Cost', 'Difference', 'Direct Gas', 'Sponsored Gas', 'Gas Overhead']
-      ];
-
-      Object.entries(testPairs).forEach(([baseName, pair]) => {
-        if (pair.direct?.directData && pair.sponsored?.sponsoredData) {
-          const directData = pair.direct.directData[network];
-          const sponsoredData = pair.sponsored.sponsoredData[network];
-          
-          if (directData && sponsoredData) {
-            const directCost = parseFloat(directData.usd);
-            const sponsoredCost = parseFloat(sponsoredData.usd);
-            const costDiff = sponsoredCost - directCost;
-            const costDiffPercent = ((costDiff / directCost) * 100).toFixed(1);
-            
-            const directGas = directData['Used Gas'];
-            const sponsoredGas = sponsoredData['Used Gas'];
-            const gasOverhead = sponsoredGas - directGas;
-            const gasOverheadPercent = ((gasOverhead / directGas) * 100).toFixed(1);
-
-            networkComparisons.push([
-              baseName,
-              `$${directData.usd}`,
-              `$${sponsoredData.usd}`,
-              `$${costDiff.toFixed(4)} (${costDiffPercent}%)`,
-              this.formatNumber(directGas),
-              this.formatNumber(sponsoredGas),
-              `+${this.formatNumber(gasOverhead)} (+${gasOverheadPercent}%)`
-            ]);
-          }
-        }
-      });
-
-      if (networkComparisons.length > 1) {
-        this.printAlignedTable(networkComparisons);
-        console.log('');
+      const report = this.generateNetworkReport(network);
+      const outputPath = path.join(BENCHMARK_DIR, `${network.toLowerCase()}-benchmark-report.md`);
+      
+      try {
+        fs.writeFileSync(outputPath, report, 'utf8');
+        console.log(`✅ ${network} report saved to: ${outputPath}`);
+      } catch (error) {
+        console.error(`❌ Error saving ${network} report:`, (error as Error).message);
       }
     });
-  }
 
-  private generateInsights(tests: ProcessedTest[]): void {
-    console.log('## 🎯 Key Insights\n');
+    // Generate a summary comparison file
+    this.generateNetworkComparisonReport();
     
-    // Calculate totals for each network and type
-    const totals = {
-      direct: { MAINNET: 0, BASE: 0, ARBITRUM: 0, OPTIMISM: 0 },
-      sponsored: { MAINNET: 0, BASE: 0, ARBITRUM: 0, OPTIMISM: 0 }
-    };
-
-    let directTestCount = 0;
-    let sponsoredTestCount = 0;
-    let avgGasOverhead = 0;
-    let gasOverheadCount = 0;
-
-    tests.forEach(test => {
-      if (test.directData) {
-        NETWORKS.forEach(network => {
-          totals.direct[network] += parseFloat(test.directData![network].usd);
-        });
-        directTestCount++;
-      }
-      
-      if (test.sponsoredData) {
-        NETWORKS.forEach(network => {
-          totals.sponsored[network] += parseFloat(test.sponsoredData![network].usd);
-        });
-        sponsoredTestCount++;
-      }
-    });
-
-    // Calculate average gas overhead for sponsored transactions
-    const testPairs: { [key: string]: { direct?: ProcessedTest; sponsored?: ProcessedTest } } = {};
-    tests.forEach(test => {
-      const baseName = test.testName.replace(' (UOP)', '');
-      if (!testPairs[baseName]) {
-        testPairs[baseName] = {};
-      }
-      
-      if (test.hasDirectData) testPairs[baseName].direct = test;
-      if (test.hasSponsoredData) testPairs[baseName].sponsored = test;
-    });
-
-    Object.values(testPairs).forEach(pair => {
-      if (pair.direct?.directData && pair.sponsored?.sponsoredData) {
-        const directGas = pair.direct.directData.MAINNET['Used Gas'];
-        const sponsoredGas = pair.sponsored.sponsoredData.MAINNET['Used Gas'];
-        avgGasOverhead += ((sponsoredGas - directGas) / directGas) * 100;
-        gasOverheadCount++;
-      }
-    });
-
-    avgGasOverhead = gasOverheadCount > 0 ? avgGasOverhead / gasOverheadCount : 0;
-
-    console.log('### 🌟 Network Cost Analysis');
-    console.log(`- **Cheapest Network Overall**: OPTIMISM (consistently lowest costs across all operations)`);
-    console.log(`- **Most Expensive Network**: MAINNET (highest transaction costs across all networks)`);
-    console.log(`- **Best L2 Alternative**: BASE (good balance of cost and performance)`);
-    console.log('');
-
-    console.log('### 🔄 Direct vs Sponsored Transaction Analysis');
-    console.log(`- **Average Gas Overhead**: Sponsored transactions use ~${avgGasOverhead.toFixed(1)}% more gas than direct transactions`);
-    console.log(`- **Cost Premium**: Sponsored transactions cost more due to additional gas usage for UserOp handling`);
-    console.log(`- **UX Trade-off**: Sponsored transactions provide better UX but at higher operational cost`);
-    console.log('');
-
-    console.log('### 🔐 Signature Method Analysis');
-    console.log(`- **Standard UOP**: Most common sponsored transaction method`);
-    console.log(`- **Master Key (MK)**: Alternative signature method with different gas characteristics`);
-    console.log(`- **P256 Signatures**: Advanced cryptographic signature method`);
-    console.log(`- **Session Key EOA**: Session-based signing for improved UX`);
-    console.log('');
-
-    console.log('### 💰 Total Cost Comparison');
+    console.log('\n✨ All network-specific reports generated successfully!');
+    console.log('\n📄 Generated files:');
     NETWORKS.forEach(network => {
-      const directCost = totals.direct[network];
-      const sponsoredCost = totals.sponsored[network];
-      console.log(`- **${network}**: Direct: ${directCost.toFixed(4)} | Sponsored: ${sponsoredCost.toFixed(4)}`);
+      console.log(`   • ${network.toLowerCase()}-benchmark-report.md`);
     });
-    console.log('');
-
-    // Find most expensive operations
-    const allOperations = tests.flatMap(test => {
-      const ops = [];
-      if (test.directData) {
-        ops.push({
-          name: `${test.testName} (Direct)`,
-          cost: parseFloat(test.directData.MAINNET.usd),
-          gas: test.directData.MAINNET['Used Gas']
-        });
-      }
-      if (test.sponsoredData) {
-        ops.push({
-          name: `${test.testName} (Sponsored)`,
-          cost: parseFloat(test.sponsoredData.MAINNET.usd),
-          gas: test.sponsoredData.MAINNET['Used Gas']
-        });
-      }
-      return ops;
-    });
-
-    if (allOperations.length > 0) {
-      const mostExpensive = allOperations.reduce((max, op) => op.cost > max.cost ? op : max);
-      const mostGasIntensive = allOperations.reduce((max, op) => op.gas > max.gas ? op : max);
-
-      console.log('### 🔥 Operation Highlights');
-      console.log(`- **Most Expensive**: ${mostExpensive.name} (${mostExpensive.cost} on MAINNET)`);
-      console.log(`- **Most Gas Intensive**: ${mostGasIntensive.name} (${this.formatNumber(mostGasIntensive.gas)} gas)`);
-      console.log('');
-    }
-
-    console.log('### 💡 Recommendations');
-    console.log(`- **For Cost Optimization**: Use OPTIMISM network for ~90% cost savings vs MAINNET`);
-    console.log(`- **For User Experience**: Consider sponsored transactions for better UX, budget ~${avgGasOverhead.toFixed(0)}% extra gas`);
-    console.log(`- **For Development**: BASE offers good cost-performance balance for testing and development`);
-    console.log(`- **For High-Volume Operations**: The gas overhead of sponsored transactions can be significant at scale`);
-    console.log(`- **Signature Methods**: Test different signature methods (MK, P256, Session Keys) to optimize for your use case`);
+    console.log('   • networks-comparison-report.md');
   }
 
-  private showExpectedStructure(): void {
-    console.log('Expected file structure:');
-    console.log('test/Output/');
-    console.log('├── Deploy/test_DeployOPFMain.json');
-    console.log('├── Initialize/');
-    console.log('│   ├── test_InitializeTX.json');
-    console.log('│   ├── test_InitializeTXWithRegisteringSessionKey.json');
-    console.log('│   ├── test_InitializeTX_UOP.json');
-    console.log('│   └── test_InitializeTXWithRegisteringSessionKey_UOP.json');
-    console.log('├── Register-Key/');
-    console.log('│   ├── test_RegisterEOA.json');
-    console.log('│   ├── test_RegisterP256.json');
-    console.log('│   ├── test_RegisterP256NonExtrac.json');
-    console.log('│   ├── test_RegisterEOA_UOP.json');
-    console.log('│   ├── test_RegisterP256_UOP.json');
-    console.log('│   ├── test_RegisterP256NonExtrac_UOP.json');
-    console.log('│   └── test_RegisterP256NonExtracWithMK_UOP.json');
-    console.log('├── ERC20/');
-    console.log('│   ├── test_ApproveErc20.json');
-    console.log('│   ├── test_TransferErc20.json');
-    console.log('│   ├── test_ApproveErc20_UOP.json');
-    console.log('│   ├── test_TransferErc20_UOP.json');
-    console.log('│   ├── test_ApproveErc20WithMK_UOP.json');
-    console.log('│   ├── test_ApproveErc20WithP256_UOP.json');
-    console.log('│   ├── test_TransferErc20WithMK_UOP.json');
-    console.log('│   └── test_TransferErc20WithP256_UOP.json');
-    console.log('├── NativeTransfer/');
-    console.log('│   ├── test_SendETH.json');
-    console.log('│   ├── test_SendETH_UOP.json');
-    console.log('│   ├── test_SendETHP256_UOP.json');
-    console.log('│   ├── test_SendETHWithMK_UOP.json');
-    console.log('│   └── test_SendETHWithSKEOA_UOP.json');
-    console.log('└── Batch/');
-    console.log('    ├── test_BatchExecution.json');
-    console.log('    ├── test_BatchExecution_UOP.json');
-    console.log('    ├── test_BatchExecutionWithMK_UOP.json');
-    console.log('    └── test_BatchExecutionWithP256_UOP.json');
-  }
-
-  public saveMarkdownReport(): void {
-    const originalConsoleLog = console.log;
+  private generateNetworkComparisonReport(): void {
     let output = '';
+
+    output += `# 🌐 Network Comparison Report\n\n`;
+    output += `📅 Generated: ${new Date().toLocaleString()}\n\n`;
+
+    // Generate comparison data for all networks
+    const networkComparisons: { [key: string]: NetworkSpecificData[] } = {};
+    NETWORKS.forEach(network => {
+      networkComparisons[network] = this.processTestsForNetwork(network);
+    });
+
+    // Overall network statistics
+    output += `## 📊 Network Overview\n\n`;
+    output += `| Network | Total Operations | Avg Cost | Total Cost | Avg Gas | Total Gas |\n`;
+    output += `|---------|------------------|----------|------------|---------|----------|\n`;
+
+    NETWORKS.forEach(network => {
+      const data = networkComparisons[network];
+      const totalOps = data.length;
+      const avgCost = data.reduce((sum, d) => sum + d.usdCost, 0) / totalOps;
+      const totalCost = data.reduce((sum, d) => sum + d.usdCost, 0);
+      const avgGas = data.reduce((sum, d) => sum + d.gasUsed, 0) / totalOps;
+      const totalGas = data.reduce((sum, d) => sum + d.gasUsed, 0);
+
+      output += `| **${network}** | ${totalOps} | ${avgCost.toFixed(4)} | ${totalCost.toFixed(4)} | ${this.formatNumber(Math.round(avgGas))} | ${this.formatNumber(totalGas)} |\n`;
+    });
+
+    output += '\n';
+
+    // Cost comparison analysis
+    output += `## 💰 Cost Comparison Analysis\n\n`;
     
-    console.log = (...args: any[]) => {
-      output += args.join(' ') + '\n';
-    };
+    const mainnetData = networkComparisons['MAINNET'];
+    const baseData = networkComparisons['BASE'];
+    const arbitrumData = networkComparisons['ARBITRUM'];
+    const optimismData = networkComparisons['OPTIMISM'];
+
+    const mainnetTotal = mainnetData.reduce((sum, d) => sum + d.usdCost, 0);
+    const baseTotal = baseData.reduce((sum, d) => sum + d.usdCost, 0);
+    const arbitrumTotal = arbitrumData.reduce((sum, d) => sum + d.usdCost, 0);
+    const optimismTotal = optimismData.reduce((sum, d) => sum + d.usdCost, 0);
+
+    output += `### 💵 Savings Analysis (vs MAINNET)\n\n`;
+    output += `- **BASE**: ${((1 - baseTotal/mainnetTotal) * 100).toFixed(1)}% cheaper (Save ${(mainnetTotal - baseTotal).toFixed(4)})\n`;
+    output += `- **ARBITRUM**: ${((1 - arbitrumTotal/mainnetTotal) * 100).toFixed(1)}% cheaper (Save ${(mainnetTotal - arbitrumTotal).toFixed(4)})\n`;
+    output += `- **OPTIMISM**: ${((1 - optimismTotal/mainnetTotal) * 100).toFixed(1)}% cheaper (Save ${(mainnetTotal - optimismTotal).toFixed(4)})\n\n`;
+
+    // Category comparison across networks
+    output += `## 📈 Category Comparison Across Networks\n\n`;
     
-    this.generateReport();
+    const categories = [...new Set(mainnetData.map(d => d.category))];
     
-    console.log = originalConsoleLog;
+    categories.forEach(category => {
+      output += `### ${category}\n\n`;
+      output += `| Network | Operations | Avg Cost | Total Cost |\n`;
+      output += `|---------|------------|----------|------------|\n`;
+
+      NETWORKS.forEach(network => {
+        const categoryData = networkComparisons[network].filter(d => d.category === category);
+        const avgCost = categoryData.reduce((sum, d) => sum + d.usdCost, 0) / categoryData.length;
+        const totalCost = categoryData.reduce((sum, d) => sum + d.usdCost, 0);
+
+        output += `| **${network}** | ${categoryData.length} | ${avgCost.toFixed(4)} | ${totalCost.toFixed(4)} |\n`;
+      });
+
+      output += '\n';
+    });
+
+    // Operation-specific comparison (most expensive operations)
+    output += `## 🔥 Most Expensive Operations Comparison\n\n`;
     
-    const outputPath = path.join(BENCHMARK_DIR, 'enhanced-benchmark-report.md');
+    // Find the most expensive operations on MAINNET and compare across networks
+    const expensiveMainnetOps = mainnetData
+      .sort((a, b) => b.usdCost - a.usdCost)
+      .slice(0, 10);
+
+    expensiveMainnetOps.forEach(mainnetOp => {
+      const opName = mainnetOp.testName;
+      const opType = mainnetOp.type;
+      
+      output += `### ${opName} (${opType})\n\n`;
+      output += `| Network | Cost | Gas Used | Wei Cost |\n`;
+      output += `|---------|------|----------|----------|\n`;
+
+      NETWORKS.forEach(network => {
+        const networkOp = networkComparisons[network].find(d => 
+          d.testName === opName && d.type === opType
+        );
+        
+        if (networkOp) {
+          output += `| **${network}** | ${networkOp.usdCost.toFixed(4)} | ${this.formatNumber(networkOp.gasUsed)} | ${this.formatWei(networkOp.weiCost)} |\n`;
+        } else {
+          output += `| **${network}** | N/A | N/A | N/A |\n`;
+        }
+      });
+
+      output += '\n';
+    });
+
+    // Signature method comparison across networks
+    output += `## 🔐 Signature Method Performance Across Networks\n\n`;
+    
+    const allMethods = [...new Set(
+      Object.values(networkComparisons)
+        .flat()
+        .map(d => d.signatureMethod)
+    )];
+
+    allMethods.forEach(method => {
+      output += `### ${method}\n\n`;
+      output += `| Network | Operations | Avg Cost | Avg Gas |\n`;
+      output += `|---------|------------|----------|----------|\n`;
+
+      NETWORKS.forEach(network => {
+        const methodData = networkComparisons[network].filter(d => d.signatureMethod === method);
+        
+        if (methodData.length > 0) {
+          const avgCost = methodData.reduce((sum, d) => sum + d.usdCost, 0) / methodData.length;
+          const avgGas = methodData.reduce((sum, d) => sum + d.gasUsed, 0) / methodData.length;
+          
+          output += `| **${network}** | ${methodData.length} | ${avgCost.toFixed(4)} | ${this.formatNumber(Math.round(avgGas))} |\n`;
+        } else {
+          output += `| **${network}** | 0 | N/A | N/A |\n`;
+        }
+      });
+
+      output += '\n';
+    });
+
+    // Network recommendations
+    output += `## 💡 Network Selection Recommendations\n\n`;
+
+    output += `### 🎯 Use Case Recommendations\n\n`;
+    output += `**🏭 Production Applications**\n`;
+    output += `- **High-Value Transactions**: MAINNET (maximum security)\n`;
+    output += `- **General Production**: BASE (good balance of cost and features)\n`;
+    output += `- **Cost-Sensitive Apps**: OPTIMISM (lowest costs)\n\n`;
+
+    output += `**🧪 Development & Testing**\n`;
+    output += `- **Primary Development**: OPTIMISM (ultra-low costs)\n`;
+    output += `- **Pre-Production Testing**: BASE (production-like environment)\n`;
+    output += `- **Final Validation**: ARBITRUM (mature ecosystem)\n\n`;
+
+    output += `**📊 Transaction Volume Considerations**\n`;
+    output += `- **Low Volume (<100 tx/day)**: Any network suitable\n`;
+    output += `- **Medium Volume (100-1000 tx/day)**: BASE or ARBITRUM recommended\n`;
+    output += `- **High Volume (1000+ tx/day)**: OPTIMISM strongly recommended\n\n`;
+
+    output += `### 🎖️ Network Rankings by Category\n\n`;
+
+    categories.forEach(category => {
+      const categoryRankings = NETWORKS.map(network => {
+        const categoryData = networkComparisons[network].filter(d => d.category === category);
+        const avgCost = categoryData.reduce((sum, d) => sum + d.usdCost, 0) / categoryData.length;
+        return { network, avgCost };
+      }).sort((a, b) => a.avgCost - b.avgCost);
+
+      output += `**${category} (by cost)**:\n`;
+      categoryRankings.forEach((ranking, index) => {
+        const emoji = index === 0 ? '🏆' : index === 1 ? '🥈' : index === 2 ? '🥉' : '📍';
+        output += `${index + 1}. ${emoji} ${ranking.network} - ${ranking.avgCost.toFixed(4)}\n`;
+      });
+      output += '\n';
+    });
+
+    // Save the comparison report
+    const outputPath = path.join(BENCHMARK_DIR, 'networks-comparison-report.md');
     try {
       fs.writeFileSync(outputPath, output, 'utf8');
-      console.log(`✅ Enhanced Markdown report saved to: ${outputPath}`);
+      console.log(`✅ Network comparison report saved to: ${outputPath}`);
     } catch (error) {
-      console.error('❌ Error saving report:', (error as Error).message);
+      console.error('❌ Error saving network comparison report:', (error as Error).message);
     }
   }
 
   public run(): void {
-    console.log('🚀 Starting Enhanced Benchmark Analysis...\n');
-    
-    if (this.benchmarks.size === 0) {
-      console.error('❌ No benchmark files found! Make sure your files are in the correct directory.');
-      this.showExpectedStructure();
-      return;
-    }
+    console.log('🚀 Starting Network-Specific Benchmark Generation...\n');
     
     // Show what files were loaded
     console.log('📄 Loaded benchmark files:');
@@ -901,21 +799,18 @@ class EnhancedBenchmarkPresenter {
     });
     console.log('');
     
-    this.generateReport();
-    this.saveMarkdownReport();
-    
-    console.log('✨ Enhanced analysis complete! Check the generated markdown file for a formatted version.');
+    this.generateAllNetworkReports();
   }
 }
 
 // Main execution
 function main(): void {
-  const presenter = new EnhancedBenchmarkPresenter();
-  presenter.run();
+  const generator = new NetworkSpecificBenchmarkGenerator();
+  generator.run();
 }
 
 // Export for potential imports
-export { EnhancedBenchmarkPresenter, NetworkData, TestData, ProcessedTest };
+export { NetworkSpecificBenchmarkGenerator, NetworkSpecificData };
 
 // Run if executed directly
 if (require.main === module) {
