@@ -11,12 +11,13 @@ import {PackedUserOperation} from
     "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 
 contract NativeTransfer is BaseBenchmark {
-        function test_SendETH() public {
+    function test_SendETH() public {
         vm.pauseGasMetering();
 
         _beginTest("NativeTransfer_Benchmark", "test_SendETH");
         _beginMode("Direct");
         _mintErc20(owner, 10e18);
+        
         for (uint256 i = 0; i < rpcs.length; ) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);

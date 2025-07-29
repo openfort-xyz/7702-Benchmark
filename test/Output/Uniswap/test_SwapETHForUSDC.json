@@ -1,0 +1,1 @@
+{"SwapUniswap_Benchmark":{"test_SwapETHForUSDC":{"Direct":{"MAINNET":{"Used Gas":155329,"weiCost":138754971496501,"usd":"0.5120"},"BASE":{"Used Gas":69017,"weiCost":479216605937,"usd":"0.0017"},"ARBITRUM":{"Used Gas":170823,"weiCost":14284731729000,"usd":"0.0527"},"OPTIMISM":{"Used Gas":163555,"weiCost":185512719245,"usd":"0.0006"}}}}}
