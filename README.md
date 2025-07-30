@@ -26,6 +26,7 @@ Openfort's 7702 delegator smart contract implements account abstraction features
 [Ethereum Mainnet](/test/Output/mainnet-benchmark-report.md) | [Base Mainnet](/test/Output/base-benchmark-report.md) | [Arbitrum Mainnet](/test/Output/arbitrum-benchmark-report.md) | [Optimism Mainnet](/test/Output/optimism-benchmark-report.md)
 
 #### Comperison Benchmarks (aa-benchmarks)
+**Disclaimer: We have prepared a comparison report between the Openfort 7702 Account and a standard Smart Contract Account (AA).**
 [Ethereum Mainnet](test/Output/Comparison/ethereum.md) | [Base Mainnet](test/Output/Comparison/base.md) | [Arbitrum Mainnet](test/Output/Comparison/arbitrum.md) | [Optimism Mainnet](test/Output/Comparison/optimism.md)
 
 <br></br>

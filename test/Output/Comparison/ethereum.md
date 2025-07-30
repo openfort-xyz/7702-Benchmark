@@ -1,4 +1,5 @@
 # Smart Account Provider Gas Cost Comparison (Mainnet)
+**Disclaimer: We have prepared a comparison report between the Openfort 7702 Account and a standard Smart Contract Account (AA).**
 
 **Ethereum Mainnet** | [Base Mainnet](./base.md) | [Arbitrum Mainnet](./arbitrum.md) | [Optimism Mainnet](./optimism.md)
 
@@ -14,6 +15,8 @@
 | Alchemy Light Account v2 (non-modular) | Account Creation | 169,655 | $1.31 |
 | Coinbase Smart Wallet (non-modular) | Account Creation | 190,525 | $1.47 |
 | Simple Account (non-modular) | Account Creation | 174,219 | $1.34 |
+
+> *Creation account with Openfort is type 4 transaction. Approximate gas cost ~46,400-50,000*
 
 ## User Operations (UOP/Sponsored Transactions)
 

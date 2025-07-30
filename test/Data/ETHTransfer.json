@@ -1,30 +1,85 @@
 {
-    "MAINNET": {
-        "challenge": "0x6f957951f320819e460b5153d750ce79cc59f395158394827663f570c00b1336",
-        "x": "0x37be0d04a8a2c4e7e4370f23c964fe406f722c24bf85c1080f2edd1cf715ec8b",
-        "y": "0x84fc81c359969b39a87d1584f6401d3eef965f44726cc6ca44b6c909ed881931",
-        "r": "0x73129e3c5f40a931754680881ffd9aa646e0f40a850123e28c30c3ef13b825c9",
-        "s": "0x4db7bf979d49bc623d0457423b6c63be9017c0c1bea4b4fd03aef12e6772cf62"
-    },
-    "BASE": {
-        "challenge": "0xb3083a7b6d5a01793d91273850613b8bad686fa31b377345e1bf406b1d5f04b9",
-        "x": "0x37be0d04a8a2c4e7e4370f23c964fe406f722c24bf85c1080f2edd1cf715ec8b",
-        "y": "0x84fc81c359969b39a87d1584f6401d3eef965f44726cc6ca44b6c909ed881931",
-        "r": "0xf1f13e38191fd3a52b1ab8518f5f5d51f2ae372e9feeda2d809d6bdf7392758b",
-        "s": "0x49990ab307a33018b2ce24606236a91bd7fde1a7b5619da935dbd05b57f987de"
-    },
-    "ARBITRUM": {
-        "challenge": "0x95bfb72b69734a592f09c073cd98624e57c3a3d5857ed2041132c657a8cefc6c",
-        "x": "0x37be0d04a8a2c4e7e4370f23c964fe406f722c24bf85c1080f2edd1cf715ec8b",
-        "y": "0x84fc81c359969b39a87d1584f6401d3eef965f44726cc6ca44b6c909ed881931",
-        "r": "0x0351f8edf4ace6c28eae90087080a4149215356f834f5d026654f488c332f2b7",
-        "s": "0x16ccb6a59510144e65a0d36a6ff74bd35cd18ac556a2370a3331412038d577d7"
-    },
-    "OPTIMISM": {
-        "challenge": "0xcaf0af3cffb2ec0b37742048d638108d13be5612c2aad5a085c75b799d0daf64",
-        "x": "0x37be0d04a8a2c4e7e4370f23c964fe406f722c24bf85c1080f2edd1cf715ec8b",
-        "y": "0x84fc81c359969b39a87d1584f6401d3eef965f44726cc6ca44b6c909ed881931",
-        "r": "0xa353420653f0e47de31c477080c27bb2217ce7cea5ab03c48bfb066fa24c0e36",
-        "s": "0x7b62f8795cd6c1a6d5e3a09d5b5c81c38e80c28052d71bf51fa61b91d6cb8d38"
-    }
+    "MAINNET":{    
+        "challenge": "0x9abf2f87e49505bceda5b7db9eba90738e76c710d38021f27460587bf7885a50",
+    
+        
+            "x": "0xc16fa71467ff69cd195443e45a9218e30512057cfc0ca391adef354b1bbaf1ff",
+            "y": "0x85a8d9b4fba799b33cad08da24c96e6745919540a23c6510c6dc4e3ede58547e",
+        
+        
+            
+                "metadata": {
+                    "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                    "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"mr8vh-SVBbztpbfbnrqQc452xxDTgCHydGBYe_eIWlA\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                    "challengeIndex": 23,
+                    "typeIndex": 1,
+                    "userVerificationRequired": true
+                },
+                "signature": {
+                    "r": "0xa7b43cf77581d61371a727b5fc41c5c6aa7d32257dc9ebf5fca4f0ebc0c9642d",
+                    "s": "0x1c9f262b4a9b7d50d1ec8b89869cbaa9bd2ebc87701cf0971002e22716e6629c"
+                }
+            
+        },
+    "BASE":{    
+        "challenge": "0x47b1c64c3f6645ad8d4e932fdf52a45c66b09bdd42ba3abe02e32e7423d4b076",
+        
+            "x": "0xc16fa71467ff69cd195443e45a9218e30512057cfc0ca391adef354b1bbaf1ff",
+            "y": "0x85a8d9b4fba799b33cad08da24c96e6745919540a23c6510c6dc4e3ede58547e",
+        
+        
+            
+                "metadata": {
+                    "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                    "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"R7HGTD9mRa2NTpMv31KkXGawm91Cujq-AuMudCPUsHY\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false,\"other_keys_can_be_added_here\":\"do not compare clientDataJSON against a template. See https://goo.gl/yabPex\"}",
+                    "challengeIndex": 23,
+                    "typeIndex": 1,
+                    "userVerificationRequired": true
+                },
+                "signature": {
+                    "r": "0x9bf0708d41f4a2e30dc2e81d8690becf4b55fd8e0734793be290db5689205b88",
+                    "s": "0x289bd6d38f1e407b65bccbacddc3760ac84c6ee1b6a5b2159e6cfe5669a69a97"
+                }
+            
+        },
+    "ARBITRUM":{    
+        "challenge": "0x28870301ef8a3ef2fcf80c66cb163e87e7e01d9bfb00a29911e51e39b7d59363",
+    
+        "x": "0xc16fa71467ff69cd195443e45a9218e30512057cfc0ca391adef354b1bbaf1ff",
+        "y": "0x85a8d9b4fba799b33cad08da24c96e6745919540a23c6510c6dc4e3ede58547e",
+        
+        
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"KIcDAe-KPvL8-AxmyxY-h-fgHZv7AKKZEeUeObfVk2M\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xd643a24e9e16cffd34bb7bfddefd2800ea62be77410e813053c9ccf071858043",
+                "s": "0x5aee3a28933e57865ef3b4de187665536fdb88212d1b875afa9437782bc9bb7e"
+            }
+        
+        },
+    "OPTIMISM":{    
+        "challenge": "0xa8a5a1394675ecb1123de61697243275cb87c6835e5662bb3c0f35b27391dda7",
+    
+        "x": "0xc16fa71467ff69cd195443e45a9218e30512057cfc0ca391adef354b1bbaf1ff",
+        "y": "0x85a8d9b4fba799b33cad08da24c96e6745919540a23c6510c6dc4e3ede58547e",
+        
+        
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"qKWhOUZ17LESPeYWlyQydcuHxoNeVmK7PA81snOR3ac\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x0640548ebea3a25238788aca8df917670b97ce54b9fba97c1762b92a3425de7d",
+                "s": "0x391c186997af01c659c195a578895699765731c6e9f093e6b4e0b8f15856ea1f"
+            }
+        
+        }
 }
