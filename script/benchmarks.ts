@@ -63,7 +63,7 @@ class NetworkSpecificBenchmarkGenerator {
   }
 
   private loadBenchmarkFiles(): void {
-    // Updated folder structure based on actual tree (all 33 files)
+    // Updated folder structure including the new Uniswap folder
     const folders = [
       { 
         folder: 'Deploy', 
@@ -121,6 +121,15 @@ class NetworkSpecificBenchmarkGenerator {
           'test_BatchExecutionWithMK_UOP.json',
           'test_BatchExecutionWithP256_UOP.json'
         ]
+      },
+      {
+        folder: 'Uniswap',
+        files: [
+          'test_SwapETHForUSDC.json',
+          'test_SwapETHForUSDC_UOP.json',
+          'test_SwapETHForUSDCWithMK_UOP.json',
+          'test_SwapETHForUSDCWithP256_UOP.json'
+        ]
       }
     ];
 
@@ -138,12 +147,12 @@ class NetworkSpecificBenchmarkGenerator {
             loadedCount++;
           }
         } catch (error) {
-          console.error(`❌ Error loading ${filePath}:`, (error as Error).message);
+          console.error(`Error loading ${filePath}:`, (error as Error).message);
         }
       });
     });
 
-    console.log(`✅ Total loaded: ${loadedCount} benchmark files\n`);
+    console.log(`Total loaded: ${loadedCount} benchmark files\n`);
   }
 
   private formatNumber(num: number): string {
@@ -192,7 +201,11 @@ class NetworkSpecificBenchmarkGenerator {
       'BatchExecution': 'Batch Execution',
       'BatchExecution_UOP': 'Batch Execution (UOP)',
       'BatchExecutionWithMK_UOP': 'Batch Execution w/ MK (UOP)',
-      'BatchExecutionWithP256_UOP': 'Batch Execution w/ P256 (UOP)'
+      'BatchExecutionWithP256_UOP': 'Batch Execution w/ P256 (UOP)',
+      'SwapETHForUSDC': 'Swap ETH for USDC',
+      'SwapETHForUSDC_UOP': 'Swap ETH for USDC (UOP)',
+      'SwapETHForUSDCWithMK_UOP': 'Swap ETH for USDC w/ MK (UOP)',
+      'SwapETHForUSDCWithP256_UOP': 'Swap ETH for USDC w/ P256 (UOP)'
     };
 
     return nameMap[cleanName] || cleanName.replace(/([A-Z])/g, ' $1').trim();
@@ -260,15 +273,15 @@ class NetworkSpecificBenchmarkGenerator {
     let output = '';
 
     // Header
-    output += `# 🚀 ${network} Network Benchmark Report\n\n`;
-    output += `📅 Generated: ${new Date().toLocaleString()}\n`;
-    output += `🌐 Network: **${network}**\n\n`;
+    output += `# ${network} Network Benchmark Report\n\n`;
+    output += `Generated: ${new Date().toLocaleString()}\n`;
+    output += `Network: **${network}**\n\n`;
 
     // Network-specific insights
     output += this.generateNetworkInsights(network, networkData);
 
     // Overview table
-    output += `## 📊 Complete Operations Overview\n\n`;
+    output += `## Complete Operations Overview\n\n`;
     output += this.generateOverviewTable(networkData);
 
     // Category-specific analysis
@@ -290,7 +303,7 @@ class NetworkSpecificBenchmarkGenerator {
   }
 
   private generateNetworkInsights(network: string, data: NetworkSpecificData[]): string {
-    let output = `## 🎯 ${network} Network Insights\n\n`;
+    let output = `## ${network} Network Insights\n\n`;
 
     const totalOperations = data.length;
     const directOperations = data.filter(d => d.type === 'Direct').length;
@@ -306,14 +319,14 @@ class NetworkSpecificBenchmarkGenerator {
     const mostEfficient = data.reduce((min, d) => d.gasUsed < min.gasUsed ? d : min);
 
     output += `- **Total Operations**: ${totalOperations} (${directOperations} Direct, ${sponsoredOperations} Sponsored)\n`;
-    output += `- **Total Cost**: $${totalCost.toFixed(4)}\n`;
-    output += `- **Average Cost**: $${avgCost.toFixed(4)} per operation\n`;
+    output += `- **Total Cost**: ${totalCost.toFixed(4)}\n`;
+    output += `- **Average Cost**: ${avgCost.toFixed(4)} per operation\n`;
     output += `- **Total Gas**: ${this.formatNumber(totalGas)} gas\n`;
     output += `- **Average Gas**: ${this.formatNumber(Math.round(avgGas))} gas per operation\n\n`;
 
-    output += `### 🔥 Performance Highlights\n`;
-    output += `- **Most Expensive**: ${mostExpensive.testName} (${mostExpensive.type}) - $${mostExpensive.usdCost}\n`;
-    output += `- **Cheapest**: ${cheapest.testName} (${cheapest.type}) - $${cheapest.usdCost}\n`;
+    output += `### Performance Highlights\n`;
+    output += `- **Most Expensive**: ${mostExpensive.testName} (${mostExpensive.type}) - ${mostExpensive.usdCost}\n`;
+    output += `- **Cheapest**: ${cheapest.testName} (${cheapest.type}) - ${cheapest.usdCost}\n`;
     output += `- **Most Gas Intensive**: ${mostGasIntensive.testName} (${mostGasIntensive.type}) - ${this.formatNumber(mostGasIntensive.gasUsed)} gas\n`;
     output += `- **Most Efficient**: ${mostEfficient.testName} (${mostEfficient.type}) - ${this.formatNumber(mostEfficient.gasUsed)} gas\n\n`;
 
@@ -325,7 +338,7 @@ class NetworkSpecificBenchmarkGenerator {
     output += `|-----------|----------|------|------------------|----------|----------|----------|\n`;
 
     data.forEach(item => {
-      output += `| ${item.testName} | ${item.category} | ${item.type} | ${item.signatureMethod} | ${this.formatNumber(item.gasUsed)} | ${this.formatWei(item.weiCost)} | $${item.usdCost.toFixed(4)} |\n`;
+      output += `| ${item.testName} | ${item.category} | ${item.type} | ${item.signatureMethod} | ${this.formatNumber(item.gasUsed)} | ${this.formatWei(item.weiCost)} | ${item.usdCost.toFixed(4)} |\n`;
     });
 
     output += '\n';
@@ -333,7 +346,7 @@ class NetworkSpecificBenchmarkGenerator {
   }
 
   private generateCategoryAnalysis(data: NetworkSpecificData[]): string {
-    let output = `## 📈 Category Analysis\n\n`;
+    let output = `## Category Analysis\n\n`;
 
     const categories = [...new Set(data.map(d => d.category))];
     
@@ -346,8 +359,8 @@ class NetworkSpecificBenchmarkGenerator {
 
       output += `### ${category}\n\n`;
       output += `- **Operations**: ${categoryData.length}\n`;
-      output += `- **Total Cost**: $${totalCost.toFixed(4)}\n`;
-      output += `- **Average Cost**: $${avgCost.toFixed(4)}\n`;
+      output += `- **Total Cost**: ${totalCost.toFixed(4)}\n`;
+      output += `- **Average Cost**: ${avgCost.toFixed(4)}\n`;
       output += `- **Total Gas**: ${this.formatNumber(totalGas)}\n`;
       output += `- **Average Gas**: ${this.formatNumber(Math.round(avgGas))}\n\n`;
 
@@ -356,7 +369,7 @@ class NetworkSpecificBenchmarkGenerator {
       output += `|-----------|------|------------------|----------|----------|\n`;
       
       categoryData.forEach(item => {
-        output += `| ${item.testName} | ${item.type} | ${item.signatureMethod} | ${this.formatNumber(item.gasUsed)} | $${item.usdCost.toFixed(4)} |\n`;
+        output += `| ${item.testName} | ${item.type} | ${item.signatureMethod} | ${this.formatNumber(item.gasUsed)} | ${item.usdCost.toFixed(4)} |\n`;
       });
 
       output += '\n';
@@ -366,7 +379,7 @@ class NetworkSpecificBenchmarkGenerator {
   }
 
   private generateSignatureMethodAnalysis(data: NetworkSpecificData[]): string {
-    let output = `## 🔐 Signature Method Analysis\n\n`;
+    let output = `## Signature Method Analysis\n\n`;
 
     const methods = [...new Set(data.map(d => d.signatureMethod))];
     
@@ -379,7 +392,7 @@ class NetworkSpecificBenchmarkGenerator {
       const avgCost = methodData.reduce((sum, d) => sum + d.usdCost, 0) / methodData.length;
       const totalCost = methodData.reduce((sum, d) => sum + d.usdCost, 0);
 
-      output += `| ${method} | ${methodData.length} | ${this.formatNumber(Math.round(avgGas))} | $${avgCost.toFixed(4)} | $${totalCost.toFixed(4)} |\n`;
+      output += `| ${method} | ${methodData.length} | ${this.formatNumber(Math.round(avgGas))} | ${avgCost.toFixed(4)} | ${totalCost.toFixed(4)} |\n`;
     });
 
     output += '\n';
@@ -387,7 +400,7 @@ class NetworkSpecificBenchmarkGenerator {
     // Detailed signature method comparison
     const sponsoredMethods = methods.filter(m => m !== 'Direct');
     if (sponsoredMethods.length > 1) {
-      output += `### 🔍 Sponsored Transaction Methods Comparison\n\n`;
+      output += `### Sponsored Transaction Methods Comparison\n\n`;
       
       sponsoredMethods.forEach(method => {
         const methodData = data.filter(d => d.signatureMethod === method);
@@ -397,7 +410,7 @@ class NetworkSpecificBenchmarkGenerator {
           
           output += `**${method}**:\n`;
           output += `- Average Gas: ${this.formatNumber(Math.round(avgGas))}\n`;
-          output += `- Average Cost: $${avgCost.toFixed(4)}\n`;
+          output += `- Average Cost: ${avgCost.toFixed(4)}\n`;
           output += `- Operations: ${methodData.length}\n\n`;
         }
       });
@@ -407,7 +420,7 @@ class NetworkSpecificBenchmarkGenerator {
   }
 
   private generateCostAnalysis(network: string, data: NetworkSpecificData[]): string {
-    let output = `## 💰 Cost Analysis\n\n`;
+    let output = `## Cost Analysis\n\n`;
 
     // Cost distribution
     const costRanges = [
@@ -418,7 +431,7 @@ class NetworkSpecificBenchmarkGenerator {
       { min: 1, max: Infinity, label: 'Very High (> $1)' }
     ];
 
-    output += `### 💵 Cost Distribution\n\n`;
+    output += `### Cost Distribution\n\n`;
     output += `| Cost Range | Operations | Percentage |\n`;
     output += `|------------|------------|------------|\n`;
 
@@ -439,9 +452,9 @@ class NetworkSpecificBenchmarkGenerator {
       const avgSponsoredCost = sponsoredOps.reduce((sum, d) => sum + d.usdCost, 0) / sponsoredOps.length;
       const costMultiplier = avgSponsoredCost / avgDirectCost;
 
-      output += `### 🔄 Direct vs Sponsored Cost Impact\n\n`;
-      output += `- **Average Direct Cost**: $${avgDirectCost.toFixed(4)}\n`;
-      output += `- **Average Sponsored Cost**: $${avgSponsoredCost.toFixed(4)}\n`;
+      output += `### Direct vs Sponsored Cost Impact\n\n`;
+      output += `- **Average Direct Cost**: ${avgDirectCost.toFixed(4)}\n`;
+      output += `- **Average Sponsored Cost**: ${avgSponsoredCost.toFixed(4)}\n`;
       output += `- **Cost Multiplier**: ${costMultiplier.toFixed(2)}x\n`;
       output += `- **Premium**: ${((costMultiplier - 1) * 100).toFixed(1)}% more expensive for sponsored transactions\n\n`;
     }
@@ -450,7 +463,7 @@ class NetworkSpecificBenchmarkGenerator {
   }
 
   private generateGasEfficiencyAnalysis(data: NetworkSpecificData[]): string {
-    let output = `## ⛽ Gas Efficiency Analysis\n\n`;
+    let output = `## Gas Efficiency Analysis\n\n`;
 
     // Gas usage ranges
     const gasRanges = [
@@ -461,7 +474,7 @@ class NetworkSpecificBenchmarkGenerator {
       { min: 1000000, max: Infinity, label: 'Very High (> 1M gas)' }
     ];
 
-    output += `### ⛽ Gas Usage Distribution\n\n`;
+    output += `### Gas Usage Distribution\n\n`;
     output += `| Gas Range | Operations | Percentage |\n`;
     output += `|-----------|------------|------------|\n`;
 
@@ -476,7 +489,7 @@ class NetworkSpecificBenchmarkGenerator {
     // Gas efficiency by category
     const categories = [...new Set(data.map(d => d.category))];
     
-    output += `### 📊 Gas Efficiency by Category\n\n`;
+    output += `### Gas Efficiency by Category\n\n`;
     output += `| Category | Avg Gas | Most Efficient | Least Efficient |\n`;
     output += `|----------|---------|----------------|------------------|\n`;
 
@@ -495,7 +508,7 @@ class NetworkSpecificBenchmarkGenerator {
   }
 
   private generateNetworkRecommendations(network: string, data: NetworkSpecificData[]): string {
-    let output = `## 💡 ${network} Network Recommendations\n\n`;
+    let output = `## ${network} Network Recommendations\n\n`;
 
     const totalCost = data.reduce((sum, d) => sum + d.usdCost, 0);
     const avgCost = totalCost / data.length;
@@ -503,8 +516,8 @@ class NetworkSpecificBenchmarkGenerator {
     // Network-specific recommendations
     switch (network) {
       case 'MAINNET':
-        output += `### 🌐 Mainnet Considerations\n`;
-        output += `- **High Cost Network**: Average operation costs $${avgCost.toFixed(4)}\n`;
+        output += `### Mainnet Considerations\n`;
+        output += `- **High Cost Network**: Average operation costs ${avgCost.toFixed(4)}\n`;
         output += `- **Use for Production**: Only for final production deployments\n`;
         output += `- **Optimize Gas**: Every gas unit counts - optimize heavily before deploying\n`;
         output += `- **Batch Operations**: Consider batching multiple operations to reduce total costs\n`;
@@ -512,8 +525,8 @@ class NetworkSpecificBenchmarkGenerator {
         break;
 
       case 'BASE':
-        output += `### 🔵 Base Network Considerations\n`;
-        output += `- **Cost-Effective L2**: Average operation costs $${avgCost.toFixed(4)}\n`;
+        output += `### Base Network Considerations\n`;
+        output += `- **Cost-Effective L2**: Average operation costs ${avgCost.toFixed(4)}\n`;
         output += `- **Good for Development**: Excellent cost-performance balance\n`;
         output += `- **Production Ready**: Suitable for production applications\n`;
         output += `- **Coinbase Ecosystem**: Leverage Coinbase integrations\n`;
@@ -521,8 +534,8 @@ class NetworkSpecificBenchmarkGenerator {
         break;
 
       case 'ARBITRUM':
-        output += `### 🔴 Arbitrum Network Considerations\n`;
-        output += `- **Moderate Costs**: Average operation costs $${avgCost.toFixed(4)}\n`;
+        output += `### Arbitrum Network Considerations\n`;
+        output += `- **Moderate Costs**: Average operation costs ${avgCost.toFixed(4)}\n`;
         output += `- **Ethereum Compatibility**: High EVM compatibility\n`;
         output += `- **Mature Ecosystem**: Well-established DeFi ecosystem\n`;
         output += `- **Good for Complex Apps**: Suitable for complex smart contracts\n`;
@@ -530,8 +543,8 @@ class NetworkSpecificBenchmarkGenerator {
         break;
 
       case 'OPTIMISM':
-        output += `### 🔴 Optimism Network Considerations\n`;
-        output += `- **Lowest Cost**: Average operation costs $${avgCost.toFixed(4)}\n`;
+        output += `### Optimism Network Considerations\n`;
+        output += `- **Lowest Cost**: Average operation costs ${avgCost.toFixed(4)}\n`;
         output += `- **Ideal for High-Volume**: Perfect for applications with many transactions\n`;
         output += `- **Development Environment**: Excellent for testing and development\n`;
         output += `- **Optimistic Rollup**: Understand the dispute resolution process\n`;
@@ -544,17 +557,17 @@ class NetworkSpecificBenchmarkGenerator {
     const efficientOps = data.filter(d => d.usdCost < avgCost * 0.5).sort((a, b) => a.usdCost - b.usdCost);
 
     if (expensiveOps.length > 0) {
-      output += `### 🚨 High-Cost Operations to Monitor\n`;
+      output += `### High-Cost Operations to Monitor\n`;
       expensiveOps.slice(0, 5).forEach(op => {
-        output += `- **${op.testName}** (${op.type}): $${op.usdCost.toFixed(4)} - Consider optimization\n`;
+        output += `- **${op.testName}** (${op.type}): ${op.usdCost.toFixed(4)} - Consider optimization\n`;
       });
       output += '\n';
     }
 
     if (efficientOps.length > 0) {
-      output += `### ✅ Most Cost-Efficient Operations\n`;
+      output += `### Most Cost-Efficient Operations\n`;
       efficientOps.slice(0, 5).forEach(op => {
-        output += `- **${op.testName}** (${op.type}): $${op.usdCost.toFixed(4)} - Great choice for high-frequency use\n`;
+        output += `- **${op.testName}** (${op.type}): ${op.usdCost.toFixed(4)} - Great choice for high-frequency use\n`;
       });
       output += '\n';
     }
@@ -562,14 +575,14 @@ class NetworkSpecificBenchmarkGenerator {
     // Signature method recommendations
     const sponsoredMethods = [...new Set(data.filter(d => d.type === 'Sponsored').map(d => d.signatureMethod))];
     if (sponsoredMethods.length > 1) {
-      output += `### 🔐 Signature Method Recommendations\n`;
+      output += `### Signature Method Recommendations\n`;
       
       sponsoredMethods.forEach(method => {
         const methodData = data.filter(d => d.signatureMethod === method);
         const avgCost = methodData.reduce((sum, d) => sum + d.usdCost, 0) / methodData.length;
         const avgGas = methodData.reduce((sum, d) => sum + d.gasUsed, 0) / methodData.length;
         
-        output += `- **${method}**: Avg $${avgCost.toFixed(4)}, ${this.formatNumber(Math.round(avgGas))} gas\n`;
+        output += `- **${method}**: Avg ${avgCost.toFixed(4)}, ${this.formatNumber(Math.round(avgGas))} gas\n`;
       });
       output += '\n';
     }
@@ -578,32 +591,32 @@ class NetworkSpecificBenchmarkGenerator {
   }
 
   public generateAllNetworkReports(): void {
-    console.log('🚀 Generating Network-Specific Benchmark Reports...\n');
+    console.log('Generating Network-Specific Benchmark Reports...\n');
 
     if (this.benchmarks.size === 0) {
-      console.error('❌ No benchmark files found!');
+      console.error('No benchmark files found!');
       return;
     }
 
     NETWORKS.forEach(network => {
-      console.log(`📊 Generating ${network} report...`);
+      console.log(`Generating ${network} report...`);
       
       const report = this.generateNetworkReport(network);
       const outputPath = path.join(BENCHMARK_DIR, `${network.toLowerCase()}-benchmark-report.md`);
       
       try {
         fs.writeFileSync(outputPath, report, 'utf8');
-        console.log(`✅ ${network} report saved to: ${outputPath}`);
+        console.log(`${network} report saved to: ${outputPath}`);
       } catch (error) {
-        console.error(`❌ Error saving ${network} report:`, (error as Error).message);
+        console.error(`Error saving ${network} report:`, (error as Error).message);
       }
     });
 
     // Generate a summary comparison file
     this.generateNetworkComparisonReport();
     
-    console.log('\n✨ All network-specific reports generated successfully!');
-    console.log('\n📄 Generated files:');
+    console.log('\nAll network-specific reports generated successfully!');
+    console.log('\nGenerated files:');
     NETWORKS.forEach(network => {
       console.log(`   • ${network.toLowerCase()}-benchmark-report.md`);
     });
@@ -613,8 +626,8 @@ class NetworkSpecificBenchmarkGenerator {
   private generateNetworkComparisonReport(): void {
     let output = '';
 
-    output += `# 🌐 Network Comparison Report\n\n`;
-    output += `📅 Generated: ${new Date().toLocaleString()}\n\n`;
+    output += `# Network Comparison Report\n\n`;
+    output += `Generated: ${new Date().toLocaleString()}\n\n`;
 
     // Generate comparison data for all networks
     const networkComparisons: { [key: string]: NetworkSpecificData[] } = {};
@@ -623,7 +636,7 @@ class NetworkSpecificBenchmarkGenerator {
     });
 
     // Overall network statistics
-    output += `## 📊 Network Overview\n\n`;
+    output += `## Network Overview\n\n`;
     output += `| Network | Total Operations | Avg Cost | Total Cost | Avg Gas | Total Gas |\n`;
     output += `|---------|------------------|----------|------------|---------|----------|\n`;
 
@@ -641,7 +654,7 @@ class NetworkSpecificBenchmarkGenerator {
     output += '\n';
 
     // Cost comparison analysis
-    output += `## 💰 Cost Comparison Analysis\n\n`;
+    output += `## Cost Comparison Analysis\n\n`;
     
     const mainnetData = networkComparisons['MAINNET'];
     const baseData = networkComparisons['BASE'];
@@ -653,13 +666,13 @@ class NetworkSpecificBenchmarkGenerator {
     const arbitrumTotal = arbitrumData.reduce((sum, d) => sum + d.usdCost, 0);
     const optimismTotal = optimismData.reduce((sum, d) => sum + d.usdCost, 0);
 
-    output += `### 💵 Savings Analysis (vs MAINNET)\n\n`;
+    output += `### Savings Analysis (vs MAINNET)\n\n`;
     output += `- **BASE**: ${((1 - baseTotal/mainnetTotal) * 100).toFixed(1)}% cheaper (Save ${(mainnetTotal - baseTotal).toFixed(4)})\n`;
     output += `- **ARBITRUM**: ${((1 - arbitrumTotal/mainnetTotal) * 100).toFixed(1)}% cheaper (Save ${(mainnetTotal - arbitrumTotal).toFixed(4)})\n`;
     output += `- **OPTIMISM**: ${((1 - optimismTotal/mainnetTotal) * 100).toFixed(1)}% cheaper (Save ${(mainnetTotal - optimismTotal).toFixed(4)})\n\n`;
 
     // Category comparison across networks
-    output += `## 📈 Category Comparison Across Networks\n\n`;
+    output += `## Category Comparison Across Networks\n\n`;
     
     const categories = [...new Set(mainnetData.map(d => d.category))];
     
@@ -680,7 +693,7 @@ class NetworkSpecificBenchmarkGenerator {
     });
 
     // Operation-specific comparison (most expensive operations)
-    output += `## 🔥 Most Expensive Operations Comparison\n\n`;
+    output += `## Most Expensive Operations Comparison\n\n`;
     
     // Find the most expensive operations on MAINNET and compare across networks
     const expensiveMainnetOps = mainnetData
@@ -711,7 +724,7 @@ class NetworkSpecificBenchmarkGenerator {
     });
 
     // Signature method comparison across networks
-    output += `## 🔐 Signature Method Performance Across Networks\n\n`;
+    output += `## Signature Method Performance Across Networks\n\n`;
     
     const allMethods = [...new Set(
       Object.values(networkComparisons)
@@ -741,25 +754,25 @@ class NetworkSpecificBenchmarkGenerator {
     });
 
     // Network recommendations
-    output += `## 💡 Network Selection Recommendations\n\n`;
+    output += `## Network Selection Recommendations\n\n`;
 
-    output += `### 🎯 Use Case Recommendations\n\n`;
-    output += `**🏭 Production Applications**\n`;
+    output += `### Use Case Recommendations\n\n`;
+    output += `**Production Applications**\n`;
     output += `- **High-Value Transactions**: MAINNET (maximum security)\n`;
     output += `- **General Production**: BASE (good balance of cost and features)\n`;
     output += `- **Cost-Sensitive Apps**: OPTIMISM (lowest costs)\n\n`;
 
-    output += `**🧪 Development & Testing**\n`;
+    output += `**Development & Testing**\n`;
     output += `- **Primary Development**: OPTIMISM (ultra-low costs)\n`;
     output += `- **Pre-Production Testing**: BASE (production-like environment)\n`;
     output += `- **Final Validation**: ARBITRUM (mature ecosystem)\n\n`;
 
-    output += `**📊 Transaction Volume Considerations**\n`;
+    output += `**Transaction Volume Considerations**\n`;
     output += `- **Low Volume (<100 tx/day)**: Any network suitable\n`;
     output += `- **Medium Volume (100-1000 tx/day)**: BASE or ARBITRUM recommended\n`;
     output += `- **High Volume (1000+ tx/day)**: OPTIMISM strongly recommended\n\n`;
 
-    output += `### 🎖️ Network Rankings by Category\n\n`;
+    output += `### Network Rankings by Category\n\n`;
 
     categories.forEach(category => {
       const categoryRankings = NETWORKS.map(network => {
@@ -770,8 +783,8 @@ class NetworkSpecificBenchmarkGenerator {
 
       output += `**${category} (by cost)**:\n`;
       categoryRankings.forEach((ranking, index) => {
-        const emoji = index === 0 ? '🏆' : index === 1 ? '🥈' : index === 2 ? '🥉' : '📍';
-        output += `${index + 1}. ${emoji} ${ranking.network} - ${ranking.avgCost.toFixed(4)}\n`;
+        const position = index === 0 ? '1st' : index === 1 ? '2nd' : index === 2 ? '3rd' : `${index + 1}th`;
+        output += `${index + 1}. ${ranking.network} - ${ranking.avgCost.toFixed(4)}\n`;
       });
       output += '\n';
     });
@@ -780,17 +793,17 @@ class NetworkSpecificBenchmarkGenerator {
     const outputPath = path.join(BENCHMARK_DIR, 'networks-comparison-report.md');
     try {
       fs.writeFileSync(outputPath, output, 'utf8');
-      console.log(`✅ Network comparison report saved to: ${outputPath}`);
+      console.log(`Network comparison report saved to: ${outputPath}`);
     } catch (error) {
-      console.error('❌ Error saving network comparison report:', (error as Error).message);
+      console.error('Error saving network comparison report:', (error as Error).message);
     }
   }
 
   public run(): void {
-    console.log('🚀 Starting Network-Specific Benchmark Generation...\n');
+    console.log('Starting Network-Specific Benchmark Generation...\n');
     
     // Show what files were loaded
-    console.log('📄 Loaded benchmark files:');
+    console.log('Loaded benchmark files:');
     this.benchmarks.forEach((fileData, filename) => {
       const testCount = Object.keys(fileData.data).reduce((count, category) => {
         return count + Object.keys(fileData.data[category]).length;

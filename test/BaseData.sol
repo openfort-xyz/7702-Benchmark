@@ -117,6 +117,15 @@ abstract contract BaseData is IKey, ChainsData {
         return (keySK, keyReg);
     }
 
+    function _getSKP256(bytes32 _x, bytes32 _y, address _contract, address _token) internal returns (Key memory, KeyReg memory) {
+        pubKeySK = PubKey({x: _x, y: _y});
+        keySK = Key({pubKey: pubKeySK, eoaAddress: address(0), keyType: KeyType.P256});
+        keyReg = _getKeyReg(
+            uint48(1784980532), 0, uint48(10), true, _contract, _token, 20e18, 2 ether
+        );
+        return (keySK, keyReg);
+    }
+
     function _getSKP256() internal returns (Key memory, KeyReg memory) {
         pubKeySK = PubKey({x: P256SK_PUBLIC_KEY_X, y: P256SK_PUBLIC_KEY_Y});
         keySK = Key({pubKey: pubKeySK, eoaAddress: address(0), keyType: KeyType.P256NONKEY});
@@ -184,11 +193,13 @@ abstract contract BaseData is IKey, ChainsData {
     }
 
     function _allowedSelectors() internal pure returns (bytes4[] memory sel) {
-        sel = new bytes4[](4);
+        sel = new bytes4[](6);
         sel[0] = 0xa9059cbb; // ERC20.transfer
         sel[1] = 0x40c10f19; // ERC20.mint
         sel[2] = 0x095ea7b3; // ERC20.approve
         sel[3] = 0x00000000; // Send
+        sel[4] = 0xd0e30db0; // Weth.deposiy
+        sel[5] = 0x414bf389; // SwapRouter.exactInputSingle
     }
 
     function _addJsonPath() internal {
@@ -201,6 +212,8 @@ abstract contract BaseData is IKey, ChainsData {
         jsonPaths["ERC20TransferP256"] = "test/Data/ERC20TransferP256.json";
         jsonPaths["ERC20AppproveP256"] = "test/Data/ERC20AppproveP256.json";
         jsonPaths["BatchP256"] = "test/Data/BatchP256.json";
+        jsonPaths["SwapETHForUSDC"] = "test/Data/SwapETHForUSDC.json";
+        jsonPaths["SwapETHForUSDCP256"] = "test/Data/SwapETHForUSDCP256.json";
     }
 
 

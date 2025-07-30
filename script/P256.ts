@@ -59,10 +59,10 @@ function normalizeP256Signature(
 const generateP256Data = async (): Promise<ResultData> => {
   // Define the challenges to sign
   const challenges: Hex[] = [
-    '0x24eadaac7c180fddc200cf37233ebcf234779f8520b842cc0d2fe9fe0b70a7b0',
-    '0xbb9303afda86dbf78919f6ca18213db3b3bae2ad92e73fead5488f573125b800',
-    '0x2b8b43c7df208f706bab33bc3245e444b004b269ae4168fb9be8b2a99ab7a43c',
-    '0xba1ecdf6684389e5b980a175d8d5e78c73f4b0bf0d294d1e61c81821491185ee'
+    '0x4bd2f7286f02b3add8b81489c4532de822ca70667dc081dea50a65c33f469740',
+    '0x8b8daa81867de77eb20ffcbd0cd673c27ffb2456ea4f37b09a159099368d5078',
+    '0x4db46505ae7698744ae306887a3703f444c8e1a75f33eee03805b66e259781f4',
+    '0x0d92f7b6bff0b9876bf596563db67781704dee5c8ee4948469c4ad6131e18999'
   ];
 
   // Define the network names corresponding to each challenge
@@ -150,7 +150,7 @@ const generateP256Data = async (): Promise<ResultData> => {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  const outputPath = path.join(outputDir, 'BatchP256.json');
+  const outputPath = path.join(outputDir, 'SwapETHForUSDCP256.json');
   
   fs.writeFileSync(
     outputPath,

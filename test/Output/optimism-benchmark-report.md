@@ -1,189 +1,208 @@
 # OPTIMISM Network Benchmark Report
 
-Generated: 7/29/2025, 3:15:02 PM
+Generated: 7/30/2025, 10:24:01 AM
 Network: **OPTIMISM**
 
 ## OPTIMISM Network Insights
 
-- **Total Operations**: 29 (10 Direct, 19 Sponsored)
-- **Total Cost**: $0.0538
-- **Average Cost**: $0.0019 per operation
-- **Total Gas**: 13,131,007 gas
-- **Average Gas**: 452,793 gas per operation
+- **Total Operations**: 33 (11 Direct, 22 Sponsored)
+- **Total Cost**: 0.0663
+- **Average Cost**: 0.0020 per operation
+- **Total Gas**: 16,504,883 gas
+- **Average Gas**: 500,148 gas per operation
 
 ### Performance Highlights
-- **Most Expensive**: Deploy OPF (Direct) - $0.0237
-- **Cheapest**: Batch Execution (Direct) - $0.0001
-- **Most Gas Intensive**: Deploy OPF (Direct) - 4,984,975 gas
-- **Most Efficient**: Approve ERC20 (Direct) - 30,572 gas
+- **Most Expensive**: Deploy OPF (Direct) - 0.0253
+- **Cheapest**: Approve ERC20 (Direct) - 0.0002
+- **Most Gas Intensive**: Deploy OPF (Direct) - 5,432,749 gas
+- **Most Efficient**: Approve ERC20 (Direct) - 58,508 gas
 
 ## Complete Operations Overview
 
 | Operation | Category | Type | Signature Method | Gas Used | Wei Cost | USD Cost |
 |-----------|----------|------|------------------|----------|----------|----------|
-| Batch Execution | Batch | Direct | Direct | 35,158 | 50.65 Gwei | $0.0001 |
-| Batch Execution (UOP) | Batch | Sponsored | Standard UOP | 87,209 | 102.83 Gwei | $0.0003 |
-| Batch Execution w/ MK (UOP) | Batch | Sponsored | Master Key | 509,195 | 525.91 Gwei | $0.0019 |
-| Batch Execution w/ P256 (UOP) | Batch | Sponsored | P256 Signature | 289,150 | 305.29 Gwei | $0.0011 |
-| Deploy OPF | Deploy | Direct | Direct | 4,984,975 | 6.43K Gwei | $0.0237 |
-| Approve ERC20 | ERC20 | Direct | Direct | 30,572 | 39.91 Gwei | $0.0001 |
-| Approve ERC20 (UOP) | ERC20 | Sponsored | Standard UOP | 82,428 | 91.90 Gwei | $0.0003 |
-| Approve ERC20 w/ MK (UOP) | ERC20 | Sponsored | Master Key | 504,395 | 514.96 Gwei | $0.0019 |
-| Approve ERC20 w/ P256 (UOP) | ERC20 | Sponsored | P256 Signature | 281,433 | 291.42 Gwei | $0.0010 |
-| Transfer ERC20 | ERC20 | Direct | Direct | 31,077 | 40.42 Gwei | $0.0001 |
-| Transfer ERC20 (UOP) | ERC20 | Sponsored | Standard UOP | 82,933 | 92.41 Gwei | $0.0003 |
-| Transfer ERC20 w/ MK (UOP) | ERC20 | Sponsored | Master Key | 499,456 | 510.01 Gwei | $0.0018 |
-| Transfer ERC20 w/ P256 (UOP) | ERC20 | Sponsored | P256 Signature | 279,710 | 289.69 Gwei | $0.0010 |
-| Initialize + Session Key | Initialize | Direct | Direct | 656,473 | 695.40 Gwei | $0.0025 |
-| Initialize + Session Key (UOP) | Initialize | Sponsored | Standard UOP | 454,215 | 492.91 Gwei | $0.0018 |
-| Initialize TX | Initialize | Direct | Direct | 357,246 | 391.74 Gwei | $0.0014 |
-| Initialize TX (UOP) | Initialize | Sponsored | Standard UOP | 407,799 | 442.72 Gwei | $0.0016 |
-| Send ETH | NativeTransfer | Direct | Direct | 40,178 | 46.95 Gwei | $0.0001 |
-| Send ETH (UOP) | NativeTransfer | Sponsored | Standard UOP | 91,970 | 98.87 Gwei | $0.0003 |
-| Send ETH P256 (UOP) | NativeTransfer | Sponsored | P256 Direct | 265,021 | 272.37 Gwei | $0.0010 |
-| Send ETH w/ MK (UOP) | NativeTransfer | Sponsored | Master Key | 497,213 | 505.16 Gwei | $0.0018 |
-| Send ETH w/ SK-EOA (UOP) | NativeTransfer | Sponsored | Session Key EOA | 72,231 | 79.08 Gwei | $0.0002 |
-| Register EOA | Register-Key | Direct | Direct | 223,953 | 237.86 Gwei | $0.0008 |
-| Register EOA (UOP) | Register-Key | Sponsored | Standard UOP | 274,212 | 288.25 Gwei | $0.0010 |
-| Register P256 | Register-Key | Direct | Direct | 303,555 | 319.62 Gwei | $0.0011 |
-| Register P256 (Non-Extrac UOP) | Register-Key | Sponsored | P256 Direct | 353,814 | 370.01 Gwei | $0.0013 |
-| Register P256 (Non-Extrac w/ MK UOP) | Register-Key | Sponsored | Master Key | 778,067 | 795.35 Gwei | $0.0029 |
-| Register P256 (Non-Extrac) | Register-Key | Direct | Direct | 303,555 | 319.62 Gwei | $0.0011 |
-| Register P256 (UOP) | Register-Key | Sponsored | P256 Direct | 353,814 | 370.01 Gwei | $0.0013 |
+| Batch Execution | Batch | Direct | Direct | 74,366 | 89.96 Gwei | 0.0003 |
+| Batch Execution (UOP) | Batch | Sponsored | Standard UOP | 149,481 | 165.27 Gwei | 0.0006 |
+| Batch Execution w/ MK (UOP) | Batch | Sponsored | Master Key | 582,999 | 599.90 Gwei | 0.0022 |
+| Batch Execution w/ P256 (UOP) | Batch | Sponsored | P256 Signature | 379,418 | 395.80 Gwei | 0.0014 |
+| Deploy OPF | Deploy | Direct | Direct | 5,432,749 | 6.88K Gwei | 0.0253 |
+| Approve ERC20 | ERC20 | Direct | Direct | 58,508 | 67.92 Gwei | 0.0002 |
+| Approve ERC20 (UOP) | ERC20 | Sponsored | Standard UOP | 133,428 | 143.04 Gwei | 0.0005 |
+| Approve ERC20 w/ MK (UOP) | ERC20 | Sponsored | Master Key | 566,927 | 577.65 Gwei | 0.0021 |
+| Approve ERC20 w/ P256 (UOP) | ERC20 | Sponsored | P256 Signature | 360,429 | 370.62 Gwei | 0.0013 |
+| Transfer ERC20 | ERC20 | Direct | Direct | 63,813 | 73.24 Gwei | 0.0002 |
+| Transfer ERC20 (UOP) | ERC20 | Sponsored | Standard UOP | 138,733 | 148.35 Gwei | 0.0005 |
+| Transfer ERC20 w/ MK (UOP) | ERC20 | Sponsored | Master Key | 566,788 | 577.51 Gwei | 0.0021 |
+| Transfer ERC20 w/ P256 (UOP) | ERC20 | Sponsored | P256 Signature | 363,470 | 373.67 Gwei | 0.0013 |
+| Initialize + Session Key | Initialize | Direct | Direct | 687,573 | 726.58 Gwei | 0.0026 |
+| Initialize + Session Key (UOP) | Initialize | Sponsored | Standard UOP | 508,379 | 547.21 Gwei | 0.0020 |
+| Initialize TX | Initialize | Direct | Direct | 387,356 | 421.93 Gwei | 0.0015 |
+| Initialize TX (UOP) | Initialize | Sponsored | Standard UOP | 460,967 | 496.02 Gwei | 0.0018 |
+| Send ETH | NativeTransfer | Direct | Direct | 64,918 | 71.75 Gwei | 0.0002 |
+| Send ETH (UOP) | NativeTransfer | Sponsored | Standard UOP | 139,786 | 146.81 Gwei | 0.0005 |
+| Send ETH P256 (UOP) | NativeTransfer | Sponsored | P256 Direct | 338,809 | 346.35 Gwei | 0.0012 |
+| Send ETH w/ MK (UOP) | NativeTransfer | Sponsored | Master Key | 556,561 | 564.66 Gwei | 0.0020 |
+| Send ETH w/ SK-EOA (UOP) | NativeTransfer | Sponsored | Session Key EOA | 132,835 | 139.84 Gwei | 0.0005 |
+| Register EOA | Register-Key | Direct | Direct | 253,377 | 267.36 Gwei | 0.0009 |
+| Register EOA (UOP) | Register-Key | Sponsored | Standard UOP | 326,688 | 340.86 Gwei | 0.0012 |
+| Register P256 | Register-Key | Direct | Direct | 333,507 | 349.65 Gwei | 0.0012 |
+| Register P256 (Non-Extrac UOP) | Register-Key | Sponsored | P256 Direct | 406,818 | 423.15 Gwei | 0.0015 |
+| Register P256 (Non-Extrac w/ MK UOP) | Register-Key | Sponsored | Master Key | 842,591 | 860.04 Gwei | 0.0031 |
+| Register P256 (Non-Extrac) | Register-Key | Direct | Direct | 333,507 | 349.65 Gwei | 0.0012 |
+| Register P256 (UOP) | Register-Key | Sponsored | P256 Direct | 406,818 | 423.15 Gwei | 0.0015 |
+| Swap ETH for USDC | Uniswap | Direct | Direct | 163,514 | 185.47 Gwei | 0.0006 |
+| Swap ETH for USDC (UOP) | Uniswap | Sponsored | Standard UOP | 215,869 | 237.96 Gwei | 0.0008 |
+| Swap ETH for USDC w/ MK (UOP) | Uniswap | Sponsored | Master Key | 647,811 | 671.02 Gwei | 0.0024 |
+| Swap ETH for USDC w/ P256 (UOP) | Uniswap | Sponsored | P256 Signature | 426,090 | 447.60 Gwei | 0.0016 |
 
 ## Category Analysis
 
 ### Batch
 
 - **Operations**: 4
-- **Total Cost**: $0.0034
-- **Average Cost**: $0.0009
-- **Total Gas**: 920,712
-- **Average Gas**: 230,178
+- **Total Cost**: 0.0045
+- **Average Cost**: 0.0011
+- **Total Gas**: 1,186,264
+- **Average Gas**: 296,566
 
 | Operation | Type | Signature Method | Gas Used | USD Cost |
 |-----------|------|------------------|----------|----------|
-| Batch Execution | Direct | Direct | 35,158 | $0.0001 |
-| Batch Execution (UOP) | Sponsored | Standard UOP | 87,209 | $0.0003 |
-| Batch Execution w/ MK (UOP) | Sponsored | Master Key | 509,195 | $0.0019 |
-| Batch Execution w/ P256 (UOP) | Sponsored | P256 Signature | 289,150 | $0.0011 |
+| Batch Execution | Direct | Direct | 74,366 | 0.0003 |
+| Batch Execution (UOP) | Sponsored | Standard UOP | 149,481 | 0.0006 |
+| Batch Execution w/ MK (UOP) | Sponsored | Master Key | 582,999 | 0.0022 |
+| Batch Execution w/ P256 (UOP) | Sponsored | P256 Signature | 379,418 | 0.0014 |
 
 ### Deploy
 
 - **Operations**: 1
-- **Total Cost**: $0.0237
-- **Average Cost**: $0.0237
-- **Total Gas**: 4,984,975
-- **Average Gas**: 4,984,975
+- **Total Cost**: 0.0253
+- **Average Cost**: 0.0253
+- **Total Gas**: 5,432,749
+- **Average Gas**: 5,432,749
 
 | Operation | Type | Signature Method | Gas Used | USD Cost |
 |-----------|------|------------------|----------|----------|
-| Deploy OPF | Direct | Direct | 4,984,975 | $0.0237 |
+| Deploy OPF | Direct | Direct | 5,432,749 | 0.0253 |
 
 ### ERC20
 
 - **Operations**: 8
-- **Total Cost**: $0.0065
-- **Average Cost**: $0.0008
-- **Total Gas**: 1,792,004
-- **Average Gas**: 224,001
+- **Total Cost**: 0.0082
+- **Average Cost**: 0.0010
+- **Total Gas**: 2,252,096
+- **Average Gas**: 281,512
 
 | Operation | Type | Signature Method | Gas Used | USD Cost |
 |-----------|------|------------------|----------|----------|
-| Approve ERC20 | Direct | Direct | 30,572 | $0.0001 |
-| Approve ERC20 (UOP) | Sponsored | Standard UOP | 82,428 | $0.0003 |
-| Approve ERC20 w/ MK (UOP) | Sponsored | Master Key | 504,395 | $0.0019 |
-| Approve ERC20 w/ P256 (UOP) | Sponsored | P256 Signature | 281,433 | $0.0010 |
-| Transfer ERC20 | Direct | Direct | 31,077 | $0.0001 |
-| Transfer ERC20 (UOP) | Sponsored | Standard UOP | 82,933 | $0.0003 |
-| Transfer ERC20 w/ MK (UOP) | Sponsored | Master Key | 499,456 | $0.0018 |
-| Transfer ERC20 w/ P256 (UOP) | Sponsored | P256 Signature | 279,710 | $0.0010 |
+| Approve ERC20 | Direct | Direct | 58,508 | 0.0002 |
+| Approve ERC20 (UOP) | Sponsored | Standard UOP | 133,428 | 0.0005 |
+| Approve ERC20 w/ MK (UOP) | Sponsored | Master Key | 566,927 | 0.0021 |
+| Approve ERC20 w/ P256 (UOP) | Sponsored | P256 Signature | 360,429 | 0.0013 |
+| Transfer ERC20 | Direct | Direct | 63,813 | 0.0002 |
+| Transfer ERC20 (UOP) | Sponsored | Standard UOP | 138,733 | 0.0005 |
+| Transfer ERC20 w/ MK (UOP) | Sponsored | Master Key | 566,788 | 0.0021 |
+| Transfer ERC20 w/ P256 (UOP) | Sponsored | P256 Signature | 363,470 | 0.0013 |
 
 ### Initialize
 
 - **Operations**: 4
-- **Total Cost**: $0.0073
-- **Average Cost**: $0.0018
-- **Total Gas**: 1,875,733
-- **Average Gas**: 468,933
+- **Total Cost**: 0.0079
+- **Average Cost**: 0.0020
+- **Total Gas**: 2,044,275
+- **Average Gas**: 511,069
 
 | Operation | Type | Signature Method | Gas Used | USD Cost |
 |-----------|------|------------------|----------|----------|
-| Initialize + Session Key | Direct | Direct | 656,473 | $0.0025 |
-| Initialize + Session Key (UOP) | Sponsored | Standard UOP | 454,215 | $0.0018 |
-| Initialize TX | Direct | Direct | 357,246 | $0.0014 |
-| Initialize TX (UOP) | Sponsored | Standard UOP | 407,799 | $0.0016 |
+| Initialize + Session Key | Direct | Direct | 687,573 | 0.0026 |
+| Initialize + Session Key (UOP) | Sponsored | Standard UOP | 508,379 | 0.0020 |
+| Initialize TX | Direct | Direct | 387,356 | 0.0015 |
+| Initialize TX (UOP) | Sponsored | Standard UOP | 460,967 | 0.0018 |
 
 ### NativeTransfer
 
 - **Operations**: 5
-- **Total Cost**: $0.0034
-- **Average Cost**: $0.0007
-- **Total Gas**: 966,613
-- **Average Gas**: 193,323
+- **Total Cost**: 0.0044
+- **Average Cost**: 0.0009
+- **Total Gas**: 1,232,909
+- **Average Gas**: 246,582
 
 | Operation | Type | Signature Method | Gas Used | USD Cost |
 |-----------|------|------------------|----------|----------|
-| Send ETH | Direct | Direct | 40,178 | $0.0001 |
-| Send ETH (UOP) | Sponsored | Standard UOP | 91,970 | $0.0003 |
-| Send ETH P256 (UOP) | Sponsored | P256 Direct | 265,021 | $0.0010 |
-| Send ETH w/ MK (UOP) | Sponsored | Master Key | 497,213 | $0.0018 |
-| Send ETH w/ SK-EOA (UOP) | Sponsored | Session Key EOA | 72,231 | $0.0002 |
+| Send ETH | Direct | Direct | 64,918 | 0.0002 |
+| Send ETH (UOP) | Sponsored | Standard UOP | 139,786 | 0.0005 |
+| Send ETH P256 (UOP) | Sponsored | P256 Direct | 338,809 | 0.0012 |
+| Send ETH w/ MK (UOP) | Sponsored | Master Key | 556,561 | 0.0020 |
+| Send ETH w/ SK-EOA (UOP) | Sponsored | Session Key EOA | 132,835 | 0.0005 |
 
 ### Register-Key
 
 - **Operations**: 7
-- **Total Cost**: $0.0095
-- **Average Cost**: $0.0014
-- **Total Gas**: 2,590,970
-- **Average Gas**: 370,139
+- **Total Cost**: 0.0106
+- **Average Cost**: 0.0015
+- **Total Gas**: 2,903,306
+- **Average Gas**: 414,758
 
 | Operation | Type | Signature Method | Gas Used | USD Cost |
 |-----------|------|------------------|----------|----------|
-| Register EOA | Direct | Direct | 223,953 | $0.0008 |
-| Register EOA (UOP) | Sponsored | Standard UOP | 274,212 | $0.0010 |
-| Register P256 | Direct | Direct | 303,555 | $0.0011 |
-| Register P256 (Non-Extrac UOP) | Sponsored | P256 Direct | 353,814 | $0.0013 |
-| Register P256 (Non-Extrac w/ MK UOP) | Sponsored | Master Key | 778,067 | $0.0029 |
-| Register P256 (Non-Extrac) | Direct | Direct | 303,555 | $0.0011 |
-| Register P256 (UOP) | Sponsored | P256 Direct | 353,814 | $0.0013 |
+| Register EOA | Direct | Direct | 253,377 | 0.0009 |
+| Register EOA (UOP) | Sponsored | Standard UOP | 326,688 | 0.0012 |
+| Register P256 | Direct | Direct | 333,507 | 0.0012 |
+| Register P256 (Non-Extrac UOP) | Sponsored | P256 Direct | 406,818 | 0.0015 |
+| Register P256 (Non-Extrac w/ MK UOP) | Sponsored | Master Key | 842,591 | 0.0031 |
+| Register P256 (Non-Extrac) | Direct | Direct | 333,507 | 0.0012 |
+| Register P256 (UOP) | Sponsored | P256 Direct | 406,818 | 0.0015 |
+
+### Uniswap
+
+- **Operations**: 4
+- **Total Cost**: 0.0054
+- **Average Cost**: 0.0013
+- **Total Gas**: 1,453,284
+- **Average Gas**: 363,321
+
+| Operation | Type | Signature Method | Gas Used | USD Cost |
+|-----------|------|------------------|----------|----------|
+| Swap ETH for USDC | Direct | Direct | 163,514 | 0.0006 |
+| Swap ETH for USDC (UOP) | Sponsored | Standard UOP | 215,869 | 0.0008 |
+| Swap ETH for USDC w/ MK (UOP) | Sponsored | Master Key | 647,811 | 0.0024 |
+| Swap ETH for USDC w/ P256 (UOP) | Sponsored | P256 Signature | 426,090 | 0.0016 |
 
 ## Signature Method Analysis
 
 | Signature Method | Operations | Avg Gas | Avg Cost | Total Cost |
 |------------------|------------|---------|----------|------------|
-| Direct | 10 | 696,674 | $0.0031 | $0.0310 |
-| Standard UOP | 7 | 211,538 | $0.0008 | $0.0056 |
-| Master Key | 5 | 557,665 | $0.0021 | $0.0103 |
-| P256 Signature | 3 | 283,431 | $0.0010 | $0.0031 |
-| P256 Direct | 3 | 324,216 | $0.0012 | $0.0036 |
-| Session Key EOA | 1 | 72,231 | $0.0002 | $0.0002 |
+| Direct | 11 | 713,926 | 0.0031 | 0.0342 |
+| Standard UOP | 8 | 259,166 | 0.0010 | 0.0079 |
+| Master Key | 6 | 627,280 | 0.0023 | 0.0139 |
+| P256 Signature | 4 | 382,352 | 0.0014 | 0.0056 |
+| P256 Direct | 3 | 384,148 | 0.0014 | 0.0042 |
+| Session Key EOA | 1 | 132,835 | 0.0005 | 0.0005 |
 
-### 🔍 Sponsored Transaction Methods Comparison
+### Sponsored Transaction Methods Comparison
 
 **Standard UOP**:
-- Average Gas: 211,538
-- Average Cost: $0.0008
-- Operations: 7
+- Average Gas: 259,166
+- Average Cost: 0.0010
+- Operations: 8
 
 **Master Key**:
-- Average Gas: 557,665
-- Average Cost: $0.0021
-- Operations: 5
+- Average Gas: 627,280
+- Average Cost: 0.0023
+- Operations: 6
 
 **P256 Signature**:
-- Average Gas: 283,431
-- Average Cost: $0.0010
-- Operations: 3
+- Average Gas: 382,352
+- Average Cost: 0.0014
+- Operations: 4
 
 **P256 Direct**:
-- Average Gas: 324,216
-- Average Cost: $0.0012
+- Average Gas: 384,148
+- Average Cost: 0.0014
 - Operations: 3
 
 **Session Key EOA**:
-- Average Gas: 72,231
-- Average Cost: $0.0002
+- Average Gas: 132,835
+- Average Cost: 0.0005
 - Operations: 1
 
 ## Cost Analysis
@@ -192,18 +211,18 @@ Network: **OPTIMISM**
 
 | Cost Range | Operations | Percentage |
 |------------|------------|------------|
-| Ultra Low (< $0.001) | 10 | 34.5% |
-| Low ($0.001 - $0.01) | 18 | 62.1% |
-| Medium ($0.01 - $0.1) | 1 | 3.4% |
+| Ultra Low (< $0.001) | 12 | 36.4% |
+| Low ($0.001 - $0.01) | 20 | 60.6% |
+| Medium ($0.01 - $0.1) | 1 | 3.0% |
 | High ($0.1 - $1) | 0 | 0.0% |
 | Very High (> $1) | 0 | 0.0% |
 
 ### Direct vs Sponsored Cost Impact
 
-- **Average Direct Cost**: $0.0031
-- **Average Sponsored Cost**: $0.0012
-- **Cost Multiplier**: 0.39x
-- **Premium**: -61.3% more expensive for sponsored transactions
+- **Average Direct Cost**: 0.0031
+- **Average Sponsored Cost**: 0.0015
+- **Cost Multiplier**: 0.47x
+- **Premium**: -53.1% more expensive for sponsored transactions
 
 ## Gas Efficiency Analysis
 
@@ -211,46 +230,47 @@ Network: **OPTIMISM**
 
 | Gas Range | Operations | Percentage |
 |-----------|------------|------------|
-| Very Efficient (< 50K gas) | 4 | 13.8% |
-| Efficient (50K - 100K gas) | 5 | 17.2% |
-| Moderate (100K - 500K gas) | 15 | 51.7% |
-| High (500K - 1M gas) | 4 | 13.8% |
-| Very High (> 1M gas) | 1 | 3.4% |
+| Very Efficient (< 50K gas) | 0 | 0.0% |
+| Efficient (50K - 100K gas) | 4 | 12.1% |
+| Moderate (100K - 500K gas) | 20 | 60.6% |
+| High (500K - 1M gas) | 8 | 24.2% |
+| Very High (> 1M gas) | 1 | 3.0% |
 
 ### Gas Efficiency by Category
 
 | Category | Avg Gas | Most Efficient | Least Efficient |
 |----------|---------|----------------|------------------|
-| Batch | 230,178 | 35,158 | 509,195 |
-| Deploy | 4,984,975 | 4,984,975 | 4,984,975 |
-| ERC20 | 224,001 | 30,572 | 504,395 |
-| Initialize | 468,933 | 357,246 | 656,473 |
-| NativeTransfer | 193,323 | 40,178 | 497,213 |
-| Register-Key | 370,139 | 223,953 | 778,067 |
+| Batch | 296,566 | 74,366 | 582,999 |
+| Deploy | 5,432,749 | 5,432,749 | 5,432,749 |
+| ERC20 | 281,512 | 58,508 | 566,927 |
+| Initialize | 511,069 | 387,356 | 687,573 |
+| NativeTransfer | 246,582 | 64,918 | 556,561 |
+| Register-Key | 414,758 | 253,377 | 842,591 |
+| Uniswap | 363,321 | 163,514 | 647,811 |
 
 ## OPTIMISM Network Recommendations
 
 ### Optimism Network Considerations
-- **Lowest Cost**: Average operation costs $0.0019
+- **Lowest Cost**: Average operation costs 0.0020
 - **Ideal for High-Volume**: Perfect for applications with many transactions
 - **Development Environment**: Excellent for testing and development
 - **Optimistic Rollup**: Understand the dispute resolution process
 - **Cost Optimization**: Best choice for cost-sensitive applications
 
 ### High-Cost Operations to Monitor
-- **Deploy OPF** (Direct): $0.0237 - Consider optimization
+- **Deploy OPF** (Direct): 0.0253 - Consider optimization
 
 ### Most Cost-Efficient Operations
-- **Batch Execution** (Direct): $0.0001 - Great choice for high-frequency use
-- **Approve ERC20** (Direct): $0.0001 - Great choice for high-frequency use
-- **Transfer ERC20** (Direct): $0.0001 - Great choice for high-frequency use
-- **Send ETH** (Direct): $0.0001 - Great choice for high-frequency use
-- **Send ETH w/ SK-EOA (UOP)** (Sponsored): $0.0002 - Great choice for high-frequency use
+- **Approve ERC20** (Direct): 0.0002 - Great choice for high-frequency use
+- **Transfer ERC20** (Direct): 0.0002 - Great choice for high-frequency use
+- **Send ETH** (Direct): 0.0002 - Great choice for high-frequency use
+- **Batch Execution** (Direct): 0.0003 - Great choice for high-frequency use
+- **Approve ERC20 (UOP)** (Sponsored): 0.0005 - Great choice for high-frequency use
 
 ### Signature Method Recommendations
-- **Standard UOP**: Avg $0.0008, 211,538 gas
-- **Master Key**: Avg $0.0021, 557,665 gas
-- **P256 Signature**: Avg $0.0010, 283,431 gas
-- **P256 Direct**: Avg $0.0012, 324,216 gas
-- **Session Key EOA**: Avg $0.0002, 72,231 gas
+- **Standard UOP**: Avg 0.0010, 259,166 gas
+- **Master Key**: Avg 0.0023, 627,280 gas
+- **P256 Signature**: Avg 0.0014, 382,352 gas
+- **P256 Direct**: Avg 0.0014, 384,148 gas
+- **Session Key EOA**: Avg 0.0005, 132,835 gas
 

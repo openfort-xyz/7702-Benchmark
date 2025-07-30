@@ -159,6 +159,14 @@ contract BaseBenchmark is BaseData, RecoverSigner {
         account.initialize(keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian);
     }
 
+    function _initializeWithP256(bytes32 _x, bytes32 _y, address _contract, address _token) internal {
+        (Key memory keyMK, KeyReg memory keyRegMK) = _getMK();
+        (Key memory keySK, KeyReg memory keyRegSK) = _getSKP256({_x: _x, _y: _y, _contract: _contract, _token: _token});
+        (bytes memory sig,) = _signInitialize();
+        vm.prank(owner);
+        account.initialize(keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian);
+    }
+
     function _initialize(bytes32 _x, bytes32 _y) internal {
         (Key memory keyMK, KeyReg memory keyRegMK) = _getMK({_x: _x, _y: _y});
         (Key memory keySK, KeyReg memory keyRegSK) = _getSK();

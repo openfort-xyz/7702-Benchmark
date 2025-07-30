@@ -1,23 +1,23 @@
 # Network Comparison Report
 
-Generated: 7/29/2025, 3:15:02 PM
+Generated: 7/30/2025, 10:24:01 AM
 
 ## Network Overview
 
 | Network | Total Operations | Avg Cost | Total Cost | Avg Gas | Total Gas |
 |---------|------------------|----------|------------|---------|----------|
-| **MAINNET** | 29 | 1.4551 | 42.1976 | 441,453 | 12,802,151 |
-| **BASE** | 29 | 0.0114 | 0.3307 | 452,745 | 13,129,596 |
-| **ARBITRUM** | 29 | 0.1395 | 4.0459 | 452,311 | 13,117,005 |
-| **OPTIMISM** | 29 | 0.0019 | 0.0538 | 452,793 | 13,131,007 |
+| **MAINNET** | 33 | 1.6055 | 52.9803 | 487,071 | 16,073,344 |
+| **BASE** | 33 | 0.0123 | 0.4054 | 488,351 | 16,115,568 |
+| **ARBITRUM** | 33 | 0.1544 | 5.0950 | 500,495 | 16,516,333 |
+| **OPTIMISM** | 33 | 0.0020 | 0.0663 | 500,148 | 16,504,883 |
 
 ## Cost Comparison Analysis
 
 ### Savings Analysis (vs MAINNET)
 
-- **BASE**: 99.2% cheaper (Save 41.8669)
-- **ARBITRUM**: 90.4% cheaper (Save 38.1517)
-- **OPTIMISM**: 99.9% cheaper (Save 42.1438)
+- **BASE**: 99.2% cheaper (Save 52.5749)
+- **ARBITRUM**: 90.4% cheaper (Save 47.8853)
+- **OPTIMISM**: 99.9% cheaper (Save 52.9140)
 
 ## Category Comparison Across Networks
 
@@ -25,55 +25,64 @@ Generated: 7/29/2025, 3:15:02 PM
 
 | Network | Operations | Avg Cost | Total Cost |
 |---------|------------|----------|------------|
-| **MAINNET** | 4 | 0.6671 | 2.6684 |
-| **BASE** | 4 | 0.0058 | 0.0233 |
-| **ARBITRUM** | 4 | 0.0711 | 0.2844 |
-| **OPTIMISM** | 4 | 0.0009 | 0.0034 |
+| **MAINNET** | 4 | 0.8557 | 3.4227 |
+| **BASE** | 4 | 0.0075 | 0.0298 |
+| **ARBITRUM** | 4 | 0.0916 | 0.3664 |
+| **OPTIMISM** | 4 | 0.0011 | 0.0045 |
 
 ### Deploy
 
 | Network | Operations | Avg Cost | Total Cost |
 |---------|------------|----------|------------|
-| **MAINNET** | 1 | 16.3935 | 16.3935 |
-| **BASE** | 1 | 0.1272 | 0.1272 |
-| **ARBITRUM** | 1 | 1.5365 | 1.5365 |
-| **OPTIMISM** | 1 | 0.0237 | 0.0237 |
+| **MAINNET** | 1 | 17.8563 | 17.8563 |
+| **BASE** | 1 | 0.1384 | 0.1384 |
+| **ARBITRUM** | 1 | 1.6747 | 1.6747 |
+| **OPTIMISM** | 1 | 0.0253 | 0.0253 |
 
 ### ERC20
 
 | Network | Operations | Avg Cost | Total Cost |
 |---------|------------|----------|------------|
-| **MAINNET** | 8 | 0.6610 | 5.2880 |
-| **BASE** | 8 | 0.0056 | 0.0445 |
-| **ARBITRUM** | 8 | 0.0689 | 0.5515 |
-| **OPTIMISM** | 8 | 0.0008 | 0.0065 |
+| **MAINNET** | 8 | 0.8434 | 6.7470 |
+| **BASE** | 8 | 0.0070 | 0.0562 |
+| **ARBITRUM** | 8 | 0.0867 | 0.6935 |
+| **OPTIMISM** | 8 | 0.0010 | 0.0082 |
 
 ### Initialize
 
 | Network | Operations | Avg Cost | Total Cost |
 |---------|------------|----------|------------|
-| **MAINNET** | 4 | 1.5457 | 6.1828 |
-| **BASE** | 4 | 0.0118 | 0.0471 |
-| **ARBITRUM** | 4 | 0.1447 | 0.5786 |
-| **OPTIMISM** | 4 | 0.0018 | 0.0073 |
+| **MAINNET** | 4 | 1.6846 | 6.7383 |
+| **BASE** | 4 | 0.0128 | 0.0513 |
+| **ARBITRUM** | 4 | 0.1577 | 0.6306 |
+| **OPTIMISM** | 4 | 0.0020 | 0.0079 |
 
 ### NativeTransfer
 
 | Network | Operations | Avg Cost | Total Cost |
 |---------|------------|----------|------------|
-| **MAINNET** | 5 | 0.6245 | 3.1224 |
-| **BASE** | 5 | 0.0048 | 0.0239 |
-| **ARBITRUM** | 5 | 0.0593 | 0.2963 |
-| **OPTIMISM** | 5 | 0.0007 | 0.0034 |
+| **MAINNET** | 5 | 0.8001 | 4.0003 |
+| **BASE** | 5 | 0.0061 | 0.0306 |
+| **ARBITRUM** | 5 | 0.0757 | 0.3786 |
+| **OPTIMISM** | 5 | 0.0009 | 0.0044 |
 
 ### Register-Key
 
 | Network | Operations | Avg Cost | Total Cost |
 |---------|------------|----------|------------|
-| **MAINNET** | 7 | 1.2204 | 8.5425 |
-| **BASE** | 7 | 0.0092 | 0.0647 |
-| **ARBITRUM** | 7 | 0.1141 | 0.7986 |
-| **OPTIMISM** | 7 | 0.0014 | 0.0095 |
+| **MAINNET** | 7 | 1.3674 | 9.5721 |
+| **BASE** | 7 | 0.0104 | 0.0726 |
+| **ARBITRUM** | 7 | 0.1279 | 0.8951 |
+| **OPTIMISM** | 7 | 0.0015 | 0.0106 |
+
+### Uniswap
+
+| Network | Operations | Avg Cost | Total Cost |
+|---------|------------|----------|------------|
+| **MAINNET** | 4 | 1.1609 | 4.6436 |
+| **BASE** | 4 | 0.0066 | 0.0265 |
+| **ARBITRUM** | 4 | 0.1140 | 0.4561 |
+| **OPTIMISM** | 4 | 0.0013 | 0.0054 |
 
 ## Most Expensive Operations Comparison
 
@@ -81,91 +90,91 @@ Generated: 7/29/2025, 3:15:02 PM
 
 | Network | Cost | Gas Used | Wei Cost |
 |---------|------|----------|----------|
-| **MAINNET** | 16.3935 | 4,973,383 | 4.44M Gwei |
-| **BASE** | 0.1272 | 4,974,518 | 34.48K Gwei |
-| **ARBITRUM** | 1.5365 | 4,979,720 | 416.42K Gwei |
-| **OPTIMISM** | 0.0237 | 4,984,975 | 6.43K Gwei |
+| **MAINNET** | 17.8563 | 5,417,157 | 4.84M Gwei |
+| **BASE** | 0.1384 | 5,422,292 | 37.52K Gwei |
+| **ARBITRUM** | 1.6747 | 5,427,494 | 453.86K Gwei |
+| **OPTIMISM** | 0.0253 | 5,432,749 | 6.88K Gwei |
 
 ### Register P256 (Non-Extrac w/ MK UOP) (Sponsored)
 
 | Network | Cost | Gas Used | Wei Cost |
 |---------|------|----------|----------|
-| **MAINNET** | 2.5671 | 778,813 | 695.71K Gwei |
-| **BASE** | 0.0195 | 779,643 | 5.30K Gwei |
-| **ARBITRUM** | 0.2395 | 776,329 | 64.92K Gwei |
-| **OPTIMISM** | 0.0029 | 778,067 | 795.35 Gwei |
+| **MAINNET** | 2.7798 | 843,337 | 753.35K Gwei |
+| **BASE** | 0.0211 | 844,167 | 5.74K Gwei |
+| **ARBITRUM** | 0.2594 | 840,853 | 70.31K Gwei |
+| **OPTIMISM** | 0.0031 | 842,591 | 860.04 Gwei |
 
 ### Initialize + Session Key (Direct)
 
 | Network | Cost | Gas Used | Wei Cost |
 |---------|------|----------|----------|
-| **MAINNET** | 2.1639 | 656,473 | 586.43K Gwei |
-| **BASE** | 0.0165 | 656,473 | 4.47K Gwei |
-| **ARBITRUM** | 0.2025 | 656,473 | 54.90K Gwei |
-| **OPTIMISM** | 0.0025 | 656,473 | 695.40 Gwei |
+| **MAINNET** | 2.2664 | 687,573 | 614.21K Gwei |
+| **BASE** | 0.0172 | 687,573 | 4.69K Gwei |
+| **ARBITRUM** | 0.2121 | 687,573 | 57.50K Gwei |
+| **OPTIMISM** | 0.0026 | 687,573 | 726.58 Gwei |
+
+### Swap ETH for USDC w/ MK (UOP) (Sponsored)
+
+| Network | Cost | Gas Used | Wei Cost |
+|---------|------|----------|----------|
+| **MAINNET** | 2.0876 | 633,350 | 565.77K Gwei |
+| **BASE** | 0.0135 | 540,329 | 3.68K Gwei |
+| **ARBITRUM** | 0.2020 | 654,678 | 54.75K Gwei |
+| **OPTIMISM** | 0.0024 | 647,811 | 671.02 Gwei |
 
 ### Transfer ERC20 w/ MK (UOP) (Sponsored)
 
 | Network | Cost | Gas Used | Wei Cost |
 |---------|------|----------|----------|
-| **MAINNET** | 1.5945 | 483,754 | 432.14K Gwei |
-| **BASE** | 0.0126 | 504,906 | 3.43K Gwei |
-| **ARBITRUM** | 0.1567 | 507,920 | 42.47K Gwei |
-| **OPTIMISM** | 0.0018 | 499,456 | 510.01 Gwei |
-
-### Approve ERC20 w/ MK (UOP) (Sponsored)
-
-| Network | Cost | Gas Used | Wei Cost |
-|---------|------|----------|----------|
-| **MAINNET** | 1.5936 | 483,481 | 431.89K Gwei |
-| **BASE** | 0.0126 | 505,953 | 3.44K Gwei |
-| **ARBITRUM** | 0.1532 | 496,803 | 41.54K Gwei |
-| **OPTIMISM** | 0.0019 | 504,395 | 514.96 Gwei |
+| **MAINNET** | 1.8062 | 547,978 | 489.51K Gwei |
+| **BASE** | 0.0143 | 572,238 | 3.89K Gwei |
+| **ARBITRUM** | 0.1775 | 575,240 | 48.10K Gwei |
+| **OPTIMISM** | 0.0021 | 566,788 | 577.51 Gwei |
 
 ### Batch Execution w/ MK (UOP) (Sponsored)
 
 | Network | Cost | Gas Used | Wei Cost |
 |---------|------|----------|----------|
-| **MAINNET** | 1.5848 | 480,812 | 429.51K Gwei |
-| **BASE** | 0.0130 | 521,524 | 3.55K Gwei |
-| **ARBITRUM** | 0.1578 | 511,553 | 42.78K Gwei |
-| **OPTIMISM** | 0.0019 | 509,195 | 525.91 Gwei |
+| **MAINNET** | 1.8020 | 546,696 | 488.36K Gwei |
+| **BASE** | 0.0149 | 597,020 | 4.06K Gwei |
+| **ARBITRUM** | 0.1806 | 585,357 | 48.95K Gwei |
+| **OPTIMISM** | 0.0022 | 582,999 | 599.90 Gwei |
+
+### Approve ERC20 w/ MK (UOP) (Sponsored)
+
+| Network | Cost | Gas Used | Wei Cost |
+|---------|------|----------|----------|
+| **MAINNET** | 1.7998 | 546,013 | 487.75K Gwei |
+| **BASE** | 0.0142 | 568,485 | 3.86K Gwei |
+| **ARBITRUM** | 0.1725 | 559,335 | 46.77K Gwei |
+| **OPTIMISM** | 0.0021 | 566,927 | 577.65 Gwei |
 
 ### Send ETH w/ MK (UOP) (Sponsored)
 
 | Network | Cost | Gas Used | Wei Cost |
 |---------|------|----------|----------|
-| **MAINNET** | 1.5783 | 478,841 | 427.75K Gwei |
-| **BASE** | 0.0123 | 491,916 | 3.34K Gwei |
-| **ARBITRUM** | 0.1522 | 493,327 | 41.25K Gwei |
-| **OPTIMISM** | 0.0018 | 497,213 | 505.16 Gwei |
+| **MAINNET** | 1.7740 | 538,189 | 480.76K Gwei |
+| **BASE** | 0.0138 | 552,956 | 3.76K Gwei |
+| **ARBITRUM** | 0.1705 | 552,663 | 46.22K Gwei |
+| **OPTIMISM** | 0.0020 | 556,561 | 564.66 Gwei |
 
 ### Initialize + Session Key (UOP) (Sponsored)
 
 | Network | Cost | Gas Used | Wei Cost |
 |---------|------|----------|----------|
-| **MAINNET** | 1.4972 | 454,215 | 405.75K Gwei |
-| **BASE** | 0.0114 | 454,215 | 3.10K Gwei |
-| **ARBITRUM** | 0.1401 | 454,215 | 37.98K Gwei |
-| **OPTIMISM** | 0.0018 | 454,215 | 492.91 Gwei |
+| **MAINNET** | 1.6757 | 508,367 | 454.12K Gwei |
+| **BASE** | 0.0128 | 508,379 | 3.47K Gwei |
+| **ARBITRUM** | 0.1568 | 508,367 | 42.51K Gwei |
+| **OPTIMISM** | 0.0020 | 508,379 | 547.21 Gwei |
 
 ### Initialize TX (UOP) (Sponsored)
 
 | Network | Cost | Gas Used | Wei Cost |
 |---------|------|----------|----------|
-| **MAINNET** | 1.3442 | 407,799 | 364.29K Gwei |
-| **BASE** | 0.0102 | 407,799 | 2.78K Gwei |
-| **ARBITRUM** | 0.1258 | 407,799 | 34.10K Gwei |
-| **OPTIMISM** | 0.0016 | 407,799 | 442.72 Gwei |
-
-### Initialize TX (Direct)
-
-| Network | Cost | Gas Used | Wei Cost |
-|---------|------|----------|----------|
-| **MAINNET** | 1.1775 | 357,246 | 319.13K Gwei |
-| **BASE** | 0.0090 | 357,246 | 2.44K Gwei |
-| **ARBITRUM** | 0.1102 | 357,246 | 29.87K Gwei |
-| **OPTIMISM** | 0.0014 | 357,246 | 391.74 Gwei |
+| **MAINNET** | 1.5194 | 460,967 | 411.78K Gwei |
+| **BASE** | 0.0116 | 460,967 | 3.15K Gwei |
+| **ARBITRUM** | 0.1422 | 460,967 | 38.55K Gwei |
+| **OPTIMISM** | 0.0018 | 460,967 | 496.02 Gwei |
 
 ## Signature Method Performance Across Networks
 
@@ -173,55 +182,55 @@ Generated: 7/29/2025, 3:15:02 PM
 
 | Network | Operations | Avg Cost | Avg Gas |
 |---------|------------|----------|----------|
-| **MAINNET** | 10 | 2.2671 | 687,781 |
-| **BASE** | 10 | 0.0177 | 695,629 |
-| **ARBITRUM** | 10 | 0.2147 | 696,149 |
-| **OPTIMISM** | 10 | 0.0031 | 696,674 |
+| **MAINNET** | 11 | 2.3183 | 703,326 |
+| **BASE** | 11 | 0.0178 | 704,388 |
+| **ARBITRUM** | 11 | 0.2203 | 714,013 |
+| **OPTIMISM** | 11 | 0.0031 | 713,926 |
 
 ### Master Key
 
 | Network | Operations | Avg Cost | Avg Gas |
 |---------|------------|----------|----------|
-| **MAINNET** | 5 | 1.7837 | 541,140 |
-| **BASE** | 5 | 0.0140 | 560,788 |
-| **ARBITRUM** | 5 | 0.1719 | 557,186 |
-| **OPTIMISM** | 5 | 0.0021 | 557,665 |
+| **MAINNET** | 6 | 2.0082 | 609,261 |
+| **BASE** | 6 | 0.0153 | 612,533 |
+| **ARBITRUM** | 6 | 0.1937 | 628,021 |
+| **OPTIMISM** | 6 | 0.0023 | 627,280 |
 
 ### Standard UOP
 
 | Network | Operations | Avg Cost | Avg Gas |
 |---------|------------|----------|----------|
-| **MAINNET** | 7 | 0.6608 | 200,490 |
-| **BASE** | 7 | 0.0053 | 211,538 |
-| **ARBITRUM** | 7 | 0.0652 | 211,538 |
-| **OPTIMISM** | 7 | 0.0008 | 211,538 |
-
-### P256 Direct
-
-| Network | Operations | Avg Cost | Avg Gas |
-|---------|------------|----------|----------|
-| **MAINNET** | 3 | 1.0677 | 323,924 |
-| **BASE** | 3 | 0.0080 | 323,194 |
-| **ARBITRUM** | 3 | 0.0998 | 323,778 |
-| **OPTIMISM** | 3 | 0.0012 | 324,216 |
+| **MAINNET** | 8 | 0.8126 | 246,537 |
+| **BASE** | 8 | 0.0062 | 247,357 |
+| **ARBITRUM** | 8 | 0.0802 | 259,938 |
+| **OPTIMISM** | 8 | 0.0010 | 259,166 |
 
 ### P256 Signature
 
 | Network | Operations | Avg Cost | Avg Gas |
 |---------|------------|----------|----------|
-| **MAINNET** | 3 | 0.8473 | 257,068 |
-| **BASE** | 3 | 0.0070 | 282,263 |
-| **ARBITRUM** | 3 | 0.0869 | 281,751 |
-| **OPTIMISM** | 3 | 0.0010 | 283,431 |
+| **MAINNET** | 4 | 1.1738 | 356,120 |
+| **BASE** | 4 | 0.0089 | 357,756 |
+| **ARBITRUM** | 4 | 0.1180 | 382,648 |
+| **OPTIMISM** | 4 | 0.0014 | 382,352 |
+
+### P256 Direct
+
+| Network | Operations | Avg Cost | Avg Gas |
+|---------|------------|----------|----------|
+| **MAINNET** | 3 | 1.2652 | 383,856 |
+| **BASE** | 3 | 0.0096 | 383,126 |
+| **ARBITRUM** | 3 | 0.1184 | 383,706 |
+| **OPTIMISM** | 3 | 0.0014 | 384,148 |
 
 ### Session Key EOA
 
 | Network | Operations | Avg Cost | Avg Gas |
 |---------|------------|----------|----------|
-| **MAINNET** | 1 | 0.2380 | 72,231 |
-| **BASE** | 1 | 0.0018 | 72,231 |
-| **ARBITRUM** | 1 | 0.0222 | 72,231 |
-| **OPTIMISM** | 1 | 0.0002 | 72,231 |
+| **MAINNET** | 1 | 0.4378 | 132,847 |
+| **BASE** | 1 | 0.0033 | 132,847 |
+| **ARBITRUM** | 1 | 0.0409 | 132,847 |
+| **OPTIMISM** | 1 | 0.0005 | 132,835 |
 
 ## Network Selection Recommendations
 
@@ -245,38 +254,44 @@ Generated: 7/29/2025, 3:15:02 PM
 ### Network Rankings by Category
 
 **Batch (by cost)**:
-1. OPTIMISM - 0.0009
-2. BASE - 0.0058
-3. ARBITRUM - 0.0711
-4. MAINNET - 0.6671
+1. OPTIMISM - 0.0011
+2. BASE - 0.0075
+3. ARBITRUM - 0.0916
+4. MAINNET - 0.8557
 
 **Deploy (by cost)**:
-1. OPTIMISM - 0.0237
-2. BASE - 0.1272
-3. ARBITRUM - 1.5365
-4. MAINNET - 16.3935
+1. OPTIMISM - 0.0253
+2. BASE - 0.1384
+3. ARBITRUM - 1.6747
+4. MAINNET - 17.8563
 
 **ERC20 (by cost)**:
-1. OPTIMISM - 0.0008
-2. BASE - 0.0056
-3. ARBITRUM - 0.0689
-4. MAINNET - 0.6610
+1. OPTIMISM - 0.0010
+2. BASE - 0.0070
+3. ARBITRUM - 0.0867
+4. MAINNET - 0.8434
 
 **Initialize (by cost)**:
-1. OPTIMISM - 0.0018
-2. BASE - 0.0118
-3. ARBITRUM - 0.1447
-4. MAINNET - 1.5457
+1. OPTIMISM - 0.0020
+2. BASE - 0.0128
+3. ARBITRUM - 0.1577
+4. MAINNET - 1.6846
 
 **NativeTransfer (by cost)**:
-1. OPTIMISM - 0.0007
-2. BASE - 0.0048
-3. ARBITRUM - 0.0593
-4. MAINNET - 0.6245
+1. OPTIMISM - 0.0009
+2. BASE - 0.0061
+3. ARBITRUM - 0.0757
+4. MAINNET - 0.8001
 
 **Register-Key (by cost)**:
-1. OPTIMISM - 0.0014
-2. BASE - 0.0092
-3. ARBITRUM - 0.1141
-4. MAINNET - 1.2204
+1. OPTIMISM - 0.0015
+2. BASE - 0.0104
+3. ARBITRUM - 0.1279
+4. MAINNET - 1.3674
+
+**Uniswap (by cost)**:
+1. OPTIMISM - 0.0013
+2. BASE - 0.0066
+3. ARBITRUM - 0.1140
+4. MAINNET - 1.1609
 

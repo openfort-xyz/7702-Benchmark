@@ -1,0 +1,1 @@
+{"SwapUniswap_Benchmark":{"test_SwapETHForUSDCWithP256_UOP":{"Sponsored":{"MAINNET":{"Used Gas":414628,"weiCost":370386060050932,"usd":"1.3667"},"BASE":{"Used Gas":331188,"weiCost":2258186082054,"usd":"0.0083"},"ARBITRUM":{"Used Gas":432301,"weiCost":36150306523000,"usd":"0.1333"},"OPTIMISM":{"Used Gas":426090,"weiCost":447602665398,"usd":"0.0016"}}}}}

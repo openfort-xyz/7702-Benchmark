@@ -251,6 +251,274 @@ contract SwapUniswap is BaseBenchmark {
         _flushTo("test/Output/Uniswap/test_SwapETHForUSDC_UOP.json");
     }
 
+    function test_SwapETHForUSDCWithMK_UOP() public {
+        vm.pauseGasMetering();
+        swapRouter = ISwapRouter(SWAP_ROUTER);
+        weth = IWETH(WETH);
+        _beginTest("SwapUniswap_Benchmark", "test_SwapETHForUSDCWithMK_UOP");
+        _beginMode("Sponsored");
+        
+        _initAddrBook();
+        PackedUserOperation memory userOp = _buildUserOp();
+
+        for (uint256 i = 0; i < rpcs.length; ) {
+            uint256 forkId = vm.createFork(rpcs[i].url);
+            vm.selectFork(forkId);
+
+            KeyDatJson memory keyData = _getMasterKeyData("SwapETHForUSDC", rpcs[i].name);
+
+            (address WETH_, address USDC_) = _loadAddresses(rpcs[i].name);
+            if (WETH_ == address(0)) continue;
+
+            swapRouter = ISwapRouter(SWAP_ROUTER);
+            weth       = IWETH(WETH_);
+
+            _deploy();
+            _attach7702();
+            _initialize(keyData.x, keyData.y);
+            _paymaster();
+            _deal(owner, 1e18);
+            
+            Call[] memory calls = new Call[](3);
+
+            ISwapRouter.ExactInputSingleParams memory params = ISwapRouter
+                .ExactInputSingleParams({
+                    tokenIn: WETH_,
+                    tokenOut: USDC_,
+                    fee: POOL_FEE,
+                    recipient: owner,
+                    deadline: 2164027884,
+                    amountIn: 0.1 ether,
+                    amountOutMinimum: 0,
+                    sqrtPriceLimitX96: 0
+            });
+
+            bytes memory callDeposit = abi.encodeWithSelector(weth.deposit.selector);
+            calls[0] = Call({target: WETH_, value: 0.1 ether, data: callDeposit});
+
+            bytes memory callApprove =
+                abi.encodeWithSelector(weth.approve.selector, SWAP_ROUTER, type(uint256).max);
+            calls[1] = Call({target: WETH_, value: 0, data: callApprove});
+
+            bytes memory callSwap =
+                abi.encodeWithSelector(swapRouter.exactInputSingle.selector, params);
+            calls[2] = Call({target: SWAP_ROUTER, value: 0, data: callSwap});
+
+            bytes32 mode = bytes32(uint256(0x01000000000000000000) << (22 * 8));
+            bytes memory executionData = abi.encode(calls);
+
+            bytes memory callData =
+            abi.encodeWithSelector(bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData);
+    
+            userOp.nonce = ep.getNonce(owner, 1);
+            userOp.callData = callData;
+    
+            bytes memory _signature = account.encodeWebAuthnSignature(
+                true,
+                keyData.authenticatorData,
+                keyData.clientDataJSON,
+                keyData.challengeIndex,
+                keyData.typeIndex,
+                keyData.r,
+                keyData.s,
+                PubKey({x: keyData.x, y: keyData.y})
+            );
+
+            // console.log(rpcs[i].name);
+            // console.logBytes32(_getUserOpHash(userOp));
+            // console.logBytes32(keyData.x);
+
+            userOp.signature = _signature;
+
+            bool isValid = webAuthn.verifySignature(
+                _getUserOpHash(userOp),
+                true,
+                keyData.authenticatorData,
+                keyData.clientDataJSON,
+                keyData.challengeIndex,
+                keyData.typeIndex,
+                keyData.r,
+                keyData.s,
+                keyData.x,
+                keyData.y
+            );
+            console.log("isValid", isValid);
+
+            PackedUserOperation[] memory ops = new PackedUserOperation[](1);
+            ops[0] = userOp;
+            
+            vm.resumeGasMetering();
+            uint256 g0 = gasleft();
+            vm.prank(pmAddr);
+            ep.handleOps(ops, payable(pmAddr));
+            uint256 gasUsedLocal = g0 - gasleft();
+            vm.pauseGasMetering();
+
+            (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", executionData));
+            
+            bytes32 k = keccak256(bytes(rpcs[i].name));
+            ChainFees storage f = fees[k];
+
+            uint256 weiCost = !f.isOPStack
+                ? FeeCalc.ethOrArbCostWei(gasUsedLocal, f.gasPrice)
+                : FeeCalc.opStackCostWeiEcotone(
+                    gasUsedLocal,
+                    f.op.l2GasPrice,
+                    zeros,
+                    nonZeros,
+                    f.op.l1BaseFee,
+                    f.op.l1BaseFeeScalar,
+                    f.op.blobBaseFee,
+                    f.op.blobBaseFeeScalar
+                );
+
+            uint256 usdE8 = FeeCalc.toUsdE8(weiCost, ethPriceUsdE8);
+            string memory usdHuman = FeeCalc.usdE8ToString(usdE8, 4);
+
+            console.log("Send ETH on %s", rpcs[i].name);
+            console.log("Used Gas execute(): %s", gasUsedLocal);
+            console.log("weiCost: %s", weiCost);
+            console.log("usd: %s$", usdHuman);
+            console.log("==================================================");
+            console.log("==================================================");
+
+            _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
+
+            unchecked { ++i; }
+        }
+        _flushTo("test/Output/Uniswap/test_SwapETHForUSDCWithMK_UOP.json");
+    }
+
+    function test_SwapETHForUSDCWithP256_UOP() public {
+        vm.pauseGasMetering();
+        swapRouter = ISwapRouter(SWAP_ROUTER);
+        weth = IWETH(WETH);
+        _beginTest("SwapUniswap_Benchmark", "test_SwapETHForUSDCWithP256_UOP");
+        _beginMode("Sponsored");
+        
+        _initAddrBook();
+        PackedUserOperation memory userOp = _buildUserOp();
+
+        for (uint256 i = 0; i < rpcs.length; ) {
+            uint256 forkId = vm.createFork(rpcs[i].url);
+            vm.selectFork(forkId);
+
+            KeyDatJson memory keyData = _getP256KeyData("SwapETHForUSDCP256", rpcs[i].name);
+
+            (address WETH_, address USDC_) = _loadAddresses(rpcs[i].name);
+            if (WETH_ == address(0)) continue;
+
+            swapRouter = ISwapRouter(SWAP_ROUTER);
+            weth       = IWETH(WETH_);
+
+            _deploy();
+            _attach7702();
+            _initializeWithP256(keyData.x, keyData.y, SWAP_ROUTER, WETH_);
+            _paymaster();
+            _deal(owner, 1e18);
+            
+            Call[] memory calls = new Call[](3);
+
+            ISwapRouter.ExactInputSingleParams memory params = ISwapRouter
+                .ExactInputSingleParams({
+                    tokenIn: WETH_,
+                    tokenOut: USDC_,
+                    fee: POOL_FEE,
+                    recipient: owner,
+                    deadline: 2164027884,
+                    amountIn: 0.1 ether,
+                    amountOutMinimum: 0,
+                    sqrtPriceLimitX96: 0
+            });
+
+            bytes memory callDeposit = abi.encodeWithSelector(weth.deposit.selector);
+            calls[0] = Call({target: WETH_, value: 0.1 ether, data: callDeposit});
+            
+            bytes memory callApprove =
+                abi.encodeWithSelector(weth.approve.selector, SWAP_ROUTER, 0.1 ether);
+            calls[1] = Call({target: WETH_, value: 0, data: callApprove});
+
+            bytes memory callSwap =
+                abi.encodeWithSelector(swapRouter.exactInputSingle.selector, params);
+            calls[2] = Call({target: SWAP_ROUTER, value: 0, data: callSwap});
+
+            bytes32 mode = bytes32(uint256(0x01000000000000000000) << (22 * 8));
+            bytes memory executionData = abi.encode(calls);
+
+            bytes memory callData =
+            abi.encodeWithSelector(bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData);
+    
+            userOp.nonce = ep.getNonce(owner, 1);
+            userOp.callData = callData;
+    
+            bytes memory _signature = account.encodeP256Signature(
+                keyData.r,
+                keyData.s,
+                PubKey({x: keyData.x, y: keyData.y}),
+                KeyType.P256
+            );
+
+            // console.log(rpcs[i].name);
+            // console.logBytes32(_getUserOpHash(userOp));
+            // console.logBytes32(keyData.x);
+            // console.logBytes32(keyData.y);
+
+            userOp.signature = _signature;
+
+            bool isValid = webAuthn.verifyP256Signature(
+                _getUserOpHash(userOp),
+                keyData.r,
+                keyData.s,
+                keyData.x,
+                keyData.y
+            );
+            console.log("isValid Test", isValid);
+
+            PackedUserOperation[] memory ops = new PackedUserOperation[](1);
+            ops[0] = userOp;
+            
+            vm.resumeGasMetering();
+            uint256 g0 = gasleft();
+            vm.prank(pmAddr);
+            ep.handleOps(ops, payable(pmAddr));
+            uint256 gasUsedLocal = g0 - gasleft();
+            vm.pauseGasMetering();
+
+            (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", executionData));
+            
+            bytes32 k = keccak256(bytes(rpcs[i].name));
+            ChainFees storage f = fees[k];
+
+            uint256 weiCost = !f.isOPStack
+                ? FeeCalc.ethOrArbCostWei(gasUsedLocal, f.gasPrice)
+                : FeeCalc.opStackCostWeiEcotone(
+                    gasUsedLocal,
+                    f.op.l2GasPrice,
+                    zeros,
+                    nonZeros,
+                    f.op.l1BaseFee,
+                    f.op.l1BaseFeeScalar,
+                    f.op.blobBaseFee,
+                    f.op.blobBaseFeeScalar
+                );
+
+            uint256 usdE8 = FeeCalc.toUsdE8(weiCost, ethPriceUsdE8);
+            string memory usdHuman = FeeCalc.usdE8ToString(usdE8, 4);
+
+            console.log("Send ETH on %s", rpcs[i].name);
+            console.log("Used Gas execute(): %s", gasUsedLocal);
+            console.log("weiCost: %s", weiCost);
+            console.log("usd: %s$", usdHuman);
+            console.log("==================================================");
+            console.log("==================================================");
+
+            _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
+
+            unchecked { ++i; }
+        }
+        _flushTo("test/Output/Uniswap/test_SwapETHForUSDCWithP256_UOP.json");
+    }
+
     function _initAddrBook() internal {
         net["MAINNET"] = NetAddrs({
             weth: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2,
