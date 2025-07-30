@@ -1,5 +1,7 @@
 # ARBITRUM Network Benchmark Report
 
+[Ethereum Mainnet](/test/Output/mainnet-benchmark-report.md) | [Base Mainnet](/test/Output/base-benchmark-report.md) | **Arbitrum Mainnet** | [Optimism Mainnet](/test/Output/optimism-benchmark-report.md)
+
 Generated: 7/30/2025, 10:24:01 AM
 Network: **ARBITRUM**
 
