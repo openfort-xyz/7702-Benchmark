@@ -32,6 +32,136 @@ Openfort's 7702 delegator smart contract implements account abstraction features
 <br></br>
 Generated: 7/28/2025, 4:35:19 PM
 
+## Openfort Benchmarks — Slides
+
+[▶ Start slideshow](#s01) · [Download folder](test/Benchmarks/pdf-report)
+
+---
+
+<a id="s01"></a>
+
+### Slide 1 / 14
+![OPF Account Benchmarks 1](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_1.png)
+
+[Next ➡︎](#s02)
+
+---
+
+<a id="s02"></a>
+
+### Slide 2 / 14
+![OPF Account Benchmarks 2](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_2.png)
+
+[⬅︎ Prev](#s01) · [Next ➡︎](#s03)
+
+---
+
+<a id="s03"></a>
+
+### Slide 3 / 14
+![OPF Account Benchmarks 3](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_3.png)
+
+[⬅︎ Prev](#s02) · [Next ➡︎](#s04)
+
+---
+
+<a id="s04"></a>
+
+### Slide 4 / 14
+![OPF Account Benchmarks 4](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_4.png)
+
+[⬅︎ Prev](#s03) · [Next ➡︎](#s05)
+
+---
+
+<a id="s05"></a>
+
+### Slide 5 / 14
+![OPF Account Benchmarks 5](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_5.png)
+
+[⬅︎ Prev](#s04) · [Next ➡︎](#s06)
+
+---
+
+<a id="s06"></a>
+
+### Slide 6 / 14
+![OPF Account Benchmarks 6](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_6.png)
+
+[⬅︎ Prev](#s05) · [Next ➡︎](#s07)
+
+---
+
+<a id="s07"></a>
+
+### Slide 7 / 14
+![OPF Account Benchmarks 7](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_7.png)
+
+[⬅︎ Prev](#s06) · [Next ➡︎](#s08)
+
+---
+
+<a id="s08"></a>
+
+### Slide 8 / 14
+![OPF Account Benchmarks 8](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_8.png)
+
+[⬅︎ Prev](#s07) · [Next ➡︎](#s09)
+
+---
+
+<a id="s09"></a>
+
+### Slide 9 / 14
+![OPF Account Benchmarks 9](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_9.png)
+
+[⬅︎ Prev](#s08) · [Next ➡︎](#s10)
+
+---
+
+<a id="s10"></a>
+
+### Slide 10 / 14
+![OPF Account Benchmarks 10](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_10.png)
+
+[⬅︎ Prev](#s09) · [Next ➡︎](#s11)
+
+---
+
+<a id="s11"></a>
+
+### Slide 11 / 14
+![OPF Account Benchmarks 11](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_11.png)
+
+[⬅︎ Prev](#s10) · [Next ➡︎](#s12)
+
+---
+
+<a id="s12"></a>
+
+### Slide 12 / 14
+![OPF Account Benchmarks 12](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_12.png)
+
+[⬅︎ Prev](#s11) · [Next ➡︎](#s13)
+
+---
+
+<a id="s13"></a>
+
+### Slide 13 / 14
+![OPF Account Benchmarks 13](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_13.png)
+
+[⬅︎ Prev](#s12) · [Next ➡︎](#s14)
+
+---
+
+<a id="s14"></a>
+
+### Slide 14 / 14
+![OPF Account Benchmarks 14](test/Benchmarks/pdf-report/OPF%20Account%20Benchmarks_14.png)
+
+[⬅︎ Prev](#s13) · [⏮ Back to start](#s01)
+
 ## Gas Usage Summary
 
 | Test                       | MAINNET   | BASE      | ARBITRUM  | OPTIMISM  |
