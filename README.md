@@ -57,20 +57,9 @@ Generated: 7/28/2025, 4:35:19 PM
 
 ## Openfort Benchmarks
 
-![Slide 1](docs/slides/slide-1.png)
-![Slide 2](docs/slides/slide-2.png)
-![Slide 3](docs/slides/slide-3.png)
-![Slide 4](docs/slides/slide-4.png)
-![Slide 5](docs/slides/slide-5.png)
-![Slide 6](docs/slides/slide-6.png)
-![Slide 7](docs/slides/slide-7.png)
-![Slide 8](docs/slides/slide-8.png)
-![Slide 9](docs/slides/slide-9.png)
-![Slide 10](docs/slides/slide-10.png)
-![Slide 11](docs/slides/slide-11.png)
-![Slide 12](docs/slides/slide-12.png)
-![Slide 13](docs/slides/slide-13.png)
-![Slide 14](docs/slides/slide-14.png)
+<p align="center">
+  <img src="../docs/slides/slide-1.png" style="width: 10800px;" />
+</p>
 
 ## Key Insights
 
