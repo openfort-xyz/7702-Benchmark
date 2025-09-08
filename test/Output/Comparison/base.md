@@ -30,6 +30,7 @@
 | **Openfort** | Send ETH w/ MK (UOP) | **552,956** | **$0.0138** |
 | **Openfort** | Send ETH P256 (UOP) | **335,743** | **$0.0084** |
 | Alchemy Light Account v2 (non-modular) | Native Transfer | 151,148 | $0.00247 |
+| Simple Account (non-modular) | Native Transfer | 151,045 | $0.00247 |
 | Coinbase Smart Wallet (non-modular) | Native Transfer | 156,812 | $0.00257 |
 | Alchemy Modular Account v2 | Native Transfer | 158,725 | $0.00259 |
 | Biconomy Nexus | Native Transfer | 164,351 | $0.00268 |
