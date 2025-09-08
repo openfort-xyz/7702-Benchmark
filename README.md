@@ -39,7 +39,7 @@ Generated: 7/28/2025, 4:35:19 PM
 <p id="slide-1"></p>
 
 ### Slide 1 / 14
-<img src="./docs/slides/slide-1.png" alt="Slide 1" width="100%" />
+<img src="/docs/slides/slide-1.png" alt="Slide 1" width="100%" />
 <p align="right"><a href="#slide-2">Next ➜</a></p>
 
 ---
@@ -129,7 +129,7 @@ Generated: 7/28/2025, 4:35:19 PM
 <p id="slide-12"></p>
 
 ### Slide 12 / 14
-<img src="./docs/slides/slide-12.png" alt="Slide 12" width="100%" />
+<img src="/docs/slides/slide-12.png" alt="Slide 12" width="100%" />
 <p><a href="#slide-11">⬅ Prev</a> · <a href="#slide-13">Next ➜</a></p>
 
 ---
@@ -137,7 +137,7 @@ Generated: 7/28/2025, 4:35:19 PM
 <p id="slide-13"></p>
 
 ### Slide 13 / 14
-<img src="./docs/slides/slide-13.png" alt="Slide 13" width="100%" />
+<img src="/docs/slides/slide-13.png" alt="Slide 13" width="100%" />
 <p><a href="#slide-12">⬅ Prev</a> · <a href="#slide-14">Next ➜</a></p>
 
 ---
