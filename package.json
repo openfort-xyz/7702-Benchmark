@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "benchmarks": "npx ts-node scripts/benchmark-presenter.ts",
+    "benchmarks:compile": "tsc scripts/benchmark-presenter.ts --outDir dist",
+    "benchmarks:run": "node dist/benchmark-presenter.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "permissionless": "^0.2.52",
+    "viem": "^2.33.1"
+  }
+}
