@@ -58,7 +58,7 @@ Generated: 7/28/2025, 4:35:19 PM
 ## Openfort Benchmarks
 
 <p align="center">
-  <img src="../docs/slides/slide-1.png" style="width: 10800px;" />
+  <img src="../docs/slides/1.png" style="width: 10800px;" />
 </p>
 
 ## Key Insights
