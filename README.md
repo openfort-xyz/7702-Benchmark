@@ -64,7 +64,7 @@ Generated: 7/28/2025, 4:35:19 PM
 ![Slide 3](./docs/slides/slide-3.png)
 ![Slide 4](./docs/slides/slide-4.png)
 ![Slide 5](./docs/slides/slide-5.png)
-![Slide 6](./docs/slides/slide-6.png)
+![Slide 6](./docs/slides/6.png)
 ![Slide 7](./docs/slides/slide-7.png)
 ![Slide 8](./docs/slides/slide-8.png)
 ![Slide 9](./docs/slides/slide-9.png)
