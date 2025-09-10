@@ -56,7 +56,7 @@
 
 | Account Provider | Operation | Gas Used | USD Cost |
 |------------------|-----------|----------|----------|
-| **Openfort** | Swap ETH for USDC (UOP) | **121,405** | **$0.0030** |
+| **Openfort** | Swap ETH for USDC (UOP) | **179,677** | **$0.0060** |
 | **Openfort** | Swap ETH for USDC w/ MK (UOP) | **540,329** | **$0.0135** |
 | **Openfort** | Swap ETH for USDC w/ P256 (UOP) | **331,188** | **$0.0083** |
 | Alchemy Light Account v2 (non-modular) | Uniswap V3 Swap | 194,407 | $0.00318 |

@@ -19,3 +19,5 @@ fs_permissions = [
 
 [fmt]
 line_length = 100
+
+gas_snapshot_check = true

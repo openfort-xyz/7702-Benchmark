@@ -109,7 +109,7 @@ contract SwapUniswap is BaseBenchmark {
             account.execute(mode, executionData);
             uint256 gasUsedLocal = g0 - gasleft();
             vm.pauseGasMetering();
-
+            console.log("test_SwapETHForUSDC gasUsedLocal",gasUsedLocal);
             (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", executionData));
             
             bytes32 k = keccak256(bytes(rpcs[i].name));
@@ -215,6 +215,7 @@ contract SwapUniswap is BaseBenchmark {
             ep.handleOps(ops, payable(pmAddr));
             uint256 gasUsedLocal = g0 - gasleft();
             vm.pauseGasMetering();
+            console.log("test_SwapETHForUSDC_UOP gasUsedLocal",gasUsedLocal);
 
             (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", executionData));
             
@@ -353,6 +354,7 @@ contract SwapUniswap is BaseBenchmark {
             ep.handleOps(ops, payable(pmAddr));
             uint256 gasUsedLocal = g0 - gasleft();
             vm.pauseGasMetering();
+            console.log("test_SwapETHForUSDCWithMK_UOP gasUsedLocal",gasUsedLocal);
 
             (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", executionData));
             
@@ -483,6 +485,7 @@ contract SwapUniswap is BaseBenchmark {
             ep.handleOps(ops, payable(pmAddr));
             uint256 gasUsedLocal = g0 - gasleft();
             vm.pauseGasMetering();
+            console.log("test_SwapETHForUSDCWithP256_UOP gasUsedLocal",gasUsedLocal);
 
             (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", executionData));
             
