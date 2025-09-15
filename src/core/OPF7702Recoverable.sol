@@ -39,7 +39,6 @@ import {EIP712Upgradeable} from
  *  • ERC-1271 on-chain signature support
  *  • Reentrancy protection & explicit nonce replay prevention
  */
-
 contract OPF7702Recoverable is OPF7702, EIP712Upgradeable, ERC7201 {
     using ECDSA for bytes32;
     using KeyHashLib for Key;
@@ -157,7 +156,7 @@ contract OPF7702Recoverable is OPF7702, EIP712Upgradeable, ERC7201 {
         if (!_sessionKey.checkKey()) {
             registerKey(_sessionKey, _sessionKeyData);
         }
-        
+
         initializeGuardians(_initialGuardian);
 
         emit IOPF7702.Initialized(_key);

@@ -47,9 +47,9 @@ contract SwapERC20Uniswap is BaseBenchmark {
         paymentToken = new MockPaymentToken();
 
         token0 = LibClone.clone(address(paymentToken));
-        _mint(token0, address(this), type(uint128).max);
+        _mintForUniSwapV2(token0, address(this), type(uint128).max);
         token1 = LibClone.clone(address(paymentToken));
-        _mint(token1, address(this), type(uint128).max);
+        _mintForUniSwapV2(token1, address(this), type(uint128).max);
         if (uint160(token0) > uint160(token1)) {
             (token0, token1) = (token1, token0);
         }
@@ -62,6 +62,9 @@ contract SwapERC20Uniswap is BaseBenchmark {
     }
 
     function test_UniswapV2Swap() public {
+        _mintForUniSwapV2(token0, owner, 20 ether);
+        _mintForUniSwapV2(token1, owner, 20 ether);
+
         bytes memory payload = abi.encodeWithSignature(
             "execute(address,uint256,bytes)", _UNISWAP_V2_ROUTER_ADDRESS, 0, _uniswapV2SwapPayload()
         );
@@ -91,7 +94,7 @@ contract SwapERC20Uniswap is BaseBenchmark {
         vm.snapshotGasLastCall("test_UniswapV2Swap");
     }
 
-    function _mint(address token, address to, uint256 amount) internal {
+    function _mintForUniSwapV2(address token, address to, uint256 amount) internal {
         if (token == address(0)) {
             vm.deal(to, amount);
         } else {
