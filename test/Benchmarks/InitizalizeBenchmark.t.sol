@@ -90,7 +90,6 @@ contract InitializeBenchmark is BaseBenchmark {
         (Key memory keyMK, KeyReg memory keyRegMK) = _getMK();
         (Key memory keySK, KeyReg memory keyRegSK) = _getSKEmpty();
 
-
         PackedUserOperation memory userOp = _buildUserOp();
 
         for (uint256 i = 0; i < rpcs.length;) {
@@ -109,7 +108,7 @@ contract InitializeBenchmark is BaseBenchmark {
             userOp.nonce = _getNonce(owner, 0);
             userOp.callData = initCallData;
             userOp.signature = _signUserOpWithEOA(userOp);
-            
+
             PackedUserOperation[] memory ops = new PackedUserOperation[](1);
             ops[0] = userOp;
 
@@ -122,7 +121,8 @@ contract InitializeBenchmark is BaseBenchmark {
             uint256 gasUsedLocal = g0 - gasleft();
             vm.pauseGasMetering();
 
-            (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", userOp.callData));
+            (uint256 zeros, uint256 nonZeros) =
+                FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", userOp.callData));
 
             bytes32 k = keccak256(bytes(rpcs[i].name));
             ChainFees storage f = fees[k];
@@ -178,7 +178,7 @@ contract InitializeBenchmark is BaseBenchmark {
 
             _deploy();
             _attach7702();
-            
+
             bytes memory initCallData = abi.encodeWithSelector(
                 account.initialize.selector, keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian
             );
@@ -237,7 +237,7 @@ contract InitializeBenchmark is BaseBenchmark {
 
         _beginTest("Register_Benchmark", "test_InitializeTXWithRegisteringSessionKey_UOP");
         _beginMode("Sponsored");
-   
+
         (Key memory keyMK, KeyReg memory keyRegMK) = _getMK();
         (Key memory keySK, KeyReg memory keyRegSK) = _getSK();
 
@@ -252,7 +252,7 @@ contract InitializeBenchmark is BaseBenchmark {
             _deploy();
             _attach7702();
             _paymaster();
-            
+
             bytes memory initCallData = abi.encodeWithSelector(
                 account.initialize.selector, keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian
             );
@@ -272,7 +272,8 @@ contract InitializeBenchmark is BaseBenchmark {
             uint256 gasUsedLocal = g0 - gasleft();
             vm.pauseGasMetering();
 
-            (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", userOp.callData));
+            (uint256 zeros, uint256 nonZeros) =
+                FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", userOp.callData));
 
             bytes32 k = keccak256(bytes(rpcs[i].name));
             ChainFees storage f = fees[k];

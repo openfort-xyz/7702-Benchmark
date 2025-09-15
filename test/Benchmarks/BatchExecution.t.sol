@@ -17,7 +17,7 @@ contract BatchExecution is BaseBenchmark {
         _beginTest("BatchExecution_Benchmark", "test_BatchExecution");
         _beginMode("Direct");
         _mintErc20(owner, 10e18);
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
 
@@ -27,15 +27,17 @@ contract BatchExecution is BaseBenchmark {
 
             Call[] memory calls = new Call[](2);
             bytes memory dataHex = abi.encodeWithSelector(erc20.mint.selector, owner, 10e18);
-            bytes memory dataHex2 = abi.encodeWithSelector(IERC20.transfer.selector, sessionKey, 2e18);
+            bytes memory dataHex2 =
+                abi.encodeWithSelector(IERC20.transfer.selector, sessionKey, 2e18);
             calls[0] = Call({target: address(erc20), value: 0, data: dataHex});
             calls[1] = Call({target: address(erc20), value: 0, data: dataHex2});
 
             bytes32 mode = bytes32(uint256(0x01000000000000000000) << (22 * 8));
             bytes memory executionData = abi.encode(calls);
 
-            bytes memory callData =
-            abi.encodeWithSelector(bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData);
+            bytes memory callData = abi.encodeWithSelector(
+                bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData
+            );
 
             vm.resumeGasMetering();
             uint256 g0 = gasleft();
@@ -44,7 +46,8 @@ contract BatchExecution is BaseBenchmark {
             uint256 gasUsedLocal = g0 - gasleft();
             vm.pauseGasMetering();
 
-            (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
+            (uint256 zeros, uint256 nonZeros) =
+                FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
 
             bytes32 k = keccak256(bytes(rpcs[i].name));
             ChainFees storage f = fees[k];
@@ -74,7 +77,9 @@ contract BatchExecution is BaseBenchmark {
 
             _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
         _flushTo("test/Output/Batch/test_BatchExecution.json");
     }
@@ -85,10 +90,10 @@ contract BatchExecution is BaseBenchmark {
         _beginTest("BatchExecution_Benchmark", "test_BatchExecution_UOP");
         _beginMode("Sponsored");
         _mintErc20(owner, 10e18);
-        
+
         PackedUserOperation memory userOp = _buildUserOp();
 
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
 
@@ -99,15 +104,17 @@ contract BatchExecution is BaseBenchmark {
 
             Call[] memory calls = new Call[](2);
             bytes memory dataHex = abi.encodeWithSelector(erc20.mint.selector, owner, 10e18);
-            bytes memory dataHex2 = abi.encodeWithSelector(IERC20.transfer.selector, sessionKey, 2e18);
+            bytes memory dataHex2 =
+                abi.encodeWithSelector(IERC20.transfer.selector, sessionKey, 2e18);
             calls[0] = Call({target: address(erc20), value: 0, data: dataHex});
             calls[1] = Call({target: address(erc20), value: 0, data: dataHex2});
 
             bytes32 mode = bytes32(uint256(0x01000000000000000000) << (22 * 8));
             bytes memory executionData = abi.encode(calls);
 
-            bytes memory callData =
-            abi.encodeWithSelector(bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData);
+            bytes memory callData = abi.encodeWithSelector(
+                bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData
+            );
 
             userOp.nonce = _getNonce(owner, 0);
             userOp.callData = callData;
@@ -115,7 +122,7 @@ contract BatchExecution is BaseBenchmark {
 
             PackedUserOperation[] memory ops = new PackedUserOperation[](1);
             ops[0] = userOp;
-            
+
             vm.resumeGasMetering();
             uint256 g0 = gasleft();
             vm.prank(pmAddr);
@@ -123,7 +130,8 @@ contract BatchExecution is BaseBenchmark {
             uint256 gasUsedLocal = g0 - gasleft();
             vm.pauseGasMetering();
 
-            (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
+            (uint256 zeros, uint256 nonZeros) =
+                FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
 
             bytes32 k = keccak256(bytes(rpcs[i].name));
             ChainFees storage f = fees[k];
@@ -153,7 +161,9 @@ contract BatchExecution is BaseBenchmark {
 
             _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
         _flushTo("test/Output/Batch/test_BatchExecution_UOP.json");
     }
@@ -164,10 +174,10 @@ contract BatchExecution is BaseBenchmark {
         _beginTest("BatchExecution_Benchmark", "test_BatchExecutionWithMK_UOP");
         _beginMode("Sponsored");
         _mintErc20(owner, 10e18);
-        
+
         PackedUserOperation memory userOp = _buildUserOp();
 
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
 
@@ -180,15 +190,17 @@ contract BatchExecution is BaseBenchmark {
 
             Call[] memory calls = new Call[](2);
             bytes memory dataHex = abi.encodeWithSelector(erc20.mint.selector, owner, 10e18);
-            bytes memory dataHex2 = abi.encodeWithSelector(IERC20.transfer.selector, sessionKey, 2e18);
+            bytes memory dataHex2 =
+                abi.encodeWithSelector(IERC20.transfer.selector, sessionKey, 2e18);
             calls[0] = Call({target: address(erc20), value: 0, data: dataHex});
             calls[1] = Call({target: address(erc20), value: 0, data: dataHex2});
 
             bytes32 mode = bytes32(uint256(0x01000000000000000000) << (22 * 8));
             bytes memory executionData = abi.encode(calls);
 
-            bytes memory callData =
-            abi.encodeWithSelector(bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData);
+            bytes memory callData = abi.encodeWithSelector(
+                bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData
+            );
 
             userOp.nonce = _getNonce(owner, 0);
             userOp.callData = callData;
@@ -226,7 +238,7 @@ contract BatchExecution is BaseBenchmark {
 
             PackedUserOperation[] memory ops = new PackedUserOperation[](1);
             ops[0] = userOp;
-            
+
             vm.resumeGasMetering();
             uint256 g0 = gasleft();
             vm.prank(pmAddr);
@@ -234,7 +246,8 @@ contract BatchExecution is BaseBenchmark {
             uint256 gasUsedLocal = g0 - gasleft();
             vm.pauseGasMetering();
 
-            (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
+            (uint256 zeros, uint256 nonZeros) =
+                FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
 
             bytes32 k = keccak256(bytes(rpcs[i].name));
             ChainFees storage f = fees[k];
@@ -264,7 +277,9 @@ contract BatchExecution is BaseBenchmark {
 
             _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
         _flushTo("test/Output/Batch/test_BatchExecutionWithMK_UOP.json");
     }
@@ -275,10 +290,10 @@ contract BatchExecution is BaseBenchmark {
         _beginTest("BatchExecution_Benchmark", "test_BatchExecutionWithP256_UOP");
         _beginMode("Sponsored");
         _mintErc20(owner, 10e18);
-        
+
         PackedUserOperation memory userOp = _buildUserOp();
 
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
 
@@ -291,24 +306,23 @@ contract BatchExecution is BaseBenchmark {
 
             Call[] memory calls = new Call[](2);
             bytes memory dataHex = abi.encodeWithSelector(erc20.mint.selector, owner, 10e18);
-            bytes memory dataHex2 = abi.encodeWithSelector(IERC20.transfer.selector, sessionKey, 2e18);
+            bytes memory dataHex2 =
+                abi.encodeWithSelector(IERC20.transfer.selector, sessionKey, 2e18);
             calls[0] = Call({target: address(erc20), value: 0, data: dataHex});
             calls[1] = Call({target: address(erc20), value: 0, data: dataHex2});
 
             bytes32 mode = bytes32(uint256(0x01000000000000000000) << (22 * 8));
             bytes memory executionData = abi.encode(calls);
 
-            bytes memory callData =
-            abi.encodeWithSelector(bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData);
+            bytes memory callData = abi.encodeWithSelector(
+                bytes4(keccak256("execute(bytes32,bytes)")), mode, executionData
+            );
 
             userOp.nonce = _getNonce(owner, 0);
             userOp.callData = callData;
 
             bytes memory _signature = account.encodeP256Signature(
-                keyData.r,
-                keyData.s,
-                PubKey({x: keyData.x, y: keyData.y}),
-                KeyType.P256
+                keyData.r, keyData.s, PubKey({x: keyData.x, y: keyData.y}), KeyType.P256
             );
 
             // console.log(rpcs[i].name);
@@ -319,17 +333,13 @@ contract BatchExecution is BaseBenchmark {
             userOp.signature = _signature;
 
             bool isValid = webAuthn.verifyP256Signature(
-                _getUserOpHash(userOp),
-                keyData.r,
-                keyData.s,
-                keyData.x,
-                keyData.y
+                _getUserOpHash(userOp), keyData.r, keyData.s, keyData.x, keyData.y
             );
             console.log("isValid Test", isValid);
 
             PackedUserOperation[] memory ops = new PackedUserOperation[](1);
             ops[0] = userOp;
-            
+
             vm.resumeGasMetering();
             uint256 g0 = gasleft();
             vm.prank(pmAddr);
@@ -337,7 +347,8 @@ contract BatchExecution is BaseBenchmark {
             uint256 gasUsedLocal = g0 - gasleft();
             vm.pauseGasMetering();
 
-            (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
+            (uint256 zeros, uint256 nonZeros) =
+                FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
 
             bytes32 k = keccak256(bytes(rpcs[i].name));
             ChainFees storage f = fees[k];
@@ -367,9 +378,10 @@ contract BatchExecution is BaseBenchmark {
 
             _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
         _flushTo("test/Output/Batch/test_BatchExecutionWithP256_UOP.json");
     }
 }
-

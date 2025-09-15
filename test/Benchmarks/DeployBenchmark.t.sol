@@ -78,7 +78,7 @@ contract DeployBenchmark is BaseBenchmark {
             unchecked {
                 ++i;
             }
-        _flushTo("test/Output/Deploy/test_DeployOPFMain.json");
+            _flushTo("test/Output/Deploy/test_DeployOPFMain.json");
         }
     }
 }

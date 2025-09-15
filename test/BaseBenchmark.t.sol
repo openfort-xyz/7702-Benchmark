@@ -50,7 +50,7 @@ contract BaseBenchmark is BaseData, RecoverSigner {
             preVerificationGas: 800000,
             gasFees: _packGasFees(80 gwei, 15 gwei),
             // paymasterAndData: abi.encodePacked(address(pm)),
-            paymasterAndData:  hex"",
+            paymasterAndData: hex"",
             signature: hex""
         });
     }
@@ -159,9 +159,12 @@ contract BaseBenchmark is BaseData, RecoverSigner {
         account.initialize(keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian);
     }
 
-    function _initializeWithP256(bytes32 _x, bytes32 _y, address _contract, address _token) internal {
+    function _initializeWithP256(bytes32 _x, bytes32 _y, address _contract, address _token)
+        internal
+    {
         (Key memory keyMK, KeyReg memory keyRegMK) = _getMK();
-        (Key memory keySK, KeyReg memory keyRegSK) = _getSKP256({_x: _x, _y: _y, _contract: _contract, _token: _token});
+        (Key memory keySK, KeyReg memory keyRegSK) =
+            _getSKP256({_x: _x, _y: _y, _contract: _contract, _token: _token});
         (bytes memory sig,) = _signInitialize();
         vm.prank(owner);
         account.initialize(keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian);
@@ -182,7 +185,7 @@ contract BaseBenchmark is BaseData, RecoverSigner {
         vm.prank(owner);
         account.initialize(keyMK, keyRegMK, keySK, keyRegSK, sig, initialGuardian);
     }
-    
+
     function _mintErc20(address _to, uint256 _amount) internal {
         erc20.mint(_to, _amount);
     }
@@ -205,15 +208,23 @@ contract BaseBenchmark is BaseData, RecoverSigner {
         vm.stopPrank();
     }
 
-    function _getMasterKeyData(string memory _keyid, string memory _name) internal view returns (KeyDatJson memory keyData) {
+    function _getMasterKeyData(string memory _keyid, string memory _name)
+        internal
+        view
+        returns (KeyDatJson memory keyData)
+    {
         string memory jsonPath = jsonPaths[_keyid];
         string memory json = vm.readFile(jsonPath);
 
         string memory basePath = string.concat(".", _name);
 
         keyData = KeyDatJson({
-            authenticatorData: stdJson.readBytes(json, string.concat(basePath, ".metadata.authenticatorData")),
-            clientDataJSON: stdJson.readString(json, string.concat(basePath, ".metadata.clientDataJSON")),
+            authenticatorData: stdJson.readBytes(
+                json, string.concat(basePath, ".metadata.authenticatorData")
+            ),
+            clientDataJSON: stdJson.readString(
+                json, string.concat(basePath, ".metadata.clientDataJSON")
+            ),
             challengeIndex: stdJson.readUint(json, string.concat(basePath, ".metadata.challengeIndex")),
             typeIndex: stdJson.readUint(json, string.concat(basePath, ".metadata.typeIndex")),
             r: stdJson.readBytes32(json, string.concat(basePath, ".signature.r")),
@@ -223,7 +234,11 @@ contract BaseBenchmark is BaseData, RecoverSigner {
         });
     }
 
-    function _getP256KeyData(string memory _keyid, string memory _name) internal view returns (KeyDatJson memory keyData)  {
+    function _getP256KeyData(string memory _keyid, string memory _name)
+        internal
+        view
+        returns (KeyDatJson memory keyData)
+    {
         string memory jsonPath = jsonPaths[_keyid];
         string memory json = vm.readFile(jsonPath);
 

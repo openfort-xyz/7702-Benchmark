@@ -47,19 +47,13 @@ abstract contract JsonOut is Test {
         _ctx.modes[_curMode].name = mode;
     }
 
-    function _push(
-        string memory chain,
-        uint256 gas,
-        uint256 weiCost,
-        string memory usd
-    ) internal {
+    function _push(string memory chain, uint256 gas, uint256 weiCost, string memory usd) internal {
         ModeData storage m = _ctx.modes[_curMode];
         m.rows.push(ChainRow(chain, gas, weiCost, usd));
     }
 
     function _flushTo(string memory relPath) internal {
-        string memory json =
-            string.concat('{"', _ctx.bench, '":{"', _ctx.test, '":{');
+        string memory json = string.concat('{"', _ctx.bench, '":{"', _ctx.test, '":{');
 
         for (uint256 i = 0; i < _ctx.modes.length; i++) {
             ModeData storage m = _ctx.modes[i];
@@ -69,11 +63,19 @@ abstract contract JsonOut is Test {
                 ChainRow storage r = m.rows[j];
                 json = string.concat(
                     json,
-                    '"', r.chain, '":{',
-                        '"Used Gas":', _u(r.gas), ',',
-                        '"weiCost":', _u(r.weiCost), ',',
-                        '"usd":"', r.usd, '"',
-                    '}',
+                    '"',
+                    r.chain,
+                    '":{',
+                    '"Used Gas":',
+                    _u(r.gas),
+                    ",",
+                    '"weiCost":',
+                    _u(r.weiCost),
+                    ",",
+                    '"usd":"',
+                    r.usd,
+                    '"',
+                    "}",
                     (j + 1 == m.rows.length) ? "" : ","
                 );
             }

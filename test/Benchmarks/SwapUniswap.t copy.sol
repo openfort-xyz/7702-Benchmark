@@ -57,7 +57,7 @@
 //         weth = IWETH(WETH);
 //         _beginTest("SwapUniswap_Benchmark", "test_SwapETHForUSDC");
 //         _beginMode("Direct");
-        
+
 //         _initAddrBook();
 
 //         for (uint256 i = 0; i < rpcs.length; ) {
@@ -73,7 +73,7 @@
 //             _attach7702();
 //             _initialize();
 //             _deal(owner, 1e18);
-            
+
 //             Call[] memory calls = new Call[](3);
 
 //             ISwapRouter.ExactInputSingleParams memory params = ISwapRouter
@@ -110,7 +110,7 @@
 //             vm.pauseGasMetering();
 
 //             (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", executionData));
-            
+
 //             bytes32 k = keccak256(bytes(rpcs[i].name));
 //             ChainFees storage f = fees[k];
 
@@ -163,7 +163,7 @@
 //             _initialize();
 //             _paymaster();
 //             _deal(owner, 1e18);
-            
+
 //             console.log("Here A");
 //             (address WETH_, address USDC_) = _loadAddresses(rpcs[i].name);
 
@@ -206,7 +206,7 @@
 //             userOp.nonce = ep.getNonce(owner, 1);
 //             userOp.callData = callData;
 //             userOp.signature = _signUserOpWithEOA(userOp);
-    
+
 //             PackedUserOperation[] memory ops = new PackedUserOperation[](1);
 //             ops[0] = userOp;
 
@@ -220,7 +220,7 @@
 //             vm.pauseGasMetering();
 
 //             (uint256 zeros, uint256 nonZeros) = FeeCalc.countData(abi.encodePacked(hex"02FFFFFFFF", callData));
-            
+
 //             bytes32 k = keccak256(bytes(rpcs[i].name));
 //             ChainFees storage f = fees[k];
 

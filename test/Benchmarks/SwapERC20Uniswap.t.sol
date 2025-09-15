@@ -42,7 +42,7 @@ contract SwapERC20Uniswap is BaseBenchmark {
 
     MockPaymentToken paymentToken;
 
-    function setUp() override public {
+    function setUp() public override {
         super.setUp();
         paymentToken = new MockPaymentToken();
 
@@ -85,7 +85,7 @@ contract SwapERC20Uniswap is BaseBenchmark {
 
         PackedUserOperation[] memory ops = new PackedUserOperation[](1);
         ops[0] = userOp;
-        
+
         vm.prank(pmAddr);
         ep.handleOps(ops, payable(pmAddr));
         vm.snapshotGasLastCall("test_UniswapV2Swap");
@@ -114,7 +114,6 @@ contract SwapERC20Uniswap is BaseBenchmark {
         );
     }
 }
-
 
 import {ERC20} from "lib/solady/src/tokens/ERC20.sol";
 

@@ -15,7 +15,7 @@ contract RegisterSessionKey is BaseBenchmark {
         _beginTest("Register_Benchmark", "test_RegisterEOA");
         _beginMode("Direct");
 
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
 
@@ -64,7 +64,9 @@ contract RegisterSessionKey is BaseBenchmark {
 
             _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
         _flushTo("test/Output/Register-Key/test_RegisterEOA.json");
     }
@@ -77,7 +79,7 @@ contract RegisterSessionKey is BaseBenchmark {
 
         PackedUserOperation memory userOp = _buildUserOp();
 
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
 
@@ -134,7 +136,9 @@ contract RegisterSessionKey is BaseBenchmark {
 
             _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
         _flushTo("test/Output/Register-Key/test_RegisterEOA_UOP.json");
     }
@@ -145,7 +149,7 @@ contract RegisterSessionKey is BaseBenchmark {
         _beginTest("Register_Benchmark", "test_RegisterP256");
         _beginMode("Direct");
 
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
 
@@ -194,7 +198,9 @@ contract RegisterSessionKey is BaseBenchmark {
 
             _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
         _flushTo("test/Output/Register-Key/test_RegisterP256.json");
     }
@@ -207,7 +213,7 @@ contract RegisterSessionKey is BaseBenchmark {
 
         PackedUserOperation memory userOp = _buildUserOp();
 
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
 
@@ -264,7 +270,9 @@ contract RegisterSessionKey is BaseBenchmark {
 
             _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
         _flushTo("test/Output/Register-Key/test_RegisterP256_UOP.json");
     }
@@ -275,7 +283,7 @@ contract RegisterSessionKey is BaseBenchmark {
         _beginTest("Register_Benchmark", "test_RegisterP256NonExtrac");
         _beginMode("Direct");
 
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
 
@@ -324,7 +332,9 @@ contract RegisterSessionKey is BaseBenchmark {
 
             _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
         _flushTo("test/Output/Register-Key/test_RegisterP256NonExtrac.json");
     }
@@ -337,7 +347,7 @@ contract RegisterSessionKey is BaseBenchmark {
 
         PackedUserOperation memory userOp = _buildUserOp();
 
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
 
@@ -394,7 +404,9 @@ contract RegisterSessionKey is BaseBenchmark {
 
             _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
         _flushTo("test/Output/Register-Key/test_RegisterP256NonExtrac_UOP.json");
     }
@@ -407,7 +419,7 @@ contract RegisterSessionKey is BaseBenchmark {
 
         PackedUserOperation memory userOp = _buildUserOp();
 
-        for (uint256 i = 0; i < rpcs.length; ) {
+        for (uint256 i = 0; i < rpcs.length;) {
             uint256 forkId = vm.createFork(rpcs[i].url);
             vm.selectFork(forkId);
 
@@ -496,7 +508,9 @@ contract RegisterSessionKey is BaseBenchmark {
 
             _push(rpcs[i].name, gasUsedLocal, weiCost, usdHuman);
 
-            unchecked { ++i; }
+            unchecked {
+                ++i;
+            }
         }
         _flushTo("test/Output/Register-Key/test_RegisterP256NonExtracWithMK_UOP.json");
     }
