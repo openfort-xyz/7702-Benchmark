@@ -4,7 +4,7 @@ pragma solidity ^0.8.29;
 
 import {OPFMain} from "src/core/OPFMain.sol";
 import {MockERC20} from "src/mocks/MockERC20.sol";
-import {Paymaster} from "src/paymaster/paymaster.sol";
+import {OPFPaymasterV3} from "src/PaymasterV3/OPFPaymasterV3.sol";
 import {WebAuthnVerifierV2} from "src/utils/WebAuthnVerifierV2.sol";
 import {Test, console2 as console} from "lib/forge-std/src/Test.sol";
 import {MockPaymentToken} from "test/BenchmarksByIthaca/UniSwapV2.sol";
@@ -19,7 +19,7 @@ contract InitBenchmarksByIthaca is BaseBenchmarksByIthaca {
     IEntryPoint internal ep;
     WebAuthnVerifierV2 internal webAuthn;
     MockERC20 internal erc20;
-    Paymaster internal pm;
+    OPFPaymasterV3 internal pm;
 
     OPFMain public account;
     OPFMain public implementation;
@@ -27,8 +27,23 @@ contract InitBenchmarksByIthaca is BaseBenchmarksByIthaca {
     function setUp() public virtual {
         (pmAddr, pmPK) = makeAddrAndKey("paymaster");
 
+        treasury = makeAddr("treasury");
+        (ownerPM, ownerPM_PK) = makeAddrAndKey("owner");
+        (managerPM, managerPM_PK) = makeAddrAndKey("manager");
+
+        for (uint256 i = 0; i < signersLength;) {
+            (address signerPM, uint256 signerPM_PK) =
+                makeAddrAndKey(string.concat("signer", vm.toString(i)));
+            signersPM.push(signerPM);
+            signersPM_PK.push(signerPM_PK);
+            unchecked {
+                i++;
+            }
+        }
+
         erc20 = new MockERC20();
         ep = IEntryPoint(payable(_ENTRY_POINT_V8));
+        pm = new OPFPaymasterV3(ownerPM, managerPM, signersPM);
 
         initialGuardian = keccak256(abi.encodePacked(makeAddr("initialGuardian")));
 
@@ -98,6 +113,7 @@ contract InitBenchmarksByIthaca is BaseBenchmarksByIthaca {
         deal(owner, 10e18);
         deal(sender, 10e18);
         deal(pmAddr, 10e18);
+        deal(ownerPM, 10e18);
     }
 
     function _mint() internal {

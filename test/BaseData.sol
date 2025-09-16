@@ -5,8 +5,10 @@ pragma solidity ^0.8.29;
 import {IKey} from "src/interfaces/IKey.sol";
 import {SpendLimit} from "src/utils/SpendLimit.sol";
 import {ChainsData} from "test/helpers/ChainsData.sol";
+import {PaymasterDataBenchmarksByIthaca} from
+    "test/BenchmarksByIthaca/PaymasterDataBenchmarksByIthaca.t.sol";
 
-abstract contract BaseData is IKey, ChainsData {
+abstract contract BaseData is IKey, ChainsData, PaymasterDataBenchmarksByIthaca {
     struct Call {
         address target;
         uint256 value;

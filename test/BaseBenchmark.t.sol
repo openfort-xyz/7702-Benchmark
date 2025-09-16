@@ -8,6 +8,7 @@ import {OPFMain} from "src/core/OPFMain.sol";
 import {MockERC20} from "src/mocks/MockERC20.sol";
 import {Paymaster} from "src/paymaster/paymaster.sol";
 import {RecoverSigner} from "test/Helpers/RecoverSigner.sol";
+import {OPFPaymasterV3} from "src/PaymasterV3/OPFPaymasterV3.sol";
 import {WebAuthnVerifierV2} from "src/utils/WebAuthnVerifierV2.sol";
 import {Test, console2 as console} from "lib/forge-std/src/Test.sol";
 import {EntryPoint} from "lib/account-abstraction/contracts/core/EntryPoint.sol";
@@ -21,7 +22,7 @@ contract BaseBenchmark is BaseData, RecoverSigner {
     IEntryPoint internal ep;
     WebAuthnVerifierV2 internal webAuthn;
     MockERC20 internal erc20;
-    Paymaster internal pm;
+    OPFPaymasterV3 internal pm;
 
     OPFMain public account;
     OPFMain public implementation;
@@ -30,9 +31,22 @@ contract BaseBenchmark is BaseData, RecoverSigner {
         super.setUp();
         // ep = new EntryPoint();
         ep = IEntryPoint(payable(ENTRYPOINT));
-        erc20 = new MockERC20();
 
         (pmAddr, pmPK) = makeAddrAndKey("paymaster");
+        treasury = makeAddr("treasury");
+        (ownerPM, ownerPM_PK) = makeAddrAndKey("owner");
+        (managerPM, managerPM_PK) = makeAddrAndKey("manager");
+
+        for (uint256 i = 0; i < signersLength;) {
+            (address signerPM, uint256 signerPM_PK) =
+                makeAddrAndKey(string.concat("signer", vm.toString(i)));
+            signersPM.push(signerPM);
+            signersPM_PK.push(signerPM_PK);
+            unchecked {
+                i++;
+            }
+        }
+
         // vm.prank(pmAddr);
         // pm = new Paymaster(IEntryPoint(ep));
         // _paymaster();
@@ -187,7 +201,10 @@ contract BaseBenchmark is BaseData, RecoverSigner {
     }
 
     function _mintErc20(address _to, uint256 _amount) internal {
+        vm.startPrank(owner);
+        erc20 = new MockERC20();
         erc20.mint(_to, _amount);
+        vm.stopPrank();
     }
 
     function _deal(address _account, uint256 _amount) internal {
@@ -205,6 +222,15 @@ contract BaseBenchmark is BaseData, RecoverSigner {
         _deal(pmAddr, 10e18);
         vm.startPrank(pmAddr);
         ep.depositTo{value: 0.09e18}(owner);
+        vm.stopPrank();
+    }
+
+    function _depositAndStakeEP() internal {
+        _deal(ownerPM, 10e18);
+        vm.startPrank(ownerPM);
+        pm = new OPFPaymasterV3(ownerPM, managerPM, signersPM);
+        pm.deposit{value: 5 ether}();
+        pm.addStake{value: 5 ether}(860);
         vm.stopPrank();
     }
 
