@@ -1,0 +1,8 @@
+{
+    "test_SendETH_UOP_VERIFYING_MODE": "145277",
+    "test_SendETH_UOP_ERC20_MODE_combinedByteBasic": "190785",
+    "test_TransferErc20_UOP_VERIFYING_MODE": "146942",
+    "test_TransferErc20_UOP_ERC20_MODE_combinedByteBasic": "185174",
+    "test_SwapETHForUSDC_UOP_VERIFYING_MODE": "198034",
+    "test_SwapETHForUSDC_UOP_ERC20_MODE_combinedByteBasic": "243544"
+  }
