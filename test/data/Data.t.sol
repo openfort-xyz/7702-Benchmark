@@ -11,8 +11,13 @@ import { SocialRecoveryManager } from "src/utils/SocialRecover.sol";
 import { WebAuthnVerifierV2 } from "src/utils/WebAuthnVerifierV2.sol";
 import { OPFPaymasterV3 as Paymaster } from "src/PaymasterV3/OPFPaymasterV3.sol";
 import { IEntryPoint } from "lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
+import { EntryPoint } from "lib/account-abstraction/contracts/core/EntryPoint.sol";
 
 abstract contract Data is WebAuthnHelper, IKey {
+    /// --------------------------------------------------------------------------------- Chain
+    string internal RPC_URL = vm.envString("MAINNET_RPC_URL");
+    uint256 internal forkId;
+
     /// --------------------------------------------------------------------------------- Contracts
     OPFMain internal opf7702;
     GasPolicy internal gasPolicy;
@@ -65,10 +70,16 @@ abstract contract Data is WebAuthnHelper, IKey {
     uint256 constant signersLength = 3;
 
     function setUp() public virtual {
+        forkId = vm.createFork(RPC_URL);
+        vm.selectFork(forkId);
+
         _createAddresses();
         _createPMsigners();
 
         vm.startPrank(sender);
+        EntryPoint deployedEntryPoint = new EntryPoint();
+        vm.etch(ENTRY_POINT_V8, address(deployedEntryPoint).code);
+        vm.label(ENTRY_POINT_V8, "EntryPointV8");
         entryPoint = IEntryPoint(payable(ENTRY_POINT_V8));
         webAuthn = new WebAuthnVerifierV2();
         gasPolicy = new GasPolicy(DEFAULT_PVG, DEFAULT_VGL, DEFAULT_CGL, DEFAULT_PMV, DEFAULT_PO);

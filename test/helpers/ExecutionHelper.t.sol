@@ -44,6 +44,11 @@ abstract contract ExecutionHelper is UserOpHelper {
         }
     }
 
+    function _packCallData(bytes32 _mode, Call[] memory _calls) internal pure returns (bytes memory callData) {
+        bytes memory executionData = abi.encode(_calls);
+        callData = abi.encodeWithSelector(bytes4(keccak256("execute(bytes32,bytes)")), _mode, executionData);
+    }
+
     function _callRecoveryManager(bytes memory data) internal {
         Call[] memory calls = new Call[](1);
         calls[0] = _createCall(address(socialRecoveryManager), 0, data);

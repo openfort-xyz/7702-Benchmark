@@ -5,6 +5,11 @@ pragma solidity 0.8.29;
 import { Data } from "test/data/Data.t.sol";
 
 abstract contract KeysHelper is Data {
+    function _quickInitializeAccount() internal {
+        _createQuickFreshKey(true);
+        _createQuickFreshKey(false);
+    }
+
     function _createQuickFreshKey(bool _isMK) internal {
         if (_isMK) {
             mkReg = KeyDataReg({
