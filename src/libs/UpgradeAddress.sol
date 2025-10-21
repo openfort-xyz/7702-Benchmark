@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity 0.8.29;
 
 /**
  * @title EntryPointLib
@@ -25,12 +25,14 @@ library UpgradeAddress {
     /* --------------------------------------------------------------------- */
 
     //  _EP_SLOT = (keccak256("openfort.entrypoint.storage") - 1) & ~0xff
-    bytes32 internal constant _EP_SLOT =
-        0x4e696bb2fc09e5383cb7d4063d5fb8f6e0701a72d9523e5f996ae73b7c89e800;
+    bytes32 internal constant _EP_SLOT = 0x4e696bb2fc09e5383cb7d4063d5fb8f6e0701a72d9523e5f996ae73b7c89e800;
 
     //  _VERIFIER_SLOT = (keccak256("openfort.webauthnverifier.storage") - 1) & ~0xff
-    bytes32 internal constant _VERIFIER_SLOT =
-        0xfd39baddba6b1a9197cb18b09396db32f340e9b468af2bcc8f997735c03db200;
+    bytes32 internal constant _VERIFIER_SLOT = 0xfd39baddba6b1a9197cb18b09396db32f340e9b468af2bcc8f997735c03db200;
+
+    //  _VERIFIER_SLOT = (keccak256("openfort.gaspolicy.storage") - 1) & ~0xff
+    bytes32 internal constant _GAS_POLICY_SLOT = 0xda9fe820be906bb4b68c951302595f7e1131563db95582cda480475cc85e6800;
+
     // flage if overriden
     uint256 internal constant _OVERRIDDEN_FLAG = 1 << 255;
 
@@ -54,6 +56,14 @@ library UpgradeAddress {
     /// @param current The address of the new WebAuthn verifier contract that is now active
     event WebAuthnVerifierUpdated(address indexed previous, address indexed current);
 
+    /// @notice Emitted when the Gas Policy contract address is updated
+    /// @dev This event is triggered when the account updates its Gas Policy contract,
+    ///      affecting how Session Key are registered and validated.
+    ///      Important for tracking gas usage and config.
+    /// @param previous The address of the previous Gas Policy contract that was replaced
+    /// @param current The address of the new Gas Policy contract that is now active
+    event GasPolicyUpdated(address indexed previous, address indexed current);
+
     /* --------------------------------------------------------------------- */
     /*                              PUBLIC HELPERS                           */
     /* --------------------------------------------------------------------- */
@@ -67,11 +77,20 @@ library UpgradeAddress {
         ep = _isOverridden(packed) ? _unpack(packed) : _fallback;
     }
 
-    /// @notice Returns the active WebAuthnVerifier address, defaulting to `_fallback`.
+    /// @notice Returns the active Gas Policy address, defaulting to `_fallback`.
     function webAuthnVerifier(address _fallback) internal view returns (address v) {
         uint256 packed;
         assembly {
             packed := sload(_VERIFIER_SLOT)
+        }
+        v = _isOverridden(packed) ? _unpack(packed) : _fallback;
+    }
+
+    /// @notice Returns the active WebAuthnVerifier address, defaulting to `_fallback`.
+    function gasPolicy(address _fallback) internal view returns (address v) {
+        uint256 packed;
+        assembly {
+            packed := sload(_GAS_POLICY_SLOT)
         }
         v = _isOverridden(packed) ? _unpack(packed) : _fallback;
     }
@@ -92,7 +111,6 @@ library UpgradeAddress {
         assembly {
             sstore(_EP_SLOT, packed)
         }
-        emit EntryPointUpdated(oldEp, newEp);
     }
 
     /// @notice Permanently overrides the WebAuthnVerifier address.
@@ -110,7 +128,23 @@ library UpgradeAddress {
         assembly {
             sstore(_VERIFIER_SLOT, packed)
         }
-        emit WebAuthnVerifierUpdated(oldV, newV);
+    }
+
+    /// @notice Permanently overrides the Gas Policy address.
+    function setGasPolicy(address newV) internal {
+        require(newV != address(0), UpgradeAddress__AddressCantBeZero());
+        address oldV;
+        uint256 currentPacked;
+        assembly {
+            currentPacked := sload(_GAS_POLICY_SLOT)
+        }
+        if (_isOverridden(currentPacked)) {
+            oldV = _unpack(currentPacked);
+        }
+        uint256 packed = _pack(newV);
+        assembly {
+            sstore(_GAS_POLICY_SLOT, packed)
+        }
     }
 
     /* --------------------------------------------------------------------- */
