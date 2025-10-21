@@ -26,3 +26,6 @@ install-forge: openzeppelin openzeppelin-upgr account-abstraction solady webauth
 
 build:
 	forge clean && forge compile
+
+push:
+	git push origin 0xkoiner/BenchmarksV2

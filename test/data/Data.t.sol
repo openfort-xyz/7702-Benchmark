@@ -9,7 +9,7 @@ import { GasPolicy } from "src/utils/GasPolicy.sol";
 import { WebAuthnHelper } from "./WebAuthnHelper.t.sol";
 import { SocialRecoveryManager } from "src/utils/SocialRecover.sol";
 import { WebAuthnVerifierV2 } from "src/utils/WebAuthnVerifierV2.sol";
-import {OPFPaymasterV3 as Paymaster} from "src/PaymasterV3/OPFPaymasterV3.sol";
+import { OPFPaymasterV3 as Paymaster } from "src/PaymasterV3/OPFPaymasterV3.sol";
 import { IEntryPoint } from "lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
 
 abstract contract Data is WebAuthnHelper, IKey {
