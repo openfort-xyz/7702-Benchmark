@@ -1,6 +1,6 @@
 {
-  "test_Batch10CallWithRootKeyDirect": "66989",
-  "test_Batch10CallWithRootKeyDirectAA": "120731",
-  "test_Batch10CallWithRootKeyDirectAASponsored": "128666",
-  "test_Batch10CallWithRootKeyDirectAASponsoredERC20": "149135"
+  "test_Batch10CallWithRootKeyDirect": "102673",
+  "test_Batch10CallWithRootKeyDirectAA": "165855",
+  "test_Batch10CallWithRootKeyDirectAASponsored": "178034",
+  "test_Batch10CallWithRootKeyDirectAASponsoredERC20": "199499"
 }

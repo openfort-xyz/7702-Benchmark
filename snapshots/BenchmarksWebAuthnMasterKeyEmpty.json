@@ -1,5 +1,5 @@
 {
-  "test_SendEmptyCallWithWebAuthnMasterKeyDirectAA": "434645",
-  "test_SendEmptyCallWithWebAuthnMasterKeyDirectAASponsored": "440045",
-  "test_SendEmptyCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "469825"
+  "test_SendEmptyCallWithWebAuthnMasterKeyDirectAA": "462187",
+  "test_SendEmptyCallWithWebAuthnMasterKeyDirectAASponsored": "474753",
+  "test_SendEmptyCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "512046"
 }

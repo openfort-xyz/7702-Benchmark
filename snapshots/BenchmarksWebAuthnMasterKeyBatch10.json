@@ -1,0 +1,5 @@
+{
+  "test_SendBatch10CallWithWebAuthnMasterKeyDirectAA": "535672",
+  "test_SendBatch10CallWithWebAuthnMasterKeyDirectAASponsored": "553580",
+  "test_SendBatch10CallWithWebAuthnMasterKeyDirectAASponsoredERC20": "567588"
+}

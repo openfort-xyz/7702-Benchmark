@@ -1,6 +1,6 @@
 {
-  "test_UniswapV2CallWithRootKeyDirect": "82140",
-  "test_UniswapV2CallWithRootKeyDirectAA": "134248",
-  "test_UniswapV2CallWithRootKeyDirectAASponsored": "141170",
-  "test_UniswapV2CallWithRootKeyDirectAASponsoredERC20": "168909"
+  "test_UniswapV2CallWithRootKeyDirect": "101032",
+  "test_UniswapV2CallWithRootKeyDirectAA": "162556",
+  "test_UniswapV2CallWithRootKeyDirectAASponsored": "173734",
+  "test_UniswapV2CallWithRootKeyDirectAASponsoredERC20": "202433"
 }
