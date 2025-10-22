@@ -10,8 +10,9 @@ import { WebAuthnHelper } from "./WebAuthnHelper.t.sol";
 import { SocialRecoveryManager } from "src/utils/SocialRecover.sol";
 import { WebAuthnVerifierV2 } from "src/utils/WebAuthnVerifierV2.sol";
 import { OPFPaymasterV3 as Paymaster } from "src/PaymasterV3/OPFPaymasterV3.sol";
-import { IEntryPoint } from "lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
 import { EntryPoint } from "lib/account-abstraction/contracts/core/EntryPoint.sol";
+import { IUniswapV2Router, MockPaymentToken } from "test/helpers/UniswapV2Helper.t.sol";
+import { IEntryPoint } from "lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
 
 abstract contract Data is WebAuthnHelper, IKey {
     /// --------------------------------------------------------------------------------- Chain
@@ -68,6 +69,14 @@ abstract contract Data is WebAuthnHelper, IKey {
 
     address treasury;
     uint256 constant signersLength = 3;
+
+    /// --------------------------------------------------------------------------------- Uniswap V2
+    address constant _UNISWAP_V2_FACTORY_ADDRESS = 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f;
+    address constant _UNISWAP_V2_ROUTER_ADDRESS = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
+    IUniswapV2Router uniswapV2Router;
+    address token0;
+    address token1;
+    MockPaymentToken paymentToken;
 
     function setUp() public virtual {
         forkId = vm.createFork(RPC_URL);

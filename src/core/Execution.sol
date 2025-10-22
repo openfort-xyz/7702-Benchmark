@@ -30,7 +30,7 @@ abstract contract Execution is KeysManager, ReentrancyGuard {
 
     /// @notice Maximum **total** low‑level calls allowed per *outer*
     ///         transaction (across every recursion level).
-    uint8 internal constant MAX_TX = 9;
+    uint8 internal constant MAX_TX = 10;
 
     bytes32 internal constant mode_1 = bytes32(uint256(0x01000000000000000000) << (22 * 8));
     bytes32 internal constant mode_3 = bytes32(uint256(0x01000000000078210002) << (22 * 8));

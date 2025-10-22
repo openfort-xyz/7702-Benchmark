@@ -3,10 +3,11 @@
 pragma solidity 0.8.29;
 
 import { OPFMain } from "src/core/OPFMain.sol";
-import { PaymasterHelper } from "test/helpers/PaymasterHelper.t.sol";
+import { IERC20 } from "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
+import { UniswapV2Helper, MockPaymentToken } from "test/helpers/UniswapV2Helper.t.sol";
 import { MessageHashUtils } from "lib/openzeppelin-contracts/contracts/utils/cryptography/MessageHashUtils.sol";
 
-contract DeployAccount is PaymasterHelper {
+contract DeployAccount is UniswapV2Helper {
     function setUp() public virtual override {
         super.setUp();
         vm.startPrank(sender);
@@ -87,5 +88,19 @@ contract DeployAccount is PaymasterHelper {
     function _depositToPM() internal {
         vm.prank(ownerPM);
         pm.deposit{ value: 1 ether }();
+    }
+
+    function _mint(address _addr, uint256 _amount) internal {
+        vm.prank(owner7702);
+        erc20.mint(_addr, _amount);
+    }
+
+    function _approveAll(address _token, address _owner, uint256 _amount, address _spender) internal {
+        vm.prank(_owner);
+        IERC20(_token).approve(_spender, _amount);
+    }
+
+    function _mintForUniSwapV2(address token, address to, uint256 amount) internal {
+        MockPaymentToken(token).mint(to, amount);
     }
 }
