@@ -15,14 +15,12 @@ contract BenchmarksWebAuthnMasterKeyNative is DeployAccount {
         super.setUp();
         reciver = makeAddr("reciver");
         _populateWebAuthn("WebAuthnMasterKey.json", ".native.DirectAA");
-        pK = PubKey({x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y});
-        _createCustomFreshKey(
-            true, KeyType.WEBAUTHN, type(uint48).max, 0, 0, _getKeyP256(pK), KeyControl.Self
-        );
-        _createQuickFreshKey(false);        
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+        _createCustomFreshKey(true, KeyType.WEBAUTHN, type(uint48).max, 0, 0, _getKeyP256(pK), KeyControl.Self);
+        _createQuickFreshKey(false);
         _initializeAccount();
         _mint(owner7702, 3000e18);
-        _approveAll(address(erc20),owner7702, type(uint256).max, address(pm));
+        _approveAll(address(erc20), owner7702, type(uint256).max, address(pm));
         _warmUpAccount();
     }
 
@@ -43,7 +41,7 @@ contract BenchmarksWebAuthnMasterKeyNative is DeployAccount {
         console.log("userOpHash:", vm.toString(userOpHash));
 
         _populateWebAuthn("WebAuthnMasterKey.json", ".native.DirectAA");
-        pK = PubKey({x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y});
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
         userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
 
@@ -73,7 +71,7 @@ contract BenchmarksWebAuthnMasterKeyNative is DeployAccount {
         console.log("userOpHash:", vm.toString(userOpHash));
 
         _populateWebAuthn("WebAuthnMasterKey.json", ".native.AASponsored");
-        pK = PubKey({x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y});
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
         userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
 
@@ -103,7 +101,7 @@ contract BenchmarksWebAuthnMasterKeyNative is DeployAccount {
         console.log("userOpHash:", vm.toString(userOpHash));
 
         _populateWebAuthn("WebAuthnMasterKey.json", ".native.AASponsoredERC20");
-        pK = PubKey({x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y});
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
         userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
 
