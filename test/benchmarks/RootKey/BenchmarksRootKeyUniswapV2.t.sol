@@ -16,7 +16,7 @@ contract BenchmarksRootKeyUniswapV2 is DeployAccount {
         _quickInitializeAccount();
         _initializeAccount();
         _mint(owner7702, 3000e18);
-        _approveAll(address(erc20),owner7702, type(uint256).max, address(pm));
+        _approveAll(address(erc20), owner7702, type(uint256).max, address(pm));
         _initUniswap();
         _warmUpAccount();
     }
@@ -140,7 +140,7 @@ contract BenchmarksRootKeyUniswapV2 is DeployAccount {
 
     function _warmUpAccount() internal {
         _depositToPM();
-        
+
         bytes memory data = _uniswapV2SwapPayload();
         Call[] memory calls = _getCalls(1, _UNISWAP_V2_ROUTER_ADDRESS, 0, data);
         bytes memory executionData = abi.encode(calls);

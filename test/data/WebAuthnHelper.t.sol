@@ -33,7 +33,7 @@ abstract contract WebAuthnHelper is Test, Constants {
 
     /// --------------------------------------------------------------------------------- Helpers
     function _getPath(string memory _path) internal pure returns (string memory path) {
-        string memory defPath = "test/data/";
+        string memory defPath = "test/data/signers/";
         path = string.concat(defPath, _path);
     }
 

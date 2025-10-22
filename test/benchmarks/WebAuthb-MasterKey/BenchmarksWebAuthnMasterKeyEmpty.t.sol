@@ -5,36 +5,29 @@ pragma solidity 0.8.29;
 import { VmSafe } from "lib/forge-std/src/Vm.sol";
 import { DeployAccount } from "test/DeployAccount.t.sol";
 import { console2 as console } from "lib/forge-std/src/Test.sol";
-import { IERC20 } from "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 import { PackedUserOperation } from "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 
-contract BenchmarksRootKeyBatch10 is DeployAccount {
+contract BenchmarksWebAuthnMasterKeyEmpty is DeployAccount {
     address internal reciver;
+    PubKey internal pK;
 
     function setUp() public override {
         super.setUp();
         reciver = makeAddr("reciver");
-        _quickInitializeAccount();
+        _populateWebAuthn("WebAuthnMasterKey.json", ".empty.DirectAA");
+        pK = PubKey({x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y});
+        _createCustomFreshKey(
+            true, KeyType.WEBAUTHN, type(uint48).max, 0, 0, _getKeyP256(pK), KeyControl.Self
+        );
+        _createQuickFreshKey(false);        
         _initializeAccount();
         _mint(owner7702, 3000e18);
-        _approveAll(address(erc20), owner7702, type(uint256).max, address(pm));
+        _approveAll(address(erc20),owner7702, type(uint256).max, address(pm));
         _warmUpAccount();
     }
 
-    function test_Batch10CallWithRootKeyDirect() external {
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
-        bytes memory executionData = abi.encode(calls);
-        _etch();
-        vm.prank(owner7702);
-        account.execute(mode_1, executionData);
-        vm.snapshotGasLastCall("test_Batch10CallWithRootKeyDirect");
-        VmSafe.Gas memory gas = vm.lastCallGas();
-    }
-
-    function test_Batch10CallWithRootKeyDirectAA() external {
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
+    function test_SendEmptyCallWithWebAuthnMasterKeyDirectAA() external {
+        Call[] memory calls = _getCalls(1, reciver, 0 ether, hex"");
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
         userOp = _populateUserOp(
@@ -46,15 +39,19 @@ contract BenchmarksRootKeyBatch10 is DeployAccount {
             hex""
         );
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_Batch10CallWithRootKeyDirectAA");
+        _populateWebAuthn("WebAuthnMasterKey.json", ".empty.DirectAA");
+        pK = PubKey({x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y});
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnMasterKeyDirectAA");
     }
 
-    function test_Batch10CallWithRootKeyDirectAASponsored() external {
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
+    function test_SendEmptyCallWithWebAuthnMasterKeyDirectAASponsored() external {
+        Call[] memory calls = _getCalls(1, reciver, 0 ether, hex"");
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
         bytes32 accountGasLimits = _packAccountGasLimits(600_000, 400_000);
@@ -72,15 +69,19 @@ contract BenchmarksRootKeyBatch10 is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_Batch10CallWithRootKeyDirectAASponsored");
+        _populateWebAuthn("WebAuthnMasterKey.json", ".empty.AASponsored");
+        pK = PubKey({x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y});
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnMasterKeyDirectAASponsored");
     }
 
-    function test_Batch10CallWithRootKeyDirectAASponsoredERC20() external {
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
+    function test_SendEmptyCallWithWebAuthnMasterKeyDirectAASponsoredERC20() external {
+        Call[] memory calls = _getCalls(1, reciver, 0 ether, hex"");
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
         bytes32 accountGasLimits = _packAccountGasLimits(600_000, 400_000);
@@ -98,10 +99,15 @@ contract BenchmarksRootKeyBatch10 is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_Batch10CallWithRootKeyDirectAASponsoredERC20");
+        _populateWebAuthn("WebAuthnMasterKey.json", ".empty.AASponsoredERC20");
+        pK = PubKey({x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y});
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnMasterKeyDirectAASponsoredERC20");
     }
 
     function _relayUserOp(PackedUserOperation memory _userOp, string memory _testName) internal {
@@ -120,8 +126,7 @@ contract BenchmarksRootKeyBatch10 is DeployAccount {
     function _warmUpAccount() internal {
         _depositToPM();
 
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
+        Call[] memory calls = _getCalls(1, reciver, 0.1 ether, hex"");
 
         bytes memory executionData = abi.encode(calls);
         _etch();

@@ -1,0 +1,102 @@
+{
+    "empty": {
+        "DirectAA": {
+            "challenge": "0x4d565978a82a98ccf6e2c5c4ed19645fd05339c2b2fdb9659ceacb76464c8616",
+            "x": "0x5e69652625977d93083800837b659f09cd361ea184f6ede6394329a0fb4ca6b4",
+            "y": "0x942fa0c12312f1315a2a7cb86521d081bba00d6a33064b0a51aa9f0e365632f6",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"TVZZeKgqmMz24sXE7RlkX9BTOcKy_bllnOrLdkZMhhY\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false,\"other_keys_can_be_added_here\":\"do not compare clientDataJSON against a template. See https://goo.gl/yabPex\"}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x63112392d01678d82ebb5ebff319a33e0bdab23bcf0725a8b44ccff645beb343",
+                "s": "0x591eb1d503943e57121caaa5864efcfd401a6fc57b9a98520a34448f971cc44f"
+            }
+        },
+        "AASponsored": {
+            "challenge": "0x12a21cc574af878ab4e3f88617fab16cd3f04d7e6809561c55560a9a78f98e19",
+            "x": "0x5e69652625977d93083800837b659f09cd361ea184f6ede6394329a0fb4ca6b4",
+            "y": "0x942fa0c12312f1315a2a7cb86521d081bba00d6a33064b0a51aa9f0e365632f6",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"EqIcxXSvh4q04_iGF_qxbNPwTX5oCVYcVVYKmnj5jhk\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false,\"other_keys_can_be_added_here\":\"do not compare clientDataJSON against a template. See https://goo.gl/yabPex\"}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x52a6da2831ec5e5ab634cbec99d27bd24b01d99b6c6864ba2138cfa5db8b1887",
+                "s": "0x1c7136570bec87d3877ea1925668ecb70639d9a2c775347de132f64f14dcf9b8"
+            }
+        },
+        "AASponsoredERC20": {
+            "challenge": "0xafa14c650f61237a062678e802fcab8721b4895d5750efa414fba40822eb1975",
+            "x": "0x5e69652625977d93083800837b659f09cd361ea184f6ede6394329a0fb4ca6b4",
+            "y": "0x942fa0c12312f1315a2a7cb86521d081bba00d6a33064b0a51aa9f0e365632f6",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"r6FMZQ9hI3oGJnjoAvyrhyG0iV1XUO-kFPukCCLrGXU\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x0768905556053bb9610aaf0599a00aa718d40c009e5342e50d5506a115c2c4f2",
+                "s": "0x5d71904ba30aa5b6d58a567b3eaaea74d153ccdf4e4faad7478a08a46f08fd4e"
+            }
+        }
+    },
+    "native": {
+        "DirectAA": {
+            "challenge": "0x7fc6bbb0eb16079439e1bde52bcd52208986c5a725a64e9a8058a4eeda9606e5",
+            "x": "0x5e69652625977d93083800837b659f09cd361ea184f6ede6394329a0fb4ca6b4",
+            "y": "0x942fa0c12312f1315a2a7cb86521d081bba00d6a33064b0a51aa9f0e365632f6",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"f8a7sOsWB5Q54b3lK81SIImGxaclpk6agFik7tqWBuU\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xfa20f054c9d234c9615d34ac502450b57ca5f16c0c2de5373246afdd70152600",
+                "s": "0x7ce97050e2918802b1d58f5413eab533133af7bc576af0f209bba1826c9579a0"
+            }
+        },
+        "AASponsored": {
+            "challenge": "0xc9948ee94fb703091bfc81999a261065f985e9091fbf52e4b654c4c6c75e5264",
+            "x": "0x5e69652625977d93083800837b659f09cd361ea184f6ede6394329a0fb4ca6b4",
+            "y": "0x942fa0c12312f1315a2a7cb86521d081bba00d6a33064b0a51aa9f0e365632f6",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"yZSO6U-3Awkb_IGZmiYQZfmF6Qkfv1LktlTExsdeUmQ\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xaaca022f4223d8cef390ecb66a1a7fc1a0da01fc5a3e8ac817f6ebd538784fbc",
+                "s": "0x2210b5ec2e405dd0cbe8258d2c4d74138f914733dc7a8006112bf171f94a2307"
+            }
+        },
+        "AASponsoredERC20": {
+            "challenge": "0x8870174cacea0ff1255f4a485f19b3e81f883273593e1782e7bd15e303ef2841",
+            "x": "0x5e69652625977d93083800837b659f09cd361ea184f6ede6394329a0fb4ca6b4",
+            "y": "0x942fa0c12312f1315a2a7cb86521d081bba00d6a33064b0a51aa9f0e365632f6",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"iHAXTKzqD_ElX0pIXxmz6B-IMnNZPheC570V4wPvKEE\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x8915f4c66917a2e39b608de67863f3499d00756d2bb102aa07b3bfedc88056a0",
+                "s": "0x30bbc89088b6d7b606424e9317ecdc5fc45292d19c889dbd155e5ce3190eeff5"
+            }
+        }
+    }
+}

@@ -2,5 +2,5 @@
   "test_SendNativeCallWithRootKeyDirect": "38451",
   "test_SendNativeCallWithRootKeyDirectAA": "99767",
   "test_SendNativeCallWithRootKeyDirectAASponsored": "110843",
-  "test_SendNativeCallWithRootKeyDirectAASponsoredERC20": "139527"
+  "test_SendNativeCallWithRootKeyDirectAASponsoredERC20": "139515"
 }

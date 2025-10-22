@@ -1,0 +1,5 @@
+{
+  "test_SendEmptyCallWithEOASessionKeyDirectAA": "95134",
+  "test_SendEmptyCallWithEOASessionKeyDirectAASponsored": "101932",
+  "test_SendEmptyCallWithEOASessionKeyDirectAASponsoredERC20": "129672"
+}

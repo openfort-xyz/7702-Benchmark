@@ -82,7 +82,7 @@ contract PaymasterHelper is ExecutionHelper {
     }
 
     function _validWindow() internal {
-        validUntil = uint48(block.timestamp + 1 days);
+        validUntil = uint48(1_792_663_859);
         validAfter = 0;
     }
 

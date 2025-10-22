@@ -16,7 +16,7 @@ contract BenchmarksRootKeyEmpty is DeployAccount {
         _quickInitializeAccount();
         _initializeAccount();
         _mint(owner7702, 3000e18);
-        _approveAll(address(erc20),owner7702, type(uint256).max, address(pm));
+        _approveAll(address(erc20), owner7702, type(uint256).max, address(pm));
         _warmUpAccount();
     }
 

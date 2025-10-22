@@ -4,37 +4,29 @@ pragma solidity 0.8.29;
 
 import { VmSafe } from "lib/forge-std/src/Vm.sol";
 import { DeployAccount } from "test/DeployAccount.t.sol";
+import { IKeysManager } from "src/interfaces/IKeysManager.sol";
 import { console2 as console } from "lib/forge-std/src/Test.sol";
-import { IERC20 } from "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 import { PackedUserOperation } from "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 
-contract BenchmarksRootKeyBatch10 is DeployAccount {
+contract BenchmarksEOASessionKeyEmpty is DeployAccount {
     address internal reciver;
+    PubKey internal pK;
 
     function setUp() public override {
         super.setUp();
         reciver = makeAddr("reciver");
-        _quickInitializeAccount();
+        _createQuickFreshKey(true);
+        _createCustomFreshKey(
+            false, KeyType.EOA, uint48(block.timestamp + 1 days), 0, 10, _getKeyEOA(sessionKey), KeyControl.Self
+        );
         _initializeAccount();
         _mint(owner7702, 3000e18);
         _approveAll(address(erc20), owner7702, type(uint256).max, address(pm));
         _warmUpAccount();
     }
 
-    function test_Batch10CallWithRootKeyDirect() external {
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
-        bytes memory executionData = abi.encode(calls);
-        _etch();
-        vm.prank(owner7702);
-        account.execute(mode_1, executionData);
-        vm.snapshotGasLastCall("test_Batch10CallWithRootKeyDirect");
-        VmSafe.Gas memory gas = vm.lastCallGas();
-    }
-
-    function test_Batch10CallWithRootKeyDirectAA() external {
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
+    function test_SendEmptyCallWithEOASessionKeyDirectAA() external {
+        Call[] memory calls = _getCalls(1, reciver, 0 ether, hex"");
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
         userOp = _populateUserOp(
@@ -46,15 +38,14 @@ contract BenchmarksRootKeyBatch10 is DeployAccount {
             hex""
         );
 
-        bytes memory signature = _signUserOp(userOp);
+        bytes memory signature = _signUserOpWithSK(userOp);
         userOp.signature = _encodeEOASignature(signature);
 
-        _relayUserOp(userOp, "test_Batch10CallWithRootKeyDirectAA");
+        _relayUserOp(userOp, "test_SendEmptyCallWithEOASessionKeyDirectAA");
     }
 
-    function test_Batch10CallWithRootKeyDirectAASponsored() external {
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
+    function test_SendEmptyCallWithEOASessionKeyAASponsored() external {
+        Call[] memory calls = _getCalls(1, reciver, 0 ether, hex"");
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
         bytes32 accountGasLimits = _packAccountGasLimits(600_000, 400_000);
@@ -72,15 +63,14 @@ contract BenchmarksRootKeyBatch10 is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
+        bytes memory signature = _signUserOpWithSK(userOp);
         userOp.signature = _encodeEOASignature(signature);
 
-        _relayUserOp(userOp, "test_Batch10CallWithRootKeyDirectAASponsored");
+        _relayUserOp(userOp, "test_SendEmptyCallWithEOASessionKeyDirectAASponsored");
     }
 
-    function test_Batch10CallWithRootKeyDirectAASponsoredERC20() external {
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
+    function test_SendEmptyCallWithEOASessionKeyAASponsoredERC20() external {
+        Call[] memory calls = _getCalls(1, reciver, 0 ether, hex"");
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
         bytes32 accountGasLimits = _packAccountGasLimits(600_000, 400_000);
@@ -98,10 +88,10 @@ contract BenchmarksRootKeyBatch10 is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
+        bytes memory signature = _signUserOpWithSK(userOp);
         userOp.signature = _encodeEOASignature(signature);
 
-        _relayUserOp(userOp, "test_Batch10CallWithRootKeyDirectAASponsoredERC20");
+        _relayUserOp(userOp, "test_SendEmptyCallWithEOASessionKeyDirectAASponsoredERC20");
     }
 
     function _relayUserOp(PackedUserOperation memory _userOp, string memory _testName) internal {
@@ -117,11 +107,15 @@ contract BenchmarksRootKeyBatch10 is DeployAccount {
         }
     }
 
-    function _warmUpAccount() internal {
+    function _warmUpAccount()
+        internal
+        setTokenSpendM(KeyType.EOA, _getKeyEOA(sessionKey), NATIVE_ADDRESS, 30 ether, IKeysManager.SpendPeriod.Month)
+        setCanCallM(KeyType.EOA, _getKeyEOA(sessionKey), NATIVE_ADDRESS, EMPTY_CALLDATA_FN_SEL, true)
+        setCanCallM(KeyType.EOA, _getKeyEOA(sessionKey), reciver, EMPTY_CALLDATA_FN_SEL, true)
+    {
         _depositToPM();
 
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
+        Call[] memory calls = _getCalls(1, reciver, 0.1 ether, hex"");
 
         bytes memory executionData = abi.encode(calls);
         _etch();
@@ -136,7 +130,7 @@ contract BenchmarksRootKeyBatch10 is DeployAccount {
         userOp =
             _populateUserOp(userOp, _packCallData(mode_1, calls), accountGasLimits, preVerificationGas, gasFees, hex"");
 
-        bytes memory signature = _signUserOp(userOp);
+        bytes memory signature = _signUserOpWithSK(userOp);
         userOp.signature = _encodeEOASignature(signature);
 
         _relayUserOp(userOp, "");
@@ -151,7 +145,7 @@ contract BenchmarksRootKeyBatch10 is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        signature = _signUserOp(userOp);
+        signature = _signUserOpWithSK(userOp);
         userOp.signature = _encodeEOASignature(signature);
 
         _relayUserOp(userOp, "");
@@ -166,7 +160,7 @@ contract BenchmarksRootKeyBatch10 is DeployAccount {
         paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        signature = _signUserOp(userOp);
+        signature = _signUserOpWithSK(userOp);
         userOp.signature = _encodeEOASignature(signature);
 
         _relayUserOp(userOp, "");
