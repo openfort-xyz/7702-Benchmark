@@ -36,7 +36,7 @@ abstract contract UniswapV2Helper is PaymasterHelper {
         path[1] = token1;
 
         return abi.encodeWithSelector(
-            IUniswapV2Router.swapTokensForExactTokens.selector, 1, 11, path, address(0xbabe), block.timestamp + 999
+            IUniswapV2Router.swapTokensForExactTokens.selector, 1, 11, path, address(0xbabe), 1_792_663_859
         );
     }
 }
