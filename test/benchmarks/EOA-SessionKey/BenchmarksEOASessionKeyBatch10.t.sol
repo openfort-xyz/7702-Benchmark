@@ -113,7 +113,7 @@ contract BenchmarksEOASessionKeyBatch10 is DeployAccount {
 
     function _warmUpAccount()
         internal
-        setTokenSpendM(KeyType.EOA, _getKeyEOA(sessionKey), address(erc20), 1000000 ether, IKeysManager.SpendPeriod.Month)
+        setTokenSpendM(KeyType.EOA, _getKeyEOA(sessionKey), address(erc20), 1_000_000 ether, IKeysManager.SpendPeriod.Month)
         setCanCallM(KeyType.EOA, _getKeyEOA(sessionKey), address(erc20), ANY_FN_SEL, true)
     {
         _depositToPM();
