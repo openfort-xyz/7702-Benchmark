@@ -11,6 +11,6 @@
   },
   "dependencies": {
     "permissionless": "^0.2.52",
-    "viem": "^2.33.1"
+    "viem": "^2.38.3"
   }
 }
