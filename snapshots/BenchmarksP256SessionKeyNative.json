@@ -1,5 +1,5 @@
 {
   "test_SendNativeCallWithP256SessionKeyAASponsored": "368407",
-  "test_SendNativeCallWithP256SessionKeyAASponsoredERC20": "397509",
-  "test_SendNativeCallWithP256SessionKeyDirectAA": "356000"
+  "test_SendNativeCallWithP256SessionKeyAASponsoredERC20": "397959",
+  "test_SendNativeCallWithP256SessionKeyDirectAA": "357314"
 }
