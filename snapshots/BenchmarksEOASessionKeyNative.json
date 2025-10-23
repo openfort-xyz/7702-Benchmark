@@ -1,0 +1,5 @@
+{
+  "test_SendNativeCallWithEOASessionKeyDirectAA": "140030",
+  "test_SendNativeCallWithEOASessionKeyDirectAASponsored": "151120",
+  "test_SendNativeCallWithEOASessionKeyDirectAASponsoredERC20": "179796"
+}
