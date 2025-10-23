@@ -1,0 +1,5 @@
+{
+  "test_SendUniswapV2CallWithWebAuthnSessionKeyDirectAA": "568488",
+  "test_SendUniswapV2CallWithWebAuthnSessionKeyDirectAASponsored": "577015",
+  "test_SendUniswapV2CallWithWebAuthnSessionKeyDirectAASponsoredERC20": "607852"
+}
