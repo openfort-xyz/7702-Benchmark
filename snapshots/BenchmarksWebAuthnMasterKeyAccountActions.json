@@ -1,0 +1,20 @@
+{
+  "test_RegisterKeyCustodialCallWithWebAuthnMasterKeyDirectAASponsored": "622032",
+  "test_RegisterKeyCustodialCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "646970",
+  "test_RegisterKeySelfCallWithWebAuthnMasterKeyDirectAASponsored": "565397",
+  "test_RegisterKeySelfCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "604914",
+  "test_RemoveCanCallCallWithWebAuthnMasterKeyDirectAASponsored": "465906",
+  "test_RemoveCanCallCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "500911",
+  "test_RemoveTokenSpendCallWithWebAuthnMasterKeyDirectAASponsored": "488185",
+  "test_RemoveTokenSpendCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "512526",
+  "test_RevokeKeySelfCallWithWebAuthnMasterKeyDirectAASponsored": "483801",
+  "test_RevokeKeySelfCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "510758",
+  "test_SetCanCallCallWithWebAuthnMasterKeyDirectAASponsored": "508681",
+  "test_SetCanCallCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "529203",
+  "test_SetTokenSpendCallWithWebAuthnMasterKeyDirectAASponsored": "548449",
+  "test_SetTokenSpendCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "580505",
+  "test_UpdateKeyDataCallWithWebAuthnMasterKeyDirectAASponsored": "485299",
+  "test_UpdateKeyDataCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "507962",
+  "test_UpdateTokenSpendCallWithWebAuthnMasterKeyDirectAASponsored": "481900",
+  "test_UpdateTokenSpendCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "521581"
+}

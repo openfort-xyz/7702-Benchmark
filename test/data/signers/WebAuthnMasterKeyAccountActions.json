@@ -1,0 +1,308 @@
+{
+    "RegisterKeySelf": {
+        "AASponsored": {
+            "challenge": "0xd0801289f10d11541d0567697fd2333ba6743f12d711b757f3305834bafbcabc",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"0IASifENEVQdBWdpf9IzO6Z0PxLXEbdX8zBYNLr7yrw\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x2e5483149df86b2af52d8690f9a5f9cb2f2240473b35cc23b432f9a260cc739f",
+                "s": "0x5846c0a1159fd09fae498a1bef2343a8cfab96ebc9915a25dee10d01c1e36089"
+            }
+        },
+        "AASponsoredERC20": {
+            "challenge": "0x1e843145b5e8cff387f1a87fdea3d6be7736b4475ab78c92d01f83d934316a80",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"HoQxRbXoz_OH8ah_3qPWvnc2tEdat4yS0B-D2TQxaoA\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x1890697d6a825560e9f42a9f22eff336191e7bf0b856d241dc9dbe257499ba67",
+                "s": "0x34726522cd2c6974413da6cb2e4df0892fbb13ddee2e7cb84872b3688c76c332"
+            }
+        }
+    },
+    "RegisterKeyCustodial": {
+        "AASponsored": {
+            "challenge": "0x906608d3f62de9ef85fbcd122f5a66b5b6e76b737d4603ead5a0048e48c1804b",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"kGYI0_Yt6e-F-80SL1pmtbbna3N9RgPq1aAEjkjBgEs\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xfeba29b8ce36a88b3ed990f2223ad36e5d53a6ad0c926f05b006ca07597203f9",
+                "s": "0x798c3f275444bb7361dffdb472fea52a6728c365688833923ddfa82cba3337b8"
+            }
+        },
+        "AASponsoredERC20": {
+            "challenge": "0x94ea6b191121c2872c7603b1a7f852ff8cf9c7d824e5bfcbdf807d289ed43b35",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"lOprGREhwocsdgOxp_hS_4z5x9gk5b_L34B9KJ7UOzU\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xfd29ae5a6ccb820d3b86a9461dc2cc594a678ca3458b29aa08c9a1ceef11db91",
+                "s": "0x6689e4fef5459b049965c1075eb1ecc38c2c4429ac039c9f6bfc511472ae898c"
+            }
+        }
+    },
+    "SetTokenSpend": {
+        "AASponsored": {
+            "challenge": "0x8db84a25a0276f39681d0930d008885689e09d88a21bb5e43edcbf57ebc766c4",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"jbhKJaAnbzloHQkw0AiIVongnYiiG7XkPty_V-vHZsQ\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xb04bbdaba52005c4eda9909dc9c4937167254d7e7661de8d9d6603bd6087602c",
+                "s": "0x65e464780f455a632ef8bf94f7a6a873c49c58c02e802195f428bbe88f536908"
+            }
+        },
+        "AASponsoredERC20": {
+            "challenge": "0x54779db0e0b93b9b0b9dd1ef64363b4689798816056da2db93267dcea6c2f951",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"VHedsOC5O5sLndHvZDY7Rol5iBYFbaLbkyZ9zqbC-VE\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x063398d53eb2b7b299a4987bc5105900e2718d74d4057b5438c4e48aa8e3dbe0",
+                "s": "0x2f4d76bdcb5ab9b8e907b5e7582514f084cc82526eb327488956132018ddb246"
+            }
+        }
+    },
+    "SetCanCall": {
+        "AASponsored": {
+            "challenge": "0x0d3be4ae239a6b7efbfbd621a3e2c1f3338108dabd197d821d0e901daba1bafb",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"DTvkriOaa377-9Yho-LB8zOBCNq9GX2CHQ6QHauhuvs\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false,\"other_keys_can_be_added_here\":\"do not compare clientDataJSON against a template. See https://goo.gl/yabPex\"}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xa3790965499f036c0249dac4b354d92ac67a2ca8521afd0157f02bd9a84d81bd",
+                "s": "0x7109ba5a54ae93adcf231767c7454e61a39391239c69170cc9017a6a503ddffd"
+            }
+        },
+        "AASponsoredERC20": {
+            "challenge": "0x607f52e311028db51085c42d6a49e323911c1531a96bf0854e32e4fc81df3bda",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"YH9S4xECjbUQhcQtaknjI5EcFTGpa_CFTjLk_IHfO9o\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xdfbaeacc49de5ebd9d9cacc90e047e56515c3f13f2f9a5ca3dcb967ab6c98e00",
+                "s": "0x16b4d913e61957972131a5bc622240a2d7180c95566fd2421237bb078f9ff934"
+            }
+        }
+    },
+    "UpdateKeyData": {
+        "AASponsored": {
+            "challenge": "0x72e13de1e9ee9489087637ede29cac18277322ee126994b5aa865ff6f1c897e8",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"cuE94enulIkIdjft4pysGCdzIu4SaZS1qoZf9vHIl-g\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x102e5b65037d6a97c244bf58093aa9f22d864dec324c65e87e587b990e4e4095",
+                "s": "0x2734dedd67eea335ffc3a47cb182d1b350156774269b9845ad32a45be4dbd932"
+            }
+        },
+        "AASponsoredERC20": {
+            "challenge": "0xbeb188336f1e4eca4063d796c170b8449f5aa85c7b32295c572a2fec1c016b72",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"vrGIM28eTspAY9eWwXC4RJ9aqFx7MilcVyov7BwBa3I\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xb33abe55beda9b2e447dea0f0d0917b816b1b8ee9811d4f9a28ea6a0c01acee7",
+                "s": "0x63cb4f3254625cd2f088fd40383a0528888a937b3972574d00aa48f3190590ac"
+            }
+        }
+    },
+    "UpdateTokenSpend": {
+        "AASponsored": {
+            "challenge": "0x8674ec2d8ddf70364991f98ed9e516082b745c6940ab4209d38ab61e0ebcaa6e",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"hnTsLY3fcDZJkfmO2eUWCCt0XGlAq0IJ04q2Hg68qm4\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xb7c7e5dfc9b3c5506ffce690e6bf379b1396ced37d79d47e24963c181cdea2ab",
+                "s": "0x7fcf738efb0c85778d846c5925d70382edaaf6a76ef01a180650bcab62e5b3c1"
+            }
+        },
+        "AASponsoredERC20": {
+            "challenge": "0x46a3516b3f3c864cc062b9f7a31129f55b41776d3c5f890fa8f7b8954d96af67",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"RqNRaz88hkzAYrn3oxEp9VtBd208X4kPqPe4lU2Wr2c\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false,\"other_keys_can_be_added_here\":\"do not compare clientDataJSON against a template. See https://goo.gl/yabPex\"}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x85cd4c14eaeb2f34c3679ad84504383f16bed6b2d7c4bc27341368ea6b484b63",
+                "s": "0x432da228943e64193a7f8b55b788f0b0440fd1a103dc4a15293f7f80c2d5df54"
+            }
+        }
+    },
+    "RevokeKeySelf": {
+        "AASponsored": {
+            "challenge": "0xec80218755fb0527a10bda93b2b7ef96f6019c3dc1efa94eb4afe9ad4af553ee",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"7IAhh1X7BSehC9qTsrfvlvYBnD3B76lOtK_prUr1U-4\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x13baefa9098acee6d72fdc6a302d1e698ef39075f3cb679ca2e89fb7ab76f193",
+                "s": "0x0f23ac705df9d1e34d2b6feb84d530a0d76b68de73d7204b061869d1596b6bbc"
+            }
+        },
+        "AASponsoredERC20": {
+            "challenge": "0x8f11aa4247bdb2b608490e6b26ee30201aa447f7934d2c0b654cc1425ec0309f",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"jxGqQke9srYISQ5rJu4wIBqkR_eTTSwLZUzBQl7AMJ8\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x618ba5c084de79da89b1d96ec7360b202843d341445eda5e9dbd4f3f9d7bdd6c",
+                "s": "0x162b86a160b8300c9ee37eb76da02a9e0531dcba97007c8d81917fdf75266942"
+            }
+        }
+    },
+    "RemoveTokenSpend": {
+        "AASponsored": {
+            "challenge": "0x98d2952643ae0bf38892c44a9fd95e3dfdb39f7d8b3055fd89acc6f09599f8e6",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"mNKVJkOuC_OIksRKn9lePf2zn32LMFX9iazG8JWZ-OY\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x2a0d4244652e55f110cc6e0dbca8de8dead55c2fe66afdc85c0a4a0e9fe9054f",
+                "s": "0x6b8aa48dc7674568cf85edca8ac1cf49d883fb62a93d2750255792efc137f796"
+            }
+        },
+        "AASponsoredERC20": {
+            "challenge": "0xd46dfa241d08ef1699b4e6507a56370bdfeeeab9c2fb0bb8839f690bab243592",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"1G36JB0I7xaZtOZQelY3C9_u6rnC-wu4g59pC6skNZI\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0x46a0e5d17e69dff90afdd04355e37f204086f59d1c902f08651c0ef355b70a28",
+                "s": "0x0bc65a59e666e0d02622743a1fc85c9813bc5585eb7360c333976ce87dcce268"
+            }
+        }
+    },
+    "RemoveCanCall": {
+        "AASponsored": {
+            "challenge": "0x2ddc6726256b10e86bb405cf272a7d3ba3c6c019a5b2340e76892ab6f9a7edc3",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"LdxnJiVrEOhrtAXPJyp9O6PGwBmlsjQOdokqtvmn7cM\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xbea49ebea0c8d85fbc53c6071c9cc6a084ed3133b1887e027f34d8e4c23a8920",
+                "s": "0x003e0d6b5c65ae9c1268090b1a7c602b73b842efc6afc899f92bf642a4dcc811"
+            }
+        },
+        "AASponsoredERC20": {
+            "challenge": "0xd65b0161844d2c74a93bed3142de62a6a8a830455ee15107fe92bc239671559c",
+            "x": "0xb5f83509985e74e5ff244c000775a6b14721ddc9693bbbc0897b76a97d12f219",
+            "y": "0x3b2f4ae105730cdcebc64f543679e57ceab7ddd653451d59643bc68d52e1aca2",
+            "metadata": {
+                "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"1lsBYYRNLHSpO-0xQt5ipqioMEVe4VEH_pK8I5ZxVZw\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "challengeIndex": 23,
+                "typeIndex": 1,
+                "userVerificationRequired": true
+            },
+            "signature": {
+                "r": "0xbf5bfc228becad55babb4e33f35bf601cca25dc3d7dd9debd29d4cbc055746b7",
+                "s": "0x17993fc87fed8a9c1d60aad3822b4dba3262b8103acd20f07e0f7bc3e0bc320e"
+            }
+        }
+    }
+}

@@ -8,28 +8,24 @@ import { IKeysManager } from "src/interfaces/IKeysManager.sol";
 import { console2 as console } from "lib/forge-std/src/Test.sol";
 import { PackedUserOperation } from "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 
-contract BenchmarksAccountActions is DeployAccount {
+contract BenchmarksWebAuthnMasterKeyAccountActions is DeployAccount {
     address internal reciver;
+    PubKey internal pK;
 
     function setUp() public override {
         super.setUp();
         reciver = makeAddr("reciver");
-        _quickInitializeAccount();
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".RegisterKeySelf.AASponsored");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+        _createCustomFreshKey(true, KeyType.WEBAUTHN, type(uint48).max, 0, 0, _getKeyP256(pK), KeyControl.Self);
+        _createQuickFreshKey(false);
         _initializeAccount();
         _mint(owner7702, 3000e18);
         _approveAll(address(erc20), owner7702, type(uint256).max, address(pm));
         _warmUpAccount();
     }
 
-    function test_RegisterKeySelfCallWithRootKeyDirect() external {
-        _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
-        _etch();
-        vm.prank(owner7702);
-        account.registerKey(skReg);
-        vm.snapshotGasLastCall("test_RegisterKeySelfCallWithRootKeyDirect");
-    }
-
-    function test_RegisterKeySelfCallWithRootKeyDirectAASponsored() external {
+    function test_RegisterKeySelfCallWithWebAuthnMasterKeyDirectAASponsored() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         bytes memory callData = abi.encodeCall(account.registerKey, (skReg));
 
@@ -44,13 +40,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_RegisterKeySelfCallWithRootKeyDirectAASponsored");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".RegisterKeySelf.AASponsored");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_RegisterKeySelfCallWithWebAuthnMasterKeyDirectAASponsored");
     }
 
-    function test_RegisterKeySelfCallWithRootKeyDirectAASponsoredERC20() external {
+    function test_RegisterKeySelfCallWithWebAuthnMasterKeyDirectAASponsoredERC20() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         bytes memory callData = abi.encodeCall(account.registerKey, (skReg));
 
@@ -65,23 +66,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_RegisterKeySelfCallWithRootKeyDirectAASponsoredERC20");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".RegisterKeySelf.AASponsoredERC20");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_RegisterKeySelfCallWithWebAuthnMasterKeyDirectAASponsoredERC20");
     }
 
-    function test_RegisterKeyCustodialCallWithRootKeyDirect() external {
-        _createCustomFreshKey(
-            false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Custodial
-        );
-        _etch();
-        vm.prank(owner7702);
-        account.registerKey(skReg);
-        vm.snapshotGasLastCall("test_RegisterKeyCustodialCallWithRootKeyDirect");
-    }
-
-    function test_RegisterKeyCustodialCallWithRootKeyDirectAASponsored() external {
+    function test_RegisterKeyCustodialCallWithWebAuthnMasterKeyDirectAASponsored() external {
         _createCustomFreshKey(
             false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Custodial
         );
@@ -98,13 +94,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_RegisterKeyCustodialCallWithRootKeyDirectAASponsored");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".RegisterKeyCustodial.AASponsored");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_RegisterKeyCustodialCallWithWebAuthnMasterKeyDirectAASponsored");
     }
 
-    function test_RegisterKeyCustodialCallWithRootKeyDirectAASponsoredERC20() external {
+    function test_RegisterKeyCustodialCallWithWebAuthnMasterKeyDirectAASponsoredERC20() external {
         _createCustomFreshKey(
             false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Custodial
         );
@@ -121,30 +122,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_RegisterKeyCustodialCallWithRootKeyDirectAASponsoredERC20");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".RegisterKeyCustodial.AASponsoredERC20");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_RegisterKeyCustodialCallWithWebAuthnMasterKeyDirectAASponsoredERC20");
     }
 
-    function test_SetTokenSpendCallWithRootKeyDirect() external {
-        _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
-        _etch();
-        vm.prank(owner7702);
-        account.registerKey(skReg);
-
-        _etch();
-        vm.prank(owner7702);
-        account.setTokenSpend(
-            _computeKeyId(KeyType.EOA, _getKeyEOA(address(1010))),
-            address(erc20),
-            1000 ether,
-            IKeysManager.SpendPeriod.Month
-        );
-        vm.snapshotGasLastCall("test_SetTokenSpendCallWithRootKeyDirect");
-    }
-
-    function test_SetTokenSpendCallWithRootKeyDirectAASponsored() external {
+    function test_SetTokenSpendCallWithWebAuthnMasterKeyDirectAASponsored() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -171,13 +160,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_SetTokenSpendCallWithRootKeyDirectAASponsored");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".SetTokenSpend.AASponsored");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_SetTokenSpendCallWithWebAuthnMasterKeyDirectAASponsored");
     }
 
-    function test_SetTokenSpendCallWithRootKeyDirectAASponsoredERC20() external {
+    function test_SetTokenSpendCallWithWebAuthnMasterKeyDirectAASponsoredERC20() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -204,25 +198,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_SetTokenSpendCallWithRootKeyDirectAASponsoredERC20");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".SetTokenSpend.AASponsoredERC20");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_SetTokenSpendCallWithWebAuthnMasterKeyDirectAASponsoredERC20");
     }
 
-    function test_SetCanCallCallWithRootKeyDirect() external {
-        _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
-        _etch();
-        vm.prank(owner7702);
-        account.registerKey(skReg);
-
-        _etch();
-        vm.prank(owner7702);
-        account.setCanCall(_computeKeyId(KeyType.EOA, _getKeyEOA(address(1010))), address(erc20), ANY_FN_SEL, true);
-        vm.snapshotGasLastCall("test_SetCanCallCallWithRootKeyDirect");
-    }
-
-    function test_SetCanCallCallWithRootKeyDirectAASponsored() external {
+    function test_SetCanCallCallWithWebAuthnMasterKeyDirectAASponsored() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -244,13 +231,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_SetCanCallCallWithRootKeyDirectAASponsored");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".SetCanCall.AASponsored");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_SetCanCallCallWithWebAuthnMasterKeyDirectAASponsored");
     }
 
-    function test_SetCanCallCallWithRootKeyDirectAASponsoredERC20() external {
+    function test_SetCanCallCallWithWebAuthnMasterKeyDirectAASponsoredERC20() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -272,25 +264,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_SetCanCallCallWithRootKeyDirectAASponsoredERC20");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".SetCanCall.AASponsoredERC20");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_SetCanCallCallWithWebAuthnMasterKeyDirectAASponsoredERC20");
     }
 
-    function test_UpdateKeyDataCallWithRootKeyDirect() external {
-        _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
-        _etch();
-        vm.prank(owner7702);
-        account.registerKey(skReg);
-
-        _etch();
-        vm.prank(owner7702);
-        account.updateKeyData(_computeKeyId(KeyType.EOA, _getKeyEOA(address(1010))), 1_855_989_444, 10_000);
-        vm.snapshotGasLastCall("test_UpdateKeyDataCallWithRootKeyDirect");
-    }
-
-    function test_UpdateKeyDataCallWithRootKeyDirectAASponsored() external {
+    function test_UpdateKeyDataCallWithWebAuthnMasterKeyDirectAASponsored() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -311,13 +296,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_UpdateKeyDataCallWithRootKeyDirectAASponsored");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".UpdateKeyData.AASponsored");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_UpdateKeyDataCallWithWebAuthnMasterKeyDirectAASponsored");
     }
 
-    function test_UpdateKeyDataCallWithRootKeyDirectAASponsoredERC20() external {
+    function test_UpdateKeyDataCallWithWebAuthnMasterKeyDirectAASponsoredERC20() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -338,39 +328,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_UpdateKeyDataCallWithRootKeyDirectAASponsoredERC20");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".UpdateKeyData.AASponsoredERC20");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_UpdateKeyDataCallWithWebAuthnMasterKeyDirectAASponsoredERC20");
     }
 
-    function test_UpdateTokenSpendCallWithRootKeyDirect() external {
-        _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
-        _etch();
-        vm.prank(owner7702);
-        account.registerKey(skReg);
-
-        _etch();
-        vm.prank(owner7702);
-        account.setTokenSpend(
-            _computeKeyId(KeyType.EOA, _getKeyEOA(address(1010))),
-            address(erc20),
-            1000 ether,
-            IKeysManager.SpendPeriod.Month
-        );
-
-        _etch();
-        vm.prank(owner7702);
-        account.updateTokenSpend(
-            _computeKeyId(KeyType.EOA, _getKeyEOA(address(1010))),
-            address(erc20),
-            10_000 ether,
-            IKeysManager.SpendPeriod.Year
-        );
-        vm.snapshotGasLastCall("test_UpdateTokenSpendCallWithRootKeyDirect");
-    }
-
-    function test_UpdateTokenSpendCallWithRootKeyDirectAASponsored() external {
+    function test_UpdateTokenSpendCallWithWebAuthnMasterKeyDirectAASponsored() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -406,13 +375,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_UpdateTokenSpendCallWithRootKeyDirectAASponsored");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".UpdateTokenSpend.AASponsored");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_UpdateTokenSpendCallWithWebAuthnMasterKeyDirectAASponsored");
     }
 
-    function test_UpdateTokenSpendCallWithRootKeyDirectAASponsoredERC20() external {
+    function test_UpdateTokenSpendCallWithWebAuthnMasterKeyDirectAASponsoredERC20() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -448,25 +422,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_UpdateTokenSpendCallWithRootKeyDirectAASponsoredERC20");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".UpdateTokenSpend.AASponsoredERC20");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_UpdateTokenSpendCallWithWebAuthnMasterKeyDirectAASponsoredERC20");
     }
 
-    function test_RevokeKeyCallWithRootKeyDirect() external {
-        _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
-        _etch();
-        vm.prank(owner7702);
-        account.registerKey(skReg);
-
-        _etch();
-        vm.prank(owner7702);
-        account.revokeKey(_computeKeyId(KeyType.EOA, _getKeyEOA(address(1010))));
-        vm.snapshotGasLastCall("test_RevokeKeyCallWithRootKeyDirect");
-    }
-
-    function test_RevokeKeySelfCallWithRootKeyDirectAASponsored() external {
+    function test_RevokeKeySelfCallWithWebAuthnMasterKeyDirectAASponsored() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -486,13 +453,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_RevokeKeySelfCallWithRootKeyDirectAASponsored");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".RevokeKeySelf.AASponsored");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_RevokeKeySelfCallWithWebAuthnMasterKeyDirectAASponsored");
     }
 
-    function test_RevokeKeySelfCallWithRootKeyDirectAASponsoredERC20() external {
+    function test_RevokeKeySelfCallWithWebAuthnMasterKeyDirectAASponsoredERC20() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -512,34 +484,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_RevokeKeySelfCallWithRootKeyDirectAASponsoredERC20");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".RevokeKeySelf.AASponsoredERC20");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_RevokeKeySelfCallWithWebAuthnMasterKeyDirectAASponsoredERC20");
     }
 
-    function test_RemoveTokenSpendCallWithRootKeyDirect() external {
-        _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
-        _etch();
-        vm.prank(owner7702);
-        account.registerKey(skReg);
-
-        _etch();
-        vm.prank(owner7702);
-        account.setTokenSpend(
-            _computeKeyId(KeyType.EOA, _getKeyEOA(address(1010))),
-            address(erc20),
-            1000 ether,
-            IKeysManager.SpendPeriod.Month
-        );
-
-        _etch();
-        vm.prank(owner7702);
-        account.removeTokenSpend(_computeKeyId(KeyType.EOA, _getKeyEOA(address(1010))), address(erc20));
-        vm.snapshotGasLastCall("test_RemoveTokenSpendCallWithRootKeyDirect");
-    }
-
-    function test_RemoveTokenSpendCallWithRootKeyDirectAASponsored() external {
+    function test_RemoveTokenSpendCallWithWebAuthnMasterKeyDirectAASponsored() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -569,13 +525,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_RemoveTokenSpendCallWithRootKeyDirectAASponsored");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".RemoveTokenSpend.AASponsored");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_RemoveTokenSpendCallWithWebAuthnMasterKeyDirectAASponsored");
     }
 
-    function test_RemoveTokenSpendCallWithRootKeyDirectAASponsoredERC20() external {
+    function test_RemoveTokenSpendCallWithWebAuthnMasterKeyDirectAASponsoredERC20() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -605,29 +566,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_RemoveTokenSpendCallWithRootKeyDirectAASponsoredERC20");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".RemoveTokenSpend.AASponsoredERC20");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_RemoveTokenSpendCallWithWebAuthnMasterKeyDirectAASponsoredERC20");
     }
 
-    function test_RemoveCanCallCallWithRootKeyDirect() external {
-        _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
-        _etch();
-        vm.prank(owner7702);
-        account.registerKey(skReg);
-
-        _etch();
-        vm.prank(owner7702);
-        account.setCanCall(_computeKeyId(KeyType.EOA, _getKeyEOA(address(1010))), address(erc20), ANY_FN_SEL, true);
-
-        _etch();
-        vm.prank(owner7702);
-        account.setCanCall(_computeKeyId(KeyType.EOA, _getKeyEOA(address(1010))), address(erc20), ANY_FN_SEL, false);
-        vm.snapshotGasLastCall("test_RemoveCanCallCallWithRootKeyDirect");
-    }
-
-    function test_RemoveCanCallCallWithRootKeyDirectAASponsored() external {
+    function test_RemoveCanCallCallWithWebAuthnMasterKeyDirectAASponsored() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -653,13 +603,18 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(VERIFYING_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_RemoveCanCallCallWithRootKeyDirectAASponsored");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".RemoveCanCall.AASponsored");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_RemoveCanCallCallWithWebAuthnMasterKeyDirectAASponsored");
     }
 
-    function test_RemoveCanCallCallWithRootKeyDirectAASponsoredERC20() external {
+    function test_RemoveCanCallCallWithWebAuthnMasterKeyDirectAASponsoredERC20() external {
         _createCustomFreshKey(false, KeyType.EOA, 1_824_367_044, 0, 100, _getKeyEOA(address(1010)), KeyControl.Self);
         _etch();
         vm.prank(owner7702);
@@ -685,10 +640,15 @@ contract BenchmarksAccountActions is DeployAccount {
         bytes memory paymasterSignature = this._signPaymasterData(ERC20_MODE, userOp, 1);
         userOp.paymasterAndData = abi.encodePacked(userOp.paymasterAndData, paymasterSignature);
 
-        bytes memory signature = _signUserOp(userOp);
-        userOp.signature = _encodeEOASignature(signature);
+        bytes32 userOpHash = _getUserOpHash(userOp);
+        console.log("userOpHash:", vm.toString(userOpHash));
 
-        _relayUserOp(userOp, "test_RemoveCanCallCallWithRootKeyDirectAASponsoredERC20");
+        _populateWebAuthn("WebAuthnMasterKeyAccountActions.json", ".RemoveCanCall.AASponsoredERC20");
+        pK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
+
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK);
+
+        _relayUserOp(userOp, "test_RemoveCanCallCallWithWebAuthnMasterKeyDirectAASponsoredERC20");
     }
 
     function _relayUserOp(PackedUserOperation memory _userOp, string memory _testName) internal {
