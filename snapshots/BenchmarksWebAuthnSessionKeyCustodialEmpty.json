@@ -1,0 +1,5 @@
+{
+  "test_SendEmptyCallWithWebAuthnSessionKeyCustodialAASponsored": "524012",
+  "test_SendEmptyCallWithWebAuthnSessionKeyCustodialAASponsoredERC20": "552445",
+  "test_SendEmptyCallWithWebAuthnSessionKeyCustodialDirectAA": "515583"
+}
