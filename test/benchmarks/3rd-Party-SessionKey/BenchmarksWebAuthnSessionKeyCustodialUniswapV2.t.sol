@@ -4,12 +4,14 @@ pragma solidity 0.8.29;
 
 import { VmSafe } from "lib/forge-std/src/Vm.sol";
 import { DeployAccount } from "test/DeployAccount.t.sol";
+import { LibClone } from "lib/solady/src/utils/LibClone.sol";
 import { IKeysManager } from "src/interfaces/IKeysManager.sol";
-import { console2 as console } from "lib/forge-std/src/Test.sol";
-import { IERC20 } from "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
+import { console2 as console } from "lib/forge-std/src/console2.sol";
+import { SafeTransferLib } from "lib/solady/src/utils/SafeTransferLib.sol";
+import { IUniswapV2Router, MockPaymentToken } from "test/helpers/UniswapV2Helper.t.sol";
 import { PackedUserOperation } from "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 
-contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
+contract BenchmarksWebAuthnSessionKeyCustodialUniswapV2 is DeployAccount {
     address internal reciver;
     PubKey internal pK_SK;
 
@@ -17,20 +19,21 @@ contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
         super.setUp();
         reciver = makeAddr("reciver");
         _createQuickFreshKey(true);
-        _populateP256NON("P256SessionKey.json", ".batch10.DirectAA.result2");
-        pK_SK = PubKey({ x: DEF_P256.X, y: DEF_P256.Y });
+        _populateWebAuthn("WebAuthnSessionKey.json", ".uniswapV2.DirectAA");
+        pK_SK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
         _createCustomFreshKey(
-            false, KeyType.P256NONKEY, uint48(block.timestamp + 1 days), 0, 1000, _getKeyP256(pK_SK), KeyControl.Self
+            false, KeyType.WEBAUTHN, uint48(block.timestamp + 1 days), 0, 10, _getKeyP256(pK_SK), KeyControl.Custodial
         );
         _initializeAccount();
         _mint(owner7702, 3000e18);
         _approveAll(address(erc20), owner7702, type(uint256).max, address(pm));
+        _initUniswap();
         _warmUpAccount();
     }
 
-    function test_SendBatch10CallWithP256SessionKeyDirectAA() external {
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
+    function test_SendUniswapV2CallWithWebAuthnSessionKeyCustodialDirectAA() external {
+        bytes memory data = _uniswapV2SwapPayload();
+        Call[] memory calls = _getCalls(1, _UNISWAP_V2_ROUTER_ADDRESS, 0, data);
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
         userOp = _populateUserOp(
@@ -45,17 +48,17 @@ contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
         bytes32 userOpHash = _getUserOpHash(userOp);
         console.log("userOpHash:", vm.toString(userOpHash));
 
-        _populateP256NON("P256SessionKey.json", ".batch10.DirectAA.result2");
-        pK_SK = PubKey({ x: DEF_P256.X, y: DEF_P256.Y });
+        _populateWebAuthn("WebAuthnSessionKey.json", ".uniswapV2.DirectAA");
+        pK_SK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
-        userOp.signature = _encodeP256Signature(DEF_P256.R, DEF_P256.S, pK_SK, KeyType.P256NONKEY);
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK_SK);
 
-        _relayUserOp(userOp, "test_SendBatch10CallWithP256SessionKeyDirectAA");
+        _relayUserOp(userOp, "test_SendUniswapV2CallWithWebAuthnSessionKeyCustodialDirectAA");
     }
 
-    function test_SendBatch10CallWithP256SessionKeyAASponsored() external {
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
+    function test_SendUniswapV2CallWithWebAuthnSessionKeyCustodialDirectAASponsored() external {
+        bytes memory data = _uniswapV2SwapPayload();
+        Call[] memory calls = _getCalls(1, _UNISWAP_V2_ROUTER_ADDRESS, 0, data);
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
         bytes32 accountGasLimits = _packAccountGasLimits(600_000, 400_000);
@@ -76,17 +79,17 @@ contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
         bytes32 userOpHash = _getUserOpHash(userOp);
         console.log("userOpHash:", vm.toString(userOpHash));
 
-        _populateP256NON("P256SessionKey.json", ".batch10.AASponsored.result2");
-        pK_SK = PubKey({ x: DEF_P256.X, y: DEF_P256.Y });
+        _populateWebAuthn("WebAuthnSessionKey.json", ".uniswapV2.AASponsored");
+        pK_SK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
-        userOp.signature = _encodeP256Signature(DEF_P256.R, DEF_P256.S, pK_SK, KeyType.P256NONKEY);
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK_SK);
 
-        _relayUserOp(userOp, "test_SendBatch10CallWithP256SessionKeyAASponsored");
+        _relayUserOp(userOp, "test_SendUniswapV2CallWithWebAuthnSessionKeyCustodialDirectAASponsored");
     }
 
-    function test_SendBatch10CallWithP256SessionKeyAASponsoredERC20() external {
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
+    function test_SendUniswapV2CallWithWebAuthnSessionKeyCustodialDirectAASponsoredERC20() external {
+        bytes memory data = _uniswapV2SwapPayload();
+        Call[] memory calls = _getCalls(1, _UNISWAP_V2_ROUTER_ADDRESS, 0, data);
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
         bytes32 accountGasLimits = _packAccountGasLimits(600_000, 400_000);
@@ -107,12 +110,12 @@ contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
         bytes32 userOpHash = _getUserOpHash(userOp);
         console.log("userOpHash:", vm.toString(userOpHash));
 
-        _populateP256NON("P256SessionKey.json", ".batch10.AASponsoredERC20.result2");
-        pK_SK = PubKey({ x: DEF_P256.X, y: DEF_P256.Y });
+        _populateWebAuthn("WebAuthnSessionKey.json", ".uniswapV2.AASponsoredERC20");
+        pK_SK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
-        userOp.signature = _encodeP256Signature(DEF_P256.R, DEF_P256.S, pK_SK, KeyType.P256NONKEY);
+        userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK_SK);
 
-        _relayUserOp(userOp, "test_SendBatch10CallWithP256SessionKeyAASponsoredERC20");
+        _relayUserOp(userOp, "test_SendUniswapV2CallWithWebAuthnSessionKeyCustodialDirectAASponsoredERC20");
     }
 
     function _relayUserOp(PackedUserOperation memory _userOp, string memory _testName) internal {
@@ -128,22 +131,37 @@ contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
         }
     }
 
+    function _initUniswap() internal {
+        paymentToken = new MockPaymentToken();
+
+        token0 = LibClone.clone(address(paymentToken));
+        _mintForUniSwapV2(token0, address(this), type(uint128).max);
+        token1 = LibClone.clone(address(paymentToken));
+        _mintForUniSwapV2(token1, address(this), type(uint128).max);
+        if (uint160(token0) > uint160(token1)) {
+            (token0, token1) = (token1, token0);
+        }
+
+        uniswapV2Router = IUniswapV2Router(_UNISWAP_V2_ROUTER_ADDRESS);
+        SafeTransferLib.safeApprove(token0, _UNISWAP_V2_ROUTER_ADDRESS, type(uint256).max);
+        SafeTransferLib.safeApprove(token1, _UNISWAP_V2_ROUTER_ADDRESS, type(uint256).max);
+        uniswapV2Router.addLiquidity(token0, token1, 1 ether, 1 ether, 1, 1, address(this), block.timestamp + 999);
+
+        _mintForUniSwapV2(token0, owner7702, 20 ether);
+        _mintForUniSwapV2(token1, owner7702, 20 ether);
+        _approveAll(token0, owner7702, type(uint256).max, _UNISWAP_V2_ROUTER_ADDRESS);
+    }
+
     function _warmUpAccount()
         internal
-        setTokenSpendM(
-            KeyType.P256NONKEY,
-            _getKeyP256(pK_SK),
-            address(erc20),
-            1_000_000 ether,
-            IKeysManager.SpendPeriod.Month
-        )
-        setCanCallM(KeyType.P256NONKEY, _getKeyP256(pK_SK), address(erc20), ANY_FN_SEL, true)
+        setTokenSpendM(KeyType.WEBAUTHN, _getKeyP256(pK_SK), token0, 1_000_000 ether, IKeysManager.SpendPeriod.Month)
+        setCanCallM(KeyType.WEBAUTHN, _getKeyP256(pK_SK), address(token0), ANY_FN_SEL, true)
+        setCanCallM(KeyType.WEBAUTHN, _getKeyP256(pK_SK), address(_UNISWAP_V2_ROUTER_ADDRESS), ANY_FN_SEL, true)
     {
         _depositToPM();
 
-        bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
-        Call[] memory calls = _getCalls(10, address(erc20), 0, data);
-
+        bytes memory data = _uniswapV2SwapPayload();
+        Call[] memory calls = _getCalls(1, _UNISWAP_V2_ROUTER_ADDRESS, 0, data);
         bytes memory executionData = abi.encode(calls);
         _etch();
         vm.prank(owner7702);

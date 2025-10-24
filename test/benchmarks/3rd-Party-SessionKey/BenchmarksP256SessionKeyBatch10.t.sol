@@ -9,7 +9,7 @@ import { console2 as console } from "lib/forge-std/src/Test.sol";
 import { IERC20 } from "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 import { PackedUserOperation } from "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 
-contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
+contract BenchmarksP256SessionKeyCustodialBatch10 is DeployAccount {
     address internal reciver;
     PubKey internal pK_SK;
 
@@ -20,7 +20,13 @@ contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
         _populateP256NON("P256SessionKey.json", ".batch10.DirectAA.result2");
         pK_SK = PubKey({ x: DEF_P256.X, y: DEF_P256.Y });
         _createCustomFreshKey(
-            false, KeyType.P256NONKEY, uint48(block.timestamp + 1 days), 0, 1000, _getKeyP256(pK_SK), KeyControl.Self
+            false,
+            KeyType.P256NONKEY,
+            uint48(block.timestamp + 1 days),
+            0,
+            1000,
+            _getKeyP256(pK_SK),
+            KeyControl.Custodial
         );
         _initializeAccount();
         _mint(owner7702, 3000e18);
@@ -28,7 +34,7 @@ contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
         _warmUpAccount();
     }
 
-    function test_SendBatch10CallWithP256SessionKeyDirectAA() external {
+    function test_SendBatch10CallWithP256SessionKeyCustodialDirectAA() external {
         bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
         Call[] memory calls = _getCalls(10, address(erc20), 0, data);
 
@@ -50,10 +56,10 @@ contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
 
         userOp.signature = _encodeP256Signature(DEF_P256.R, DEF_P256.S, pK_SK, KeyType.P256NONKEY);
 
-        _relayUserOp(userOp, "test_SendBatch10CallWithP256SessionKeyDirectAA");
+        _relayUserOp(userOp, "test_SendBatch10CallWithP256SessionKeyCustodialDirectAA");
     }
 
-    function test_SendBatch10CallWithP256SessionKeyAASponsored() external {
+    function test_SendBatch10CallWithP256SessionKeyCustodialAASponsored() external {
         bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
         Call[] memory calls = _getCalls(10, address(erc20), 0, data);
 
@@ -81,10 +87,10 @@ contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
 
         userOp.signature = _encodeP256Signature(DEF_P256.R, DEF_P256.S, pK_SK, KeyType.P256NONKEY);
 
-        _relayUserOp(userOp, "test_SendBatch10CallWithP256SessionKeyAASponsored");
+        _relayUserOp(userOp, "test_SendBatch10CallWithP256SessionKeyCustodialAASponsored");
     }
 
-    function test_SendBatch10CallWithP256SessionKeyAASponsoredERC20() external {
+    function test_SendBatch10CallWithP256SessionKeyCustodialAASponsoredERC20() external {
         bytes memory data = abi.encodeWithSelector(IERC20.transfer.selector, reciver, 10e18);
         Call[] memory calls = _getCalls(10, address(erc20), 0, data);
 
@@ -112,7 +118,7 @@ contract BenchmarksP256SessionKeyBatch10 is DeployAccount {
 
         userOp.signature = _encodeP256Signature(DEF_P256.R, DEF_P256.S, pK_SK, KeyType.P256NONKEY);
 
-        _relayUserOp(userOp, "test_SendBatch10CallWithP256SessionKeyAASponsoredERC20");
+        _relayUserOp(userOp, "test_SendBatch10CallWithP256SessionKeyCustodialAASponsoredERC20");
     }
 
     function _relayUserOp(PackedUserOperation memory _userOp, string memory _testName) internal {
