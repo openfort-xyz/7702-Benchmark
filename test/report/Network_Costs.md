@@ -288,6 +288,29 @@ Using the Ecotone formula with estimated UserOperation size of 500 bytes:
 
 ---
 
+### 7. Deployment and Initialization Operations
+
+**Operation**: One-time setup costs for contract deployment and account initialization.
+
+| Operation | Gas Used | Ethereum | Base | Polygon | Optimism |
+|-----------|----------|----------|------|---------|----------|
+| **Deploy OPFMain Contract** | 5,019,232 | $2.73647 | $0.15099 | $0.02980 | $0.04043 |
+| **Initialize Account (without SessionKey)** | 289,959 | $0.15820 | $0.01730 | $0.00172 | $0.02074 |
+| **Initialize Account (with SessionKey)** | 411,339 | $0.22442 | $0.02067 | $0.00244 | $0.02124 |
+| **Total Setup (Deploy + Init w/ SessionKey)** | 5,430,571 | $2.96089 | $0.17166 | $0.03224 | $0.06167 |
+
+**Key Insights**:
+- **Contract Deployment**: One-time cost of ~$2.74 on Ethereum, $0.03 on Polygon, $0.04 on Optimism, $0.15 on Base
+- **Account Initialization**: $0.16-0.22 on Ethereum, $0.017-0.021 on Base, $0.0017-0.0024 on Polygon
+- **SessionKey Registration Overhead**: Adding SessionKey during initialization costs +121k gas (+41.9%)
+- **Network comparisons**:
+  - **Polygon**: Most cost-effective for deployment ($0.03 vs $2.74 on Ethereum = 98.9% savings)
+  - **Base**: L1 data fee ($0.009) is negligible compared to large deployment gas cost
+  - **Optimism**: L1 fee dominates for low-gas initialization but is minimal for deployment
+  - **Total setup cost**: Polygon offers 91x cheaper total setup vs Ethereum
+
+---
+
 ## Network Comparison Analysis
 
 ### Cost Rankings by Operation Type
@@ -344,6 +367,20 @@ Using the Ecotone formula with estimated UserOperation size of 500 bytes:
 
 **Note**: For high-gas WebAuthn operations, Base's fixed L1 fee makes it most cost-effective despite Polygon's lower gas price.
 
+#### Deployment and Initialization (Deploy OPFMain Contract)
+1. **Polygon**: $0.02980 ✓ Cheapest
+2. **Optimism**: $0.04043
+3. **Base**: $0.15099
+4. **Ethereum**: $2.73647 (91.8x more than Polygon)
+
+#### Initialization Only (with SessionKey)
+1. **Polygon**: $0.00244 ✓ Cheapest
+2. **Base**: $0.02067
+3. **Optimism**: $0.02124
+4. **Ethereum**: $0.22442 (92.0x more than Polygon)
+
+**Note**: For very high-gas operations like contract deployment (5M gas), Polygon's low per-gas cost dramatically outperforms L2s despite their fixed L1 fees.
+
 ### Cost Efficiency Ratios
 
 **Ethereum as baseline (1.00x):**
@@ -358,12 +395,15 @@ Using the Ecotone formula with estimated UserOperation size of 500 bytes:
 | WebAuthn Empty | 1.00x | 0.06x | 0.11x | 0.10x |
 | RootKey Account Mgmt | 1.00x | 0.14x | 0.11x | 0.29x |
 | WebAuthn Account Mgmt | 1.00x | 0.04x | 0.11x | 0.07x |
+| Contract Deployment | 1.00x | 0.06x | 0.01x | 0.01x |
+| Account Initialization | 1.00x | 0.09x | 0.01x | 0.09x |
 
 **Key Findings**:
-- **Polygon** consistently offers ~11% of Ethereum costs (9x cheaper) for low-to-medium gas operations
+- **Polygon** consistently offers ~1-11% of Ethereum costs (9-100x cheaper) across all operations
 - **Base** ranges from 4-19% of Ethereum costs, excels for high-gas WebAuthn operations
-- **Optimism** ranges from 7-39% of Ethereum costs
+- **Optimism** ranges from 1-39% of Ethereum costs
 - L2s show greatest advantage for high-gas operations where L1 data fee is proportionally smaller
+- **Contract deployment**: Polygon offers 99% cost savings vs Ethereum (92x cheaper)
 - **WebAuthn account management**: Base offers 96% cost savings vs Ethereum (25x cheaper)
 
 ---

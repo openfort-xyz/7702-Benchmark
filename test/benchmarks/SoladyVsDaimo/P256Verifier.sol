@@ -3,7 +3,8 @@ pragma solidity ^0.8.4;
 
 /// @notice P256 verifier contract.
 /// @author Solady (https://github.com/vectorized/solady/blob/main/src/utils/P256.sol)
-/// @author Modified from OpenZeppelin (https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/P256.sol)
+/// @author Modified from OpenZeppelin
+/// (https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/P256.sol)
 /// @dev Optimized for a balance between runtime gas and bytecode size.
 /// Returns `uint256(1)` on verification success.
 /// Unlike RIP-7212, this verifier returns `uint256(0)` on failure instead of empty return data.
@@ -131,7 +132,10 @@ contract P256Verifier {
                                 and(gt(calldatasize(), 0x9f), and(lt(iszero(r), lt(r, n)), lt(iszero(s), lt(s, n)))),
                                 and(lt(Qx, p), lt(Qy, p))
                             ),
-                            eq(mulmod(Qy, Qy, p), addmod(mulmod(addmod(mulmod(Qx, Qx, p), mload(returndatasize()), p), Qx, p), B, p))
+                            eq(
+                                mulmod(Qy, Qy, p),
+                                addmod(mulmod(addmod(mulmod(Qx, Qx, p), mload(returndatasize()), p), Qx, p), B, p)
+                            )
                         ),
                         and(
                             // We need to check that the `returndatasize` is indeed 32,
@@ -169,7 +173,7 @@ contract P256Verifier {
             let z := i
             let p := P
             let A := mload(returndatasize())
-            for {} 1 {} {
+            for { } 1 { } {
                 if z {
                     let yy := mulmod(y, y, p)
                     let zz := mulmod(z, z, p)
@@ -186,7 +190,7 @@ contract P256Verifier {
                     z := mulmod(2, mulmod(y2, z2, p), p)
                     y := addmod(mulmod(m, addmod(s, sub(p, x), p), p), sub(p, mulmod(8, mulmod(yy, yy, p), p)), p)
                 }
-                for { let o := or(and(shr(245, shl(i, u1)), 0x600), and(shr(247, shl(i, u2)), 0x180)) } 1 {} {
+                for { let o := or(and(shr(245, shl(i, u1)), 0x600), and(shr(247, shl(i, u2)), 0x180)) } 1 { } {
                     let z2 := mload(add(o, 0x40))
                     if or(iszero(z), iszero(z2)) {
                         if iszero(z2) { break }
@@ -235,7 +239,7 @@ contract P256Verifier {
                     z := mulmod(2, mulmod(y2, z2, p), p)
                     y := addmod(mulmod(m, addmod(s, sub(p, x), p), p), sub(p, mulmod(8, mulmod(yy, yy, p), p)), p)
                 }
-                for { let o := or(and(shr(243, shl(i, u1)), 0x600), and(shr(245, shl(i, u2)), 0x180)) } 1 {} {
+                for { let o := or(and(shr(243, shl(i, u1)), 0x600), and(shr(245, shl(i, u2)), 0x180)) } 1 { } {
                     let z2 := mload(add(o, 0x40))
                     if or(iszero(z), iszero(z2)) {
                         if iszero(z2) { break }

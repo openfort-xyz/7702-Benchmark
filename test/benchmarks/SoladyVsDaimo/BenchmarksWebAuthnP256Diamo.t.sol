@@ -22,8 +22,18 @@ contract BenchmarksWebAuthnP256Diamo is DeployAccount {
         bytes32 challenge = 0x4d565978a82a98ccf6e2c5c4ed19645fd05339c2b2fdb9659ceacb76464c8616;
         _populateWebAuthn("WebAuthnMasterKey.json", ".empty.DirectAA");
         vm.prank(owner7702);
-        bool isValid = webAuthn.verifySignature(challenge, DEF_WEBAUTHN.UVR, DEF_WEBAUTHN.AUTHENTICATOR_DATA, DEF_WEBAUTHN.CLIENT_DATA_JSON, DEF_WEBAUTHN.CHALLENGE_INDEX,
-        DEF_WEBAUTHN.TYPE_INDEX, DEF_WEBAUTHN.R, DEF_WEBAUTHN.S, DEF_WEBAUTHN.X, DEF_WEBAUTHN.Y);
+        bool isValid = webAuthn.verifySignature(
+            challenge,
+            DEF_WEBAUTHN.UVR,
+            DEF_WEBAUTHN.AUTHENTICATOR_DATA,
+            DEF_WEBAUTHN.CLIENT_DATA_JSON,
+            DEF_WEBAUTHN.CHALLENGE_INDEX,
+            DEF_WEBAUTHN.TYPE_INDEX,
+            DEF_WEBAUTHN.R,
+            DEF_WEBAUTHN.S,
+            DEF_WEBAUTHN.X,
+            DEF_WEBAUTHN.Y
+        );
         vm.snapshotGasLastCall("test_WebAuthn");
         assertTrue(isValid);
     }

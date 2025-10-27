@@ -103,6 +103,22 @@ Token swap via UniswapV2 router.
 | RemoveTokenSpend | 488,185 | 512,526 (+5.0%) |
 | RemoveCanCall | 465,906 | 500,911 (+7.5%) |
 
+### Deployment and Initialization
+
+One-time operations for account setup and contract deployment.
+
+| Operation | Gas Used | Description |
+|-----------|----------|-------------|
+| **Deploy OPFMain Contract** | 5,019,232 | Deploy the OPFMain implementation contract (one-time) |
+| **Initialize Account (without SessionKey)** | 289,959 | Initialize account with MasterKey only |
+| **Initialize Account (with SessionKey)** | 411,339 (+41.9%) | Initialize account with MasterKey and SessionKey |
+
+**Key Insights**:
+- **Contract Deployment**: One-time cost of ~5M gas for OPFMain implementation
+- **Account Initialization**: 290k-411k gas depending on whether SessionKey is registered
+- **SessionKey Registration Overhead**: +121k gas (+41.9%) to register SessionKey during initialization
+- **Total Setup Cost** (deploy + initialize): 5.3M-5.4M gas for first account, then 290k-411k for each additional account
+
 ---
 
 ## Comparative Analysis

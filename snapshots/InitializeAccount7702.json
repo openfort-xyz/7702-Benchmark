@@ -1,0 +1,4 @@
+{
+  "test_InitializeWithSessionKeyBenchmark": "411339",
+  "test_InitializeWithoutSessionKeyBenchmark": "289959"
+}
