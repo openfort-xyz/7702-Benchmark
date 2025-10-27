@@ -1,86 +1,185 @@
-#  Openfort 7702 Delegator Smart Contract Benchmarks
+# EIP-7702 Delegator Smart Contract Benchmarks Benchmark Suite
 
-This benchmark suite provides comprehensive performance analysis of Openfort's EIP-7702 delegator smart contract across multiple blockchain networks. The benchmarks measure gas consumption, transaction costs, and performance characteristics for various operations including deployment, initialization, key registration, token transfers, and batch executions.
+Comprehensive gas benchmarks for EIP-7702 Account Abstraction implementations across different key types, operation modes, and transaction scenarios.
 
-## EIP-7702 Delegator Contract
-Openfort's 7702 delegator smart contract implements account abstraction features that enable:
+## Table of Contents
+- [Introduction](#introduction)
+- [EIP-7702 Overview](#eip-7702-overview)
+- [Benchmark Methodology](#benchmark-methodology)
+- [Key Types & Operation Modes](#key-types--operation-modes)
+- [Benchmark Snippet Results](#benchmark-snippet-results)
+- [Comparative Analysis](#comparative-analysis)
 
-- Account Delegation: EOAs can delegate execution to smart contract logic
-- Sponsored Transactions: Third-party gas payment (account abstraction)
-- Session Keys: Temporary authentication for improved UX
-- Batch Operations: Multiple operations in a single transaction
-- Advanced Signatures: Support for P256 and other signature schemes
+---
 
-##  Benchmark Categories
-- Deploy Smart Contract
-- Initialize Account
-- Register-Key
-- ERC20 Operations
-- Native Transfer
-- Batch Execution
+## Introduction
 
-#### Full Benchmark Report
-[Full Report](/test/Output/enhanced-benchmark-report.md) | [Benchmarks Report](/test/Output/benchmark-report.md)
+This benchmark suite provides comprehensive gas consumption measurements for EIP-7702 implementations across:
+- **Key Types**: RootKey, WebAuthn MasterKey, SessionKey (EOA, P256, WebAuthn)
+- **Operation Modes**: Direct Call, ERC4377 AA Call (Not Sponsored, Sponsored, Sponsored ERC20)
+- **Transaction Types**: Empty Calls, Native transfers, ERC20 transfers, Batch operations, UniswapV2 swaps
+- **Custodial Variants**: Self-custody vs third-party custody models
 
-#### Benchmarks for EVM Networks
-[Ethereum Mainnet](/test/Output/mainnet-benchmark-report.md) | [Base Mainnet](/test/Output/base-benchmark-report.md) | [Arbitrum Mainnet](/test/Output/arbitrum-benchmark-report.md) | [Optimism Mainnet](/test/Output/optimism-benchmark-report.md)
+> **All benchmarks measure real gas consumption using Foundry's `vm.snapshotGasLastCall()` with warmed storage to ensure accurate, production-representative measurements.**
 
-#### Comperison Benchmarks (aa-benchmarks)
-**Disclaimer: We have prepared a comparison report between the Openfort 7702 Account and a standard Smart Contract Account (AA).**
-[Ethereum Mainnet](test/Output/Comparison/ethereum.md) | [Base Mainnet](test/Output/Comparison/base.md) | [Arbitrum Mainnet](test/Output/Comparison/arbitrum.md) | [Optimism Mainnet](test/Output/Comparison/optimism.md)
+---
 
-<br></br>
-Generated: 7/28/2025, 4:35:19 PM
+## EIP-7702 Overview
 
-## Gas Usage Summary
+**EIP-7702** enables Externally Owned Accounts (EOAs) to temporarily delegate execution to smart contracts, providing Account Abstraction features while maintaining private key security.
 
-| Test                       | MAINNET   | BASE      | ARBITRUM  | OPTIMISM  |
-| -------------------------- | --------- | --------- | --------- | --------- |
-| Deploy OPF                 | 5,001,063 | 5,002,249 | 5,007,503 | 5,012,809 |
-| Initialize TX              | 356,932   | 356,932   | 356,932   | 356,932   |
-| Initialize + Session Key   | 658,262   | 658,262   | 658,262   | 658,262   |
-| Register EOA               | 222,841   | 222,841   | 222,841   | 222,841   |
-| Register P256              | 302,442   | 302,442   | 302,442   | 302,442   |
-| Register P256 (Non-Extrac) | 302,442   | 302,442   | 302,442   | 302,442   |
+### Key Features
+- Native EOA Support (no contract deployment)
+- Temporary Delegation (transaction-scoped)
+- Session Keys (granular permissions)
+- Flexible Signatures (ECDSA, P256, WebAuthn)
+- ERC-4337 Compatible
 
-## Cost Comparison (USD)
+---
 
-| Test                       | MAINNET | BASE   | ARBITRUM | OPTIMISM |    Best      |
-| -------------------------- | ------- | ------ | -------- | -------- | ------------ |
-| Deploy OPF                 | 16.4848 | 0.1279 | 1.5451   | 0.0238   | **OPTIMISM** |
-| Initialize TX              | 1.1765  | 0.0089 | 0.1101   | 0.0014   | **OPTIMISM** |
-| Initialize + Session Key   | 2.1698  | 0.0165 | 0.2031   | 0.0025   | **OPTIMISM** |
-| Register EOA               | 0.7345  | 0.0056 | 0.0687   | 0.0008   | **OPTIMISM** |
-| Register P256              | 0.9969  | 0.0076 | 0.0933   | 0.0011   | **OPTIMISM** |
-| Register P256 (Non-Extrac) | 0.9969  | 0.0076 | 0.0933   | 0.0011   | **OPTIMISM** |
+## Benchmark Methodology
 
+### Warming Strategy
 
-## Openfort Benchmarks
+All benchmarks use consistent warming to ensure accurate measurements:
 
-## Openfort Benchmarks — Image Stack
+1. **EntryPoint Warm-up**: Execute initial operations to warm EntryPoint storage
+2. **Account Warm-up**: Run sample transactions through each operation mode
+3. **Storage Warm-up**: Call `_etch()` immediately before measured operations
 
-![Slide 1](./docs/slides/1.png)
-![Slide 2](./docs/slides/2.png)
-![Slide 3](./docs/slides/3.png)
-![Slide 4](./docs/slides/4.png)
-![Slide 5](./docs/slides/5.png)
-![Slide 6](./docs/slides/6.png)
-![Slide 7](./docs/slides/7.png)
-![Slide 8](./docs/slides/8.png)
-![Slide 9](./docs/slides/9.png)
-![Slide 10](./docs/slides/10.png)
-![Slide 11](./docs/slides/11.png)
-![Slide 12](./docs/slides/12.png)
-![Slide 13](./docs/slides/13.png)
+**What's Measured**: `entryPoint.handleOps()` - Complete ERC-4337 UserOperation execution including signature verification, execution, and gas accounting.
 
-## Key Insights
+---
 
-- **Cheapest Network**: OPTIMISM consistently offers the lowest costs
-- **Most Expensive**: MAINNET has the highest transaction costs
-- **Gas Consistency**: Gas usage remains the same across networks
-- **Cost Savings**: Using OPTIMISM vs MAINNET saves ~99.9% (Total: $22.5287)
-- **Price Variation**: Up to 735x difference between most/least expensive networks
-- **Total Costs**: MAINNET: $22.5594 | BASE: $0.1741 | ARBITRUM: $2.1136 | OPTIMISM: $0.0307
-- **Most Expensive Operation**: "Deploy OPF" ($16.4848 on MAINNET)
-- **Most Efficient Operation**: "Register EOA" (222,841 gas)
+## Key Types & Operation Modes
+
+### Key Types
+
+| Key Type | Signature Method | Use Case |
+|----------|------------------|----------|
+| **RootKey** | ECDSA (secp256k1) | Full account control |
+| **MasterKey (WebAuthn)** | WebAuthn P256 | Full account control |
+| **SessionKey (EOA)** | ECDSA (secp256k1) | Limited permissions |
+| **SessionKey (WebAuthn)** | WebAuthn P256 | Limited permissions |
+| **SessionKey (P256)** | P256 (secp256r1) | Limited permissions |
+
+### Operation Modes
+
+| Mode | Paymaster | Gas Payment |
+|------|-----------|-------------|
+| **Direct** | None | Sender pays ETH |
+| **ERC4337** | None | Account pays ETH |
+| **ERC4337 Sponsored** | Native | Paymaster pays ETH |
+| **ERC4337 Sponsored ERC20** | ERC20 |  Paymaster pays ERC20 |
+
+---
+
+## Benchmark Snippet Results
+
+### Empty Operations
+
+Empty `execute()` calls - baseline overhead measurement.
+
+| Key Type | Direct | ERC4337 | ERC4337 Sponsored | ERC4337 Sponsored ERC20 |
+|----------|--------|----------|-------------|------------------|
+| **RootKey** | 31,679 | 92,983 (+193.5%) | 104,059 (+11.9%) | 132,743 (+27.6%) |
+| **EOA SessionKey** | - | 124,418 | 135,508 (+8.9%) | 164,196 (+21.2%) |
+| **EOA SessionKey (Custodial)** | - | 139,929 | 151,528 (+8.3%) | 180,235 (+18.9%) |
+| **P256 SessionKey** | - | 305,262 | 312,839 (+2.5%) | 344,581 (+10.1%) |
+| **P256 SessionKey (Custodial)** | - | 320,786 | 328,872 (+2.5%) | 360,632 (+9.7%) |
+| **WebAuthn SessionKey** | - | 499,969 | 507,889 (+1.6%) | 536,285 (+5.6%) |
+| **WebAuthn SessionKey (Custodial)** | - | 515,583 | 524,012 (+1.6%) | 552,445 (+5.4%) |
+| **WebAuthn MasterKey** | - | 469,222 | 477,142 (+1.7%) | 505,524 (+5.9%) |
+
+### Full Benchmark Report
+
+[Benchmark Results](/test/report/Benchmark_Results.md) | [Account Management](/test/report/Account_Actions.md) | [Network Costs](/test/report/Network_Costs.md)
+
+---
+
+## Comparative Analysis
+
+### Signature Type Gas Overhead
+
+Comparing signature verification costs (AASponsored, empty operation):
+
+| Signature Type | Gas Cost | Overhead vs ECDSA |
+|----------------|----------|-------------------|
+| ECDSA (RootKey) | 104,059 | Baseline |
+| ECDSA (EOA SessionKey) | 135,508 | +30% |
+| P256 (SessionKey) | 312,839 | +200% |
+| WebAuthn (SessionKey) | 507,889 | +388% |
+| WebAuthn (MasterKey) | 477,142 | +359% |
+
+**Insight**: P256 and WebAuthn incur ~180-370k gas overhead due to signature verification complexity.
+
+### Custodial Overhead
+
+Comparing self-custody vs third-party custody (AASponsored, empty):
+
+| Key Type | Self-Custody | Third-Party | Overhead |
+|----------|--------------|-------------|----------|
+| EOA SessionKey | 135,508 | 151,528 | +12% (16,020 gas) |
+| P256 SessionKey | 312,839 | 328,872 | +5% (16,033 gas) |
+| WebAuthn SessionKey | 507,889 | 524,012 | +3% (16,123 gas) |
+
+**Insight**: Custodial overhead is consistent (~16k gas) across signature types.
+
+---
+
+## Running Benchmarks
+
+```bash
+# Install Foundry
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
+
+# Install dependencies
+forge install
+
+# Run all benchmarks
+forge test --isolate
+
+# Run specific categories
+forge test --mc "BenchmarksRootKey*"  --isolate
+forge test --mc "BenchmarksWebAuthnSessionKey*"  --isolate
+```
+
+---
+
+## Repository Structure
+
+```
+7702-Benchmark/
+│ 
+├── test/benchmarks/              # Benchmark test files
+│   ├── RootKey/
+│   ├── EOA-SessionKey/
+│   ├── P256-SessionKey/
+│   ├── WebAuthn-SessionKey/
+│   ├── WebAuthb-MasterKey/
+│   ├── 3rd-Party-SessionKey/
+│   └── SoladyVsDaimo/
+├── snapshots/                    # Gas measurements (43 files)
+├── README.md                     # This file
+└── *.md                          # Additional documentation
+```
+
+---
+
+## Acknowledgments
+
+- **EIP-7702**: [Specification](https://eips.ethereum.org/EIPS/eip-7702)
+- **ERC-4337**: [Account Abstraction](https://eips.ethereum.org/EIPS/eip-4337)
+- **RIP-7212**: [P256 Precompile](https://github.com/ethereum/RIPs/blob/master/RIPS/rip-7212.md)
+- **Solady**: [Gas-optimized libraries](https://github.com/vectorized/solady)
+- **FreshCryptoLib**: [P256 implementation](https://github.com/rdubois-crypto/FreshCryptoLib)
+- **Daimo**: [WebAuthn verifier](https://github.com/daimo-eth/p256-verifier)
+
+---
+
+**Last Updated**: 2025-10-27
+**Benchmark Version**: 1.0.0
+**Solidity**: 0.8.29
+**Foundry**: Latest
 

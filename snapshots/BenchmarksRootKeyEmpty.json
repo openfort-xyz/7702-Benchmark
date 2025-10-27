@@ -1,0 +1,6 @@
+{
+  "test_SendEmptyCallWithRootKeyDirect": "31679",
+  "test_SendEmptyCallWithRootKeyDirectAA": "92983",
+  "test_SendEmptyCallWithRootKeyDirectAASponsored": "104059",
+  "test_SendEmptyCallWithRootKeyDirectAASponsoredERC20": "132743"
+}

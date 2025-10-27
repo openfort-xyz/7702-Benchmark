@@ -1,0 +1,5 @@
+{
+  "test_SendNativeCallWithWebAuthnMasterKeyDirectAA": "474358",
+  "test_SendNativeCallWithWebAuthnMasterKeyDirectAASponsored": "487013",
+  "test_SendNativeCallWithWebAuthnMasterKeyDirectAASponsoredERC20": "512739"
+}

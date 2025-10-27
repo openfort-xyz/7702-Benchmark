@@ -2,12 +2,11 @@
 
 pragma solidity ^0.8.29;
 
-import {MultiSigner} from "./MultiSigner.sol";
-import {BasePaymaster} from "./BasePaymaster.sol";
-import {ManagerAccessControl} from "./ManagerAccessControl.sol";
-import {UserOperationLib} from "lib/account-abstraction/contracts/core/UserOperationLib.sol";
-import {PackedUserOperation} from
-    "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
+import { MultiSigner } from "./MultiSigner.sol";
+import { BasePaymaster } from "./BasePaymaster.sol";
+import { ManagerAccessControl } from "./ManagerAccessControl.sol";
+import { UserOperationLib } from "lib/account-abstraction/contracts/core/UserOperationLib.sol";
+import { PackedUserOperation } from "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 
 using UserOperationLib for PackedUserOperation;
 
@@ -141,10 +140,14 @@ abstract contract BaseSingletonPaymaster is ManagerAccessControl, BasePaymaster,
      * @notice Initializes a SingletonPaymaster instance.
      * @param _owner The initial contract owner.
      */
-    constructor(address _owner, address _manager, address[] memory _signers)
+    constructor(
+        address _owner,
+        address _manager,
+        address[] memory _signers
+    )
         BasePaymaster(_owner, _manager)
         MultiSigner(_signers)
-    {}
+    { }
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                      INTERNAL HELPERS                      */
@@ -159,7 +162,10 @@ abstract contract BaseSingletonPaymaster is ManagerAccessControl, BasePaymaster,
      * @return mode The paymaster mode.
      * @return paymasterConfig The paymaster config bytes.
      */
-    function _parsePaymasterAndData(bytes calldata _paymasterAndData, uint256 _paymasterDataOffset)
+    function _parsePaymasterAndData(
+        bytes calldata _paymasterAndData,
+        uint256 _paymasterDataOffset
+    )
         internal
         pure
         returns (uint8, bytes calldata)
@@ -211,8 +217,7 @@ abstract contract BaseSingletonPaymaster is ManagerAccessControl, BasePaymaster,
         configPointer += 16;
         config.exchangeRate = uint256(bytes32(_paymasterConfig[configPointer:configPointer + 32])); // 32 bytes
         configPointer += 32;
-        config.paymasterValidationGasLimit =
-            uint128(bytes16(_paymasterConfig[configPointer:configPointer + 16])); // 16
+        config.paymasterValidationGasLimit = uint128(bytes16(_paymasterConfig[configPointer:configPointer + 16])); // 16
             // bytes
         configPointer += 16;
         config.treasury = address(bytes20(_paymasterConfig[configPointer:configPointer + 20])); // 20 bytes
@@ -224,8 +229,7 @@ abstract contract BaseSingletonPaymaster is ManagerAccessControl, BasePaymaster,
                 revert OPFPaymasterV3__PaymasterConfigLengthInvalid();
             }
 
-            config.preFundInToken =
-                uint128(bytes16(_paymasterConfig[configPointer:configPointer + 16])); // 16 bytes
+            config.preFundInToken = uint128(bytes16(_paymasterConfig[configPointer:configPointer + 16])); // 16 bytes
             configPointer += 16;
         }
         config.constantFee = uint128(0);
@@ -234,8 +238,7 @@ abstract contract BaseSingletonPaymaster is ManagerAccessControl, BasePaymaster,
                 revert OPFPaymasterV3__PaymasterConfigLengthInvalid();
             }
 
-            config.constantFee =
-                uint128(bytes16(_paymasterConfig[configPointer:configPointer + 16])); // 16 bytes
+            config.constantFee = uint128(bytes16(_paymasterConfig[configPointer:configPointer + 16])); // 16 bytes
             configPointer += 16;
         }
 
@@ -310,13 +313,16 @@ abstract contract BaseSingletonPaymaster is ManagerAccessControl, BasePaymaster,
         bytes32 _userOpHash,
         ERC20PaymasterData memory _cfg,
         uint256 _requiredPreFund
-    ) internal pure returns (bytes memory) {
+    )
+        internal
+        pure
+        returns (bytes memory)
+    {
         // the limit we have for executing the userOp.
         uint256 executionGasLimit = _userOp.unpackCallGasLimit() + _userOp.unpackPostOpGasLimit();
 
         // the limit we are allowed for everything before the userOp is executed.
-        uint256 preOpGasApproximation = _userOp.preVerificationGas
-            + _userOp.unpackVerificationGasLimit() // VerificationGasLimit
+        uint256 preOpGasApproximation = _userOp.preVerificationGas + _userOp.unpackVerificationGasLimit() // VerificationGasLimit
             // is an overestimation.
             + _cfg.paymasterValidationGasLimit; // paymasterValidationGasLimit has to be an under estimation to compensate
             // for
@@ -342,11 +348,7 @@ abstract contract BaseSingletonPaymaster is ManagerAccessControl, BasePaymaster,
         );
     }
 
-    function _parsePostOpContext(bytes calldata _context)
-        internal
-        pure
-        returns (ERC20PostOpContext memory ctx)
-    {
+    function _parsePostOpContext(bytes calldata _context) internal pure returns (ERC20PostOpContext memory ctx) {
         ctx = abi.decode(_context, (ERC20PostOpContext));
     }
 
@@ -363,7 +365,11 @@ abstract contract BaseSingletonPaymaster is ManagerAccessControl, BasePaymaster,
         uint256 _postOpGas,
         uint256 _actualUserOpFeePerGas,
         uint256 _exchangeRate
-    ) public pure returns (uint256) {
+    )
+        public
+        pure
+        returns (uint256)
+    {
         return ((_actualGasCost + (_postOpGas * _actualUserOpFeePerGas)) * _exchangeRate) / 1e18;
     }
 

@@ -2,18 +2,19 @@
 
 pragma solidity ^0.8.29;
 
-import {IPaymasterV8} from "./interfaces/IPaymasterV8.sol";
-import {SafeTransferLib} from "lib/solady/src/utils/SafeTransferLib.sol";
-import {BaseSingletonPaymaster} from "./core/BaseSingletonPaymaster.sol";
-import {_packValidationData} from "lib/account-abstraction/contracts/core/Helpers.sol";
-import {ECDSA} from "lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol";
-import {UserOperationLib} from "lib/account-abstraction/contracts/core/UserOperationLib.sol";
-import {PackedUserOperation} from
-    "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
-import {MessageHashUtils} from
-    "lib/openzeppelin-contracts/contracts/utils/cryptography/MessageHashUtils.sol";
+import { IPaymasterV8 } from "./interfaces/IPaymasterV8.sol";
+import { ECDSA } from "lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol";
+import { SafeTransferLib } from "solady/utils/SafeTransferLib.sol";
+import { BaseSingletonPaymaster } from "./core/BaseSingletonPaymaster.sol";
+import { _packValidationData } from "lib/account-abstraction/contracts/core/Helpers.sol";
+import { UserOperationLib } from "lib/account-abstraction/contracts/core/UserOperationLib.sol";
+import { MessageHashUtils } from "lib/openzeppelin-contracts/contracts/utils/cryptography/MessageHashUtils.sol";
+import { PackedUserOperation } from "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 
 /**
+ * @title PaymasterV3
+ * @author 0xKoiner@Openfort
+ * @notice Inspired by Pimlico and Solady Paymaster.
  * @dev Paymaster implementation compatible with account-abstraction v0.0.8 and OpenZeppelin v5.4.0
  *
  * @notice DEPENDENCY REQUIREMENTS:
@@ -49,9 +50,13 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                        CONSTRUCTOR                         */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
-    constructor(address _owner, address _manager, address[] memory _signers)
+    constructor(
+        address _owner,
+        address _manager,
+        address[] memory _signers
+    )
         BaseSingletonPaymaster(_owner, _manager, _signers)
-    {}
+    { }
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*        ENTRYPOINT V0.8 ERC-4337 PAYMASTER OVERRIDES        */
@@ -64,7 +69,11 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         PackedUserOperation calldata userOp,
         bytes32 userOpHash,
         uint256 requiredPreFund
-    ) external override returns (bytes memory context, uint256 validationData) {
+    )
+        external
+        override
+        returns (bytes memory context, uint256 validationData)
+    {
         _requireFromEntryPoint();
         return _validatePaymasterUserOp(userOp, userOpHash, requiredPreFund);
     }
@@ -74,7 +83,10 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         bytes calldata context,
         uint256 actualGasCost,
         uint256 actualUserOpFeePerGas
-    ) external override {
+    )
+        external
+        override
+    {
         _requireFromEntryPoint();
         _postOp(mode, context, actualGasCost, actualUserOpFeePerGas);
     }
@@ -121,7 +133,10 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         PackedUserOperation calldata _userOp,
         bytes32 _userOpHash,
         uint256 _requiredPreFund
-    ) internal returns (bytes memory, uint256) {
+    )
+        internal
+        returns (bytes memory, uint256)
+    {
         (uint8 mode, bytes calldata paymasterConfig) =
             _parsePaymasterAndData(_userOp.paymasterAndData, PAYMASTER_DATA_OFFSET);
 
@@ -133,8 +148,7 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         uint256 validationData;
 
         if (mode == VERIFYING_MODE) {
-            (context, validationData) =
-                _validateVerifyingMode(_userOp, paymasterConfig, _userOpHash);
+            (context, validationData) = _validateVerifyingMode(_userOp, paymasterConfig, _userOpHash);
         }
 
         if (mode == ERC20_MODE) {
@@ -149,9 +163,11 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         PackedUserOperation calldata _userOp,
         bytes calldata _paymasterConfig,
         bytes32 _userOpHash
-    ) internal returns (bytes memory, uint256) {
-        (uint48 validUntil, uint48 validAfter, bytes calldata signature) =
-            _parseVerifyingConfig(_paymasterConfig);
+    )
+        internal
+        returns (bytes memory, uint256)
+    {
+        (uint48 validUntil, uint48 validAfter, bytes calldata signature) = _parseVerifyingConfig(_paymasterConfig);
 
         bytes32 hash = MessageHashUtils.toEthSignedMessageHash(getHash(VERIFYING_MODE, _userOp));
         address recoveredSigner = ECDSA.recover(hash, signature);
@@ -159,9 +175,7 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         bool isSignatureValid = signers[recoveredSigner];
         uint256 validationData = _packValidationData(!isSignatureValid, validUntil, validAfter);
 
-        emit UserOperationSponsored(
-            _userOpHash, _getSender(_userOp), VERIFYING_MODE, address(0), 0, 0
-        );
+        emit UserOperationSponsored(_userOpHash, _getSender(_userOp), VERIFYING_MODE, address(0), 0, 0);
         return ("", validationData);
     }
 
@@ -171,15 +185,17 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         bytes calldata _paymasterConfig,
         bytes32 _userOpHash,
         uint256 _requiredPreFund
-    ) internal returns (bytes memory, uint256) {
+    )
+        internal
+        returns (bytes memory, uint256)
+    {
         ERC20PaymasterData memory cfg = _parseErc20Config(_paymasterConfig);
 
         bytes32 hash = MessageHashUtils.toEthSignedMessageHash(getHash(_mode, _userOp));
         address recoveredSigner = ECDSA.recover(hash, cfg.signature);
 
         bool isSignatureValid = signers[recoveredSigner];
-        uint256 validationData =
-            _packValidationData(!isSignatureValid, cfg.validUntil, cfg.validAfter);
+        uint256 validationData = _packValidationData(!isSignatureValid, cfg.validUntil, cfg.validAfter);
         bytes memory context = _createPostOpContext(_userOp, _userOpHash, cfg, _requiredPreFund);
 
         if (!isSignatureValid) {
@@ -193,9 +209,7 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         }
 
         if (cfg.preFundInToken > 0) {
-            SafeTransferLib.safeTransferFrom(
-                cfg.token, _userOp.sender, cfg.treasury, cfg.preFundInToken
-            );
+            SafeTransferLib.safeTransferFrom(cfg.token, _userOp.sender, cfg.treasury, cfg.preFundInToken);
         }
 
         return (context, validationData);
@@ -206,26 +220,22 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         bytes calldata _context,
         uint256 _actualGasCost,
         uint256 _actualUserOpFeePerGas
-    ) internal {
+    )
+        internal
+    {
         ERC20PostOpContext memory ctx = _parsePostOpContext(_context);
 
         uint256 expectedPenaltyGasCost = _expectedPenaltyGasCost(
-            _actualGasCost,
-            _actualUserOpFeePerGas,
-            ctx.postOpGas,
-            ctx.preOpGasApproximation,
-            ctx.executionGasLimit
+            _actualGasCost, _actualUserOpFeePerGas, ctx.postOpGas, ctx.preOpGasApproximation, ctx.executionGasLimit
         );
 
         uint256 actualGasCost = _actualGasCost + expectedPenaltyGasCost;
 
-        uint256 costInToken = getCostInToken(
-            actualGasCost, ctx.postOpGas, _actualUserOpFeePerGas, ctx.exchangeRate
-        ) + ctx.constantFee;
+        uint256 costInToken =
+            getCostInToken(actualGasCost, ctx.postOpGas, _actualUserOpFeePerGas, ctx.exchangeRate) + ctx.constantFee;
 
-        uint256 absoluteCostInToken = costInToken > ctx.preFundCharged
-            ? costInToken - ctx.preFundCharged
-            : ctx.preFundCharged - costInToken;
+        uint256 absoluteCostInToken =
+            costInToken > ctx.preFundCharged ? costInToken - ctx.preFundCharged : ctx.preFundCharged - costInToken;
 
         SafeTransferLib.safeTransferFrom(
             ctx.token,
@@ -237,14 +247,10 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         uint256 preFundInToken = (ctx.preFund * ctx.exchangeRate) / 1e18;
 
         if (ctx.recipient != address(0) && preFundInToken > costInToken) {
-            SafeTransferLib.safeTransferFrom(
-                ctx.token, ctx.sender, ctx.recipient, preFundInToken - costInToken
-            );
+            SafeTransferLib.safeTransferFrom(ctx.token, ctx.sender, ctx.recipient, preFundInToken - costInToken);
         }
 
-        emit UserOperationSponsored(
-            ctx.userOpHash, ctx.sender, ERC20_MODE, ctx.token, costInToken, ctx.exchangeRate
-        );
+        emit UserOperationSponsored(ctx.userOpHash, ctx.sender, ERC20_MODE, ctx.token, costInToken, ctx.exchangeRate);
     }
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
@@ -257,7 +263,12 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         uint128 postOpGas,
         uint256 preOpGasApproximation,
         uint256 executionGasLimit
-    ) public pure virtual returns (uint256) {
+    )
+        public
+        pure
+        virtual
+        returns (uint256)
+    {
         uint256 executionGasUsed = 0;
         uint256 actualGas = _actualGasCost / _actualUserOpFeePerGas + postOpGas;
 
@@ -273,22 +284,14 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         return expectedPenaltyGas * _actualUserOpFeePerGas;
     }
 
-    function getHash(uint8 _mode, PackedUserOperation calldata _userOp)
-        public
-        view
-        returns (bytes32)
-    {
+    function getHash(uint8 _mode, PackedUserOperation calldata _userOp) public view returns (bytes32) {
         if (_mode == VERIFYING_MODE) {
-            return _getHash(
-                _userOp, MODE_AND_ALLOW_ALL_BUNDLERS_LENGTH + VERIFYING_PAYMASTER_DATA_LENGTH
-            );
+            return _getHash(_userOp, MODE_AND_ALLOW_ALL_BUNDLERS_LENGTH + VERIFYING_PAYMASTER_DATA_LENGTH);
         } else {
-            uint8 paymasterDataLength =
-                MODE_AND_ALLOW_ALL_BUNDLERS_LENGTH + ERC20_PAYMASTER_DATA_LENGTH;
+            uint8 paymasterDataLength = MODE_AND_ALLOW_ALL_BUNDLERS_LENGTH + ERC20_PAYMASTER_DATA_LENGTH;
 
-            uint8 combinedByte = uint8(
-                _userOp.paymasterAndData[PAYMASTER_DATA_OFFSET + MODE_AND_ALLOW_ALL_BUNDLERS_LENGTH]
-            );
+            uint8 combinedByte =
+                uint8(_userOp.paymasterAndData[PAYMASTER_DATA_OFFSET + MODE_AND_ALLOW_ALL_BUNDLERS_LENGTH]);
             // constantFeePresent is in the *lowest* bit
             bool constantFeePresent = (combinedByte & 0x01) != 0;
             // recipientPresent is in the second lowest bit
@@ -312,7 +315,10 @@ contract OPFPaymasterV3 is BaseSingletonPaymaster, IPaymasterV8 {
         }
     }
 
-    function _getHash(PackedUserOperation calldata _userOp, uint256 paymasterDataLength)
+    function _getHash(
+        PackedUserOperation calldata _userOp,
+        uint256 paymasterDataLength
+    )
         internal
         view
         returns (bytes32)

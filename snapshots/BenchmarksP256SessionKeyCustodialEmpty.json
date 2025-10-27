@@ -1,0 +1,5 @@
+{
+  "test_SendEmptyCallWithP256SessionKeyCustodialAASponsored": "328872",
+  "test_SendEmptyCallWithP256SessionKeyCustodialAASponsoredERC20": "360632",
+  "test_SendEmptyCallWithP256SessionKeyCustodialDirectAA": "320786"
+}

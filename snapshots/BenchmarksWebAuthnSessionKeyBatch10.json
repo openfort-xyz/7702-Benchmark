@@ -1,0 +1,5 @@
+{
+  "test_SendBatch10CallWithWebAuthnSessionKeyDirectAA": "697369",
+  "test_SendBatch10CallWithWebAuthnSessionKeyDirectAASponsored": "722135",
+  "test_SendBatch10CallWithWebAuthnSessionKeyDirectAASponsoredERC20": "728266"
+}

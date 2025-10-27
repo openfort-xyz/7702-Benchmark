@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
-import {AccessControl} from "lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
+import { AccessControl } from "lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
 
 interface IManagerAccessControl {
     function MANAGER_ROLE() external view returns (bytes32);
@@ -16,13 +16,8 @@ abstract contract ManagerAccessControl is AccessControl {
     bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
 
     modifier onlyAdminOrManager() {
-        if (
-            !hasRole(DEFAULT_ADMIN_ROLE, msg.sender)
-                && !hasRole(ManagerAccessControl.MANAGER_ROLE, msg.sender)
-        ) {
-            revert IManagerAccessControl.AccessControlUnauthorizedAccount(
-                msg.sender, ManagerAccessControl.MANAGER_ROLE
-            );
+        if (!hasRole(DEFAULT_ADMIN_ROLE, msg.sender) && !hasRole(ManagerAccessControl.MANAGER_ROLE, msg.sender)) {
+            revert IManagerAccessControl.AccessControlUnauthorizedAccount(msg.sender, ManagerAccessControl.MANAGER_ROLE);
         }
         _;
     }

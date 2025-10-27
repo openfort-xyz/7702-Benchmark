@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-import {PackedUserOperation} from
-    "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
+import { PackedUserOperation } from "lib/account-abstraction/contracts/interfaces/PackedUserOperation.sol";
 
 /**
  * The interface exposed by a paymaster contract, who agrees to pay the gas for user's operations.
@@ -14,7 +13,8 @@ interface IPaymasterV8 {
         opSucceeded,
         // User op reverted. Still has to pay for gas.
         opReverted,
-        // Only used internally in the EntryPoint (cleanup after postOp reverts). Never calling paymaster with this value
+        // Only used internally in the EntryPoint (cleanup after postOp reverts). Never calling paymaster with this
+        // value
         postOpReverted
     }
 
@@ -39,7 +39,9 @@ interface IPaymasterV8 {
         PackedUserOperation calldata userOp,
         bytes32 userOpHash,
         uint256 maxCost
-    ) external returns (bytes memory context, uint256 validationData);
+    )
+        external
+        returns (bytes memory context, uint256 validationData);
 
     /**
      * Post-operation handler.
@@ -59,5 +61,6 @@ interface IPaymasterV8 {
         bytes calldata context,
         uint256 actualGasCost,
         uint256 actualUserOpFeePerGas
-    ) external;
+    )
+        external;
 }

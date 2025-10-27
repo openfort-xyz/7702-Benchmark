@@ -1,0 +1,5 @@
+{
+  "test_SendNativeCallWithWebAuthnSessionKeyDirectAA": "551261",
+  "test_SendNativeCallWithWebAuthnSessionKeyDirectAASponsored": "563916",
+  "test_SendNativeCallWithWebAuthnSessionKeyDirectAASponsoredERC20": "589663"
+}

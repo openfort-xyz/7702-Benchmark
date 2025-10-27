@@ -4,8 +4,8 @@ pragma solidity ^0.8.29;
 
 /* solhint-disable reason-string */
 
-import {ManagerAccessControl} from "./ManagerAccessControl.sol";
-import {IEntryPoint} from "lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
+import { ManagerAccessControl } from "./ManagerAccessControl.sol";
+import { IEntryPoint } from "lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
 
 /**
  * Helper class for creating a paymaster.
@@ -17,8 +17,7 @@ abstract contract BasePaymaster is ManagerAccessControl {
 
     address public immutable OWNER;
     address public immutable MANAGER;
-    IEntryPoint public constant ENTRY_POINT_V8 =
-        IEntryPoint(0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108);
+    IEntryPoint public constant ENTRY_POINT_V8 = IEntryPoint(0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108);
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                        CONSTRUCTOR                         */
@@ -37,7 +36,7 @@ abstract contract BasePaymaster is ManagerAccessControl {
      * Add a deposit for this paymaster, used for paying for transaction fees.
      */
     function deposit() public payable {
-        ENTRY_POINT_V8.depositTo{value: msg.value}(address(this));
+        ENTRY_POINT_V8.depositTo{ value: msg.value }(address(this));
     }
 
     /**
@@ -45,10 +44,7 @@ abstract contract BasePaymaster is ManagerAccessControl {
      * @param withdrawAddress - Target to send to.
      * @param amount          - Amount to withdraw.
      */
-    function withdrawTo(address payable withdrawAddress, uint256 amount)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function withdrawTo(address payable withdrawAddress, uint256 amount) public onlyRole(DEFAULT_ADMIN_ROLE) {
         ENTRY_POINT_V8.withdrawTo(withdrawAddress, amount);
     }
 
@@ -58,7 +54,7 @@ abstract contract BasePaymaster is ManagerAccessControl {
      * @param unstakeDelaySec - The unstake delay for this paymaster. Can only be increased.
      */
     function addStake(uint32 unstakeDelaySec) external payable onlyAdminOrManager {
-        ENTRY_POINT_V8.addStake{value: msg.value}(unstakeDelaySec);
+        ENTRY_POINT_V8.addStake{ value: msg.value }(unstakeDelaySec);
     }
 
     /**

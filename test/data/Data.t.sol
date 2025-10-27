@@ -1,0 +1,139 @@
+// SPDX-License-Identifier: MIT
+
+pragma solidity 0.8.29;
+
+import { IKey } from "src/interfaces/IKey.sol";
+import { OPFMain } from "src/core/OPFMain.sol";
+import { MockERC20 } from "src/mocks/MockERC20.sol";
+import { GasPolicy } from "src/utils/GasPolicy.sol";
+import { WebAuthnHelper } from "./WebAuthnHelper.t.sol";
+import { WebAuthnVerifier } from "src/utils/WebAuthnVerifier.sol";
+import { SocialRecoveryManager } from "src/utils/SocialRecover.sol";
+import { WebAuthnVerifierV2 } from "src/utils/WebAuthnVerifierV2.sol";
+import { OPFPaymasterV3 as Paymaster } from "src/PaymasterV3/OPFPaymasterV3.sol";
+import { EntryPoint } from "lib/account-abstraction/contracts/core/EntryPoint.sol";
+import { IUniswapV2Router, MockPaymentToken } from "test/helpers/UniswapV2Helper.t.sol";
+import { IEntryPoint } from "lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
+import { WenAuthnVerifierOz } from "test/benchmarks/SoladyVsDaimoVsOZ/WenAuthnVerifierOz.sol";
+
+abstract contract Data is WebAuthnHelper, IKey {
+    /// --------------------------------------------------------------------------------- Chain
+    string internal RPC_URL = vm.envString("MAINNET_RPC_URL");
+    uint256 internal forkId;
+
+    /// --------------------------------------------------------------------------------- Contracts
+    OPFMain internal opf7702;
+    GasPolicy internal gasPolicy;
+    IEntryPoint public entryPoint;
+    WebAuthnVerifierV2 internal webAuthn;
+    WenAuthnVerifierOz internal webAuthnOz;
+    WebAuthnVerifier internal webAuthnSolady;
+    SocialRecoveryManager internal socialRecoveryManager;
+    MockERC20 internal erc20;
+    Paymaster internal pm;
+
+    /// --------------------------------------------------------------------------------- Account Owner
+    uint256 internal owner7702PK;
+    address internal owner7702;
+
+    /// --------------------------------------------------------------------------------- Key EOA
+    uint256 internal sessionKeyPK;
+    address internal sessionKey;
+
+    /// --------------------------------------------------------------------------------- Relayer EOA
+    uint256 internal senderPK;
+    address internal sender;
+
+    /// --------------------------------------------------------------------------------- Guardian
+    uint256 internal guardianPK;
+    address internal guardian;
+    bytes32 internal _initialGuardian;
+
+    /// --------------------------------------------------------------------------------- PubKey
+    PubKey internal pubK;
+    KeyDataReg internal KDR;
+
+    /// --------------------------------------------------------------------------------- Key Data
+    KeyDataReg internal mkReg;
+    KeyDataReg internal skReg;
+
+    /// --------------------------------------------------------------------------------- 7702 account
+    OPFMain public implementation;
+    OPFMain public account;
+
+    /// --------------------------------------------------------------------------------- Paymaster
+    uint256 ownerPM_PK;
+    address ownerPM;
+
+    uint256 managerPM_PK;
+    address managerPM;
+
+    uint256[] signersPM_PK;
+    address[] signersPM;
+
+    address treasury;
+    uint256 constant signersLength = 3;
+
+    /// --------------------------------------------------------------------------------- Uniswap V2
+    address constant _UNISWAP_V2_FACTORY_ADDRESS = 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f;
+    address constant _UNISWAP_V2_ROUTER_ADDRESS = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
+    IUniswapV2Router uniswapV2Router;
+    address token0;
+    address token1;
+    MockPaymentToken paymentToken;
+
+    function setUp() public virtual {
+        forkId = vm.createFork(RPC_URL);
+        vm.selectFork(forkId);
+
+        _createAddresses();
+        _createPMsigners();
+
+        vm.startPrank(sender);
+        EntryPoint deployedEntryPoint = new EntryPoint();
+        vm.etch(ENTRY_POINT_V8, address(deployedEntryPoint).code);
+        vm.label(ENTRY_POINT_V8, "EntryPointV8");
+        entryPoint = IEntryPoint(payable(ENTRY_POINT_V8));
+        webAuthn = new WebAuthnVerifierV2();
+        webAuthnOz = new WenAuthnVerifierOz();
+        webAuthnSolady = new WebAuthnVerifier();
+        gasPolicy = new GasPolicy(DEFAULT_PVG, DEFAULT_VGL, DEFAULT_CGL, DEFAULT_PMV, DEFAULT_PO);
+        socialRecoveryManager =
+            new SocialRecoveryManager(RECOVERY_PERIOD, LOCK_PERIOD, SECURITY_PERIOD, SECURITY_WINDOW);
+        pm = new Paymaster(ownerPM, managerPM, signersPM);
+        _createInitialGuradian();
+        erc20 = new MockERC20();
+        vm.stopPrank();
+    }
+
+    function _createAddresses() internal {
+        (sender, senderPK) = makeAddrAndKey("sender");
+        (guardian, guardianPK) = makeAddrAndKey("guardian");
+        (owner7702, owner7702PK) = makeAddrAndKey("owner7702");
+        (sessionKey, sessionKeyPK) = makeAddrAndKey("sessionKey");
+
+        treasury = makeAddr("treasury");
+        (ownerPM, ownerPM_PK) = makeAddrAndKey("owner");
+        (managerPM, managerPM_PK) = makeAddrAndKey("manager");
+    }
+
+    function _createPMsigners() internal {
+        for (uint256 i = 0; i < signersLength;) {
+            (address signer, uint256 signerPK) = makeAddrAndKey(string.concat("signer", vm.toString(i)));
+            signersPM.push(signer);
+            signersPM_PK.push(signerPK);
+            unchecked {
+                i++;
+            }
+        }
+    }
+
+    function _etch() internal {
+        vm.etch(owner7702, abi.encodePacked(bytes3(0xef0100), address(implementation)));
+        account = OPFMain(payable(owner7702));
+    }
+
+    function _createInitialGuradian() internal {
+        _initialGuardian = keccak256(abi.encode(guardian));
+    }
+}

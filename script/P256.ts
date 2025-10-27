@@ -1,38 +1,9 @@
-#!/usr/bin/env ts-node
-
-import * as fs from 'fs';
-import * as path from 'path';
-import { p256 } from '@noble/curves/p256';
-import { randomBytes } from 'crypto';
-
-// Type definitions
-type Hex = `0x${string}`;
-
-interface NetworkSignatureData {
-  challenge: Hex;
-  x: Hex;
-  y: Hex;
-  r: Hex;
-  s: Hex;
-}
-
-interface ResultData {
-  [networkName: string]: NetworkSignatureData;
-}
-
-/* ────────────────────────────────────────────── helper: hex utils ── */
-const toHex = (bytes: Uint8Array): Hex =>
-  `0x${Buffer.from(bytes).toString("hex")}` as Hex;
-
-const toHex32 = (n: bigint): Hex =>
-  `0x${n.toString(16).padStart(64, "0")}` as Hex;
-
-const bigintToHex = (n: bigint): Hex => toHex32(n);
-
-const hexToBytes = (hex: Hex): Uint8Array => {
-  const cleanHex = hex.startsWith('0x') ? hex.slice(2) : hex;
-  return new Uint8Array(Buffer.from(cleanHex, 'hex'));
-};
+// src/p256Data.ts
+import { p256 } from "@noble/curves/p256";
+import type { Hex } from "viem";
+import { fromHex } from 'viem';
+import { writeFileSync } from 'fs';
+import { WebCryptoP256 } from "ox";
 
 /** P-256 curve order (𝑛) */
 const P256_N = BigInt(
@@ -55,127 +26,152 @@ function normalizeP256Signature(
   return { r, s };
 }
 
+/* ────────────────────────────────────────────── helper: hex utils ── */
+const toHex = (bytes: Uint8Array): Hex =>
+  `0x${Buffer.from(bytes).toString("hex")}` as Hex;
+
+const toHex32 = (n: bigint): Hex =>
+  `0x${n.toString(16).padStart(64, "0")}` as Hex;
+
+const bigintToHex = (n: bigint): Hex => toHex32(n);
+
 /* ──────────────────────────────────────────────────────────── main ── */
-const generateP256Data = async (): Promise<ResultData> => {
-  // Define the challenges to sign
-  const challenges: Hex[] = [
-    '0x4bd2f7286f02b3add8b81489c4532de822ca70667dc081dea50a65c33f469740',
-    '0x8b8daa81867de77eb20ffcbd0cd673c27ffb2456ea4f37b09a159099368d5078',
-    '0x4db46505ae7698744ae306887a3703f444c8e1a75f33eee03805b66e259781f4',
-    '0x0d92f7b6bff0b9876bf596563db67781704dee5c8ee4948469c4ad6131e18999'
+export const p256Data = (async () => {
+  // Define the 15 challenges
+  const challenges = [
+    '0x4d565978a82a98ccf6e2c5c4ed19645fd05339c2b2fdb9659ceacb76464c8616',
+    '0x12a21cc574af878ab4e3f88617fab16cd3f04d7e6809561c55560a9a78f98e19',
+    '0xafa14c650f61237a062678e802fcab8721b4895d5750efa414fba40822eb1975',
+    '0xc32eeb618e41054ae155d1024e1544888611fd0391675fd5ef8da0cac0886498',
+    '0x3980d4c033df942b00b75dbbbc76732415498d41afd531748b149d046c137a5a',
+    '0x57587714ba51d605aab1764e8ceabfa28288f2759690a8765d7b3538412dcd00',
+    '0x4bc65629eb07d6adcc1b3d696917a3f4fc5b0128de954b759be986c0a2e9a9be',
+    '0x27d5f1041ab460b6748b57fffd953340bb66707e5afda7682df6247c988f8741',
+    '0x0e03cc23cab90812eb228d302fdc0bf702dd3344481aa04d3904147576a72599',
+    '0x104e70524d439547c45b21b71bebf925315e8b621a325de9cfb002ac5008288b',
+    '0xebffeddb404273172f69c75dca688430e775cb502f3d9682bac7bc7a02d1fa42',
+    '0x0eaa9160b7e290aed1cb981d5bccdc1198b02df797bd374446e1376804633dfe',
+    '0xbbb702b4bcd4939eddc0b8a34d21c726ded22d2c7579c95e24355582038ad33f',
+    '0x771d16b9cabaa624ca2fbdf2b0a5dc9a2893a611cdfd07293e955820a0c34415',
+    '0xddbad98c3e18d981913eb41f2b21a5c82b72f721df4f107615fcb2a05888be61',
   ];
 
-  // Define the network names corresponding to each challenge
-  const networks: string[] = ['MAINNET', 'BASE', 'ARBITRUM', 'OPTIMISM'];
+  // Mapping of challenges to their scenario and mode
+  const CHALLENGE_MAPPING = [
+    { scenario: 'empty', mode: 'DirectAA' },           // Challenge 1
+    { scenario: 'empty', mode: 'AASponsored' },        // Challenge 2
+    { scenario: 'empty', mode: 'AASponsoredERC20' },   // Challenge 3
+    { scenario: 'native', mode: 'DirectAA' },          // Challenge 4
+    { scenario: 'native', mode: 'AASponsored' },       // Challenge 5
+    { scenario: 'native', mode: 'AASponsoredERC20' },  // Challenge 6
+    { scenario: 'transferERC20', mode: 'DirectAA' },   // Challenge 7
+    { scenario: 'transferERC20', mode: 'AASponsored' }, // Challenge 8
+    { scenario: 'transferERC20', mode: 'AASponsoredERC20' }, // Challenge 9
+    { scenario: 'batch10', mode: 'DirectAA' },         // Challenge 10
+    { scenario: 'batch10', mode: 'AASponsored' },      // Challenge 11
+    { scenario: 'batch10', mode: 'AASponsoredERC20' }, // Challenge 12
+    { scenario: 'uniswapV2', mode: 'DirectAA' },       // Challenge 13
+    { scenario: 'uniswapV2', mode: 'AASponsored' },    // Challenge 14
+    { scenario: 'uniswapV2', mode: 'AASponsoredERC20' }, // Challenge 15
+  ];
 
-  /* 1️⃣  GENERATE KEY PAIR ------------------------------------------ */
-  // Generate a random private key
-  const privateKeyBytes = randomBytes(32);
-  const privateKey = privateKeyBytes;
-  
-  // Get the public key from private key
-  const publicKeyBytes = p256.getPublicKey(privateKey, false); // uncompressed format
-  
-  // Extract x and y coordinates (skip the first byte which is 0x04 for uncompressed)
-  const xBytes = publicKeyBytes.slice(1, 33);
-  const yBytes = publicKeyBytes.slice(33, 65);
-  
-  const xHex: Hex = toHex(xBytes);
-  const yHex: Hex = toHex(yBytes);
+  // Generate key pairs once
+  const privKey = p256.utils.randomPrivateKey();
+  const pubKey = p256.getPublicKey(privKey, false);
+  const P256_xHex = toHex(pubKey.slice(1, 33));
+  const P256_yHex = toHex(pubKey.slice(33));
 
-  console.log("🔑 Generated key pair");
-  console.log("Private key:", toHex(privateKey));
-  console.log("Public key coordinates - x:", xHex, "y:", yHex);
+  const keyPair = await WebCryptoP256.createKeyPair();
+  console.log("🔑 Key pairs generated");
+  console.log("P256 public key (x, y):", P256_xHex, P256_yHex);
+  console.log("WebCrypto public key (x, y):", toHex32(keyPair.publicKey.x), toHex32(keyPair.publicKey.y));
 
-  // Initialize the result object
-  const result: ResultData = {};
+  // Build the output structure
+  const output: any = {};
 
-  /* 2️⃣  SIGN EACH CHALLENGE ---------------------------------------- */
+  console.log('\n🔐 Signing challenges...');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
+  // Sign each challenge
   for (let i = 0; i < challenges.length; i++) {
-    const challenge = challenges[i];
-    const network = networks[i];
+    const { scenario, mode } = CHALLENGE_MAPPING[i];
+    const challengeHex = challenges[i];
+    const challengeBytes = fromHex(challengeHex, 'bytes');
 
-    console.log(`\n🔐 Signing ${network} challenge: ${challenge}`);
+    // Sign with p256 (@noble/curves)
+    const signature = p256.sign(challengeBytes, privKey);
+    const rHex = bigintToHex(signature.r);
+    const sHex = bigintToHex(signature.s);
+    const { r: P256_lowSR, s: P256_lowSS } = normalizeP256Signature(rHex, sHex);
+    const isValidSignature = p256.verify(signature, challengeBytes, pubKey);
 
-    // Convert challenge hex to bytes
-    const challengeBytes = hexToBytes(challenge);
+    // Sign with WebCryptoP256
+    const { r, s } = await WebCryptoP256.sign({
+      privateKey: keyPair.privateKey,
+      payload: challengeHex,
+    });
+    const P256NONKEY_rHex = bigintToHex(r);
+    const P256NONKEY_sHex = bigintToHex(s);
+    const isValid = await WebCryptoP256.verify({
+      publicKey: keyPair.publicKey,
+      payload: challengeHex,
+      signature: { r, s }
+    });
 
-    /* 3️⃣  SIGN -------------------------------------------------------- */
-    const signature = p256.sign(challengeBytes, privateKey);
-    
-    const rBig = signature.r;
-    const sBig = signature.s;
-    
-    console.log(`${network} signature components - r:`, rBig.toString(), "s:", sBig.toString());
+    console.log(`✅ Signed ${scenario}.${mode}`);
 
-    let rHex: Hex = bigintToHex(rBig);
-    let sHex: Hex = bigintToHex(sBig);
+    // Build result objects
+    const result = {
+      P256_hashHex: challengeHex,
+      P256_lowSR,
+      P256_lowSS,
+      P256_xHex,
+      P256_yHex,
+      challenge: challengeHex,
+      rBigInt: signature.r.toString(),
+      sBigInt: signature.s.toString(),
+      recovery: signature.recovery,
+      isValidSignature,
+    };
 
-    // Normalize the signature (ensure s is in lower half)
-    const normalized = normalizeP256Signature(rHex, sHex);
-    rHex = normalized.r;
-    sHex = normalized.s;
+    const result2 = {
+      P256NONKEY_hashHex: challengeHex,
+      P256NONKEY_rHex,
+      P256NONKEY_sHex,
+      P256NONKEY_xHex: toHex32(keyPair.publicKey.x),
+      P256NONKEY_yHex: toHex32(keyPair.publicKey.y),
+      challenge: challengeHex,
+      webauthnData: {
+        r: r.toString(),
+        s: s.toString()
+      },
+      isValidSignature: isValid,
+    };
 
-    console.log(`${network} normalized r as hex:`, rHex);
-    console.log(`${network} normalized s as hex:`, sHex);
-
-    /* 4️⃣  VERIFY (sanity-check) -------------------------------------- */
-    const isValid = p256.verify(signature, challengeBytes, publicKeyBytes);
-
-    console.log(`${network} signature verification result:`, isValid);
-
-    if (isValid) {
-      console.log(`✅ ${network} signature is VALID!`);
-    } else {
-      console.log(`❌ ${network} signature is INVALID!`);
-      throw new Error(`Invalid signature for ${network}`);
+    // Initialize scenario object if it doesn't exist
+    if (!output[scenario]) {
+      output[scenario] = {};
     }
 
-    // Add to result object in the required format
-    result[network] = {
-      challenge: challenge,
-      x: xHex,
-      y: yHex,
-      r: rHex,
-      s: sHex
+    // Add to output structure
+    output[scenario][mode] = {
+      result,
+      result2
     };
   }
 
-  /* 5️⃣  WRITE TO FILE ---------------------------------------------- */
-  console.log("\n📦 Final result object:", result);
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('✅ All signatures collected!\n');
 
-  // Ensure the directory exists
-  const outputDir = path.join(process.cwd(), 'test', 'Data');
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
-
-  const outputPath = path.join(outputDir, 'SwapETHForUSDCP256.json');
-  
-  fs.writeFileSync(
-    outputPath,
-    JSON.stringify(result, null, 4) // Using 4 spaces for indentation to match your format
+  // Save to file
+  console.log('📋 Saving to: test/data/signers/P256SessionKey.json');
+  console.log('═══════════════════════════════════════════════════════════════════');
+  writeFileSync(
+    "test/data/signers/P256SessionKey.json",
+    JSON.stringify(output, null, 2)
   );
+  console.log('═══════════════════════════════════════════════════════════════════');
+  console.log('✅ File saved successfully!');
 
-  console.log(`✅ File written to ${outputPath}`);
-
-  return result;
-};
-
-// Run the script
-const main = async (): Promise<void> => {
-  try {
-    await generateP256Data();
-    console.log("🎉 Script completed successfully!");
-  } catch (error) {
-    console.error("❌ Script failed:", error);
-    process.exit(1);
-  }
-};
-
-// Execute if this file is run directly
-if (require.main === module) {
-  main();
-}
-
-export { generateP256Data };
+  return output;
+})();

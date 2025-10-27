@@ -1,1 +1,0 @@
-{"NativeTransferPaymasterERC20":{"test_SendETH_UOP_ERC20_MODE_combinedByteBasic":{"Sponsored":{"MAINNET":{"Used Gas":169766,"weiCost":342684312363918,"usd":"1.2645"},"BASE":{"Used Gas":167766,"weiCost":687742320158,"usd":"0.0025"},"ARBITRUM":{"Used Gas":167766,"weiCost":1677660000000,"usd":"0.0061"},"OPTIMISM":{"Used Gas":167766,"weiCost":188638640408,"usd":"0.0006"}}}}}

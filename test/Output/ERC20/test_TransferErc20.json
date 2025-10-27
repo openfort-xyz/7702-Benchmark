@@ -1,1 +1,0 @@
-{"ERC20_Benchmark":{"test_TransferErc20":{"Direct":{"MAINNET":{"Used Gas":6018,"weiCost":12147745672314,"usd":"0.0448"},"BASE":{"Used Gas":31077,"weiCost":138228704656,"usd":"0.0005"},"ARBITRUM":{"Used Gas":31077,"weiCost":310770000000,"usd":"0.0011"},"OPTIMISM":{"Used Gas":31077,"weiCost":59984517886,"usd":"0.0002"}}}}}

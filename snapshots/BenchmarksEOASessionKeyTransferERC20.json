@@ -1,0 +1,5 @@
+{
+  "test_SendTransferERC20CallWithEOASessionKeyDirectAA": "147640",
+  "test_SendTransferERC20CallWithEOASessionKeyDirectAASponsored": "158752",
+  "test_SendTransferERC20CallWithEOASessionKeyDirectAASponsoredERC20": "180164"
+}
