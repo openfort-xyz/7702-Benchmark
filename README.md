@@ -82,14 +82,14 @@ Empty `execute()` calls - baseline overhead measurement.
 
 | Key Type | Direct | DirectAA | AASponsored | AASponsoredERC20 |
 |----------|--------|----------|-------------|------------------|
-| **RootKey** | 31,679 | 92,983 | 104,059 | 132,743 |
-| **EOA SessionKey** | - | 124,418 | 135,508 | 164,196 |
-| **EOA SessionKey (Custodial)** | - | 139,929 | 151,528 | 180,235 |
-| **P256 SessionKey** | - | 305,262 | 312,839 | 344,581 |
-| **P256 SessionKey (Custodial)** | - | 320,786 | 328,872 | 360,632 |
-| **WebAuthn SessionKey** | - | 499,969 | 507,889 | 536,285 |
-| **WebAuthn SessionKey (Custodial)** | - | 515,583 | 524,012 | 552,445 |
-| **WebAuthn MasterKey** | - | 469,222 | 477,142 | 505,524 |
+| **RootKey** | 31,679 | 92,983 (+193.5%) | 104,059 (+11.9%) | 132,743 (+27.6%) |
+| **EOA SessionKey** | - | 124,418 | 135,508 (+8.9%) | 164,196 (+21.2%) |
+| **EOA SessionKey (Custodial)** | - | 139,929 | 151,528 (+8.3%) | 180,235 (+18.9%) |
+| **P256 SessionKey** | - | 305,262 | 312,839 (+2.5%) | 344,581 (+10.1%) |
+| **P256 SessionKey (Custodial)** | - | 320,786 | 328,872 (+2.5%) | 360,632 (+9.7%) |
+| **WebAuthn SessionKey** | - | 499,969 | 507,889 (+1.6%) | 536,285 (+5.6%) |
+| **WebAuthn SessionKey (Custodial)** | - | 515,583 | 524,012 (+1.6%) | 552,445 (+5.4%) |
+| **WebAuthn MasterKey** | - | 469,222 | 477,142 (+1.7%) | 505,524 (+5.9%) |
 
 ### Full Benchmark Report
 
