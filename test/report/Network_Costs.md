@@ -219,28 +219,72 @@ Using the Ecotone formula with estimated UserOperation size of 500 bytes:
 
 ### 6. Account Management Actions
 
-**Operation**: Administrative account operations (upgrade, add/remove owners, etc.)
+**Operation**: Administrative account operations including key registration, permission management, and revocation.
 
-| Configuration | Operation | Gas Used | Ethereum | Base | Polygon | Optimism |
-|---------------|-----------|----------|----------|------|---------|----------|
-| **RootKey** | Upgrade Account | 39,447 | $0.02152 | $0.00992 | $0.00235 | $0.01968 |
-| **RootKey** | Add Safe Owner | 116,099 | $0.06333 | $0.00978 | $0.00691 | $0.02000 |
-| **RootKey** | Add Session Key | 116,151 | $0.06336 | $0.00978 | $0.00691 | $0.02000 |
-| **RootKey** | Revoke Session Key | 71,435 | $0.03897 | $0.01015 | $0.00425 | $0.01984 |
-| **RootKey** | Add P256 Owner | 127,467 | $0.06953 | $0.00985 | $0.00759 | $0.02008 |
-| **RootKey** | Add WebAuthn Owner | 126,227 | $0.06886 | $0.00985 | $0.00751 | $0.02007 |
-| **WebAuthn MasterKey** | Upgrade Account | 182,687 | $0.09970 | $0.01033 | $0.01087 | $0.02056 |
-| **WebAuthn MasterKey** | Add Safe Owner | 259,339 | $0.14152 | $0.01096 | $0.01543 | $0.02107 |
-| **WebAuthn MasterKey** | Add Session Key | 259,391 | $0.14155 | $0.01096 | $0.01543 | $0.02107 |
-| **WebAuthn MasterKey** | Revoke Session Key | 214,675 | $0.11715 | $0.01055 | $0.01278 | $0.02054 |
-| **WebAuthn MasterKey** | Add P256 Owner | 270,707 | $0.14771 | $0.01104 | $0.01611 | $0.02115 |
-| **WebAuthn MasterKey** | Add WebAuthn Owner | 269,467 | $0.14704 | $0.01103 | $0.01603 | $0.02114 |
+#### RootKey Account Actions
+
+| Operation | Mode | Gas Used | Ethereum | Base | Polygon | Optimism |
+|-----------|------|----------|----------|------|---------|----------|
+| **RegisterKeySelf** | Direct | 126,410 | $0.06894 | $0.00987 | $0.00751 | $0.02006 |
+| **RegisterKeySelf** | AA Sponsored | 198,751 | $0.10844 | $0.01024 | $0.01182 | $0.02036 |
+| **RegisterKeySelf** | AA Sponsored ERC20 | 227,458 | $0.12412 | $0.01050 | $0.01353 | $0.02048 |
+| **RegisterKeyCustodial** | Direct | 177,450 | $0.09682 | $0.01014 | $0.01056 | $0.02027 |
+| **RegisterKeyCustodial** | AA Sponsored | 249,779 | $0.13626 | $0.01063 | $0.01486 | $0.02056 |
+| **RegisterKeyCustodial** | AA Sponsored ERC20 | 278,498 | $0.15194 | $0.01089 | $0.01657 | $0.02068 |
+| **SetTokenSpend** | Direct | 103,434 | $0.05644 | $0.00978 | $0.00615 | $0.01998 |
+| **SetTokenSpend** | AA Sponsored | 175,565 | $0.09581 | $0.01013 | $0.01045 | $0.02026 |
+| **SetTokenSpend** | AA Sponsored ERC20 | 204,270 | $0.11147 | $0.01039 | $0.01215 | $0.02038 |
+| **SetCanCall** | Direct | 57,667 | $0.03146 | $0.00998 | $0.00343 | $0.01977 |
+| **SetCanCall** | AA Sponsored | 129,810 | $0.07082 | $0.00986 | $0.00772 | $0.02009 |
+| **SetCanCall** | AA Sponsored ERC20 | 158,503 | $0.08648 | $0.01012 | $0.00943 | $0.02021 |
+| **UpdateKeyData** | Direct | 30,500 | $0.01664 | $0.00990 | $0.00181 | $0.01966 |
+| **UpdateKeyData** | AA Sponsored | 102,568 | $0.05597 | $0.00977 | $0.00610 | $0.01997 |
+| **UpdateKeyData** | AA Sponsored ERC20 | 131,273 | $0.07163 | $0.01001 | $0.00781 | $0.02008 |
+| **UpdateTokenSpend** | Direct | 44,716 | $0.02439 | $0.00994 | $0.00266 | $0.01972 |
+| **UpdateTokenSpend** | AA Sponsored | 116,859 | $0.06377 | $0.00982 | $0.00695 | $0.02002 |
+| **UpdateTokenSpend** | AA Sponsored ERC20 | 145,540 | $0.07941 | $0.01008 | $0.00866 | $0.02013 |
+| **RevokeKey** | Direct | 45,854 | $0.02501 | $0.00995 | $0.00273 | $0.01972 |
+| **RevokeKey** | AA Sponsored | 115,408 | $0.06298 | $0.00981 | $0.00687 | $0.02001 |
+| **RevokeKey** | AA Sponsored ERC20 | 144,111 | $0.07863 | $0.01007 | $0.00858 | $0.02013 |
+| **RemoveTokenSpend** | Direct | 41,230 | $0.02249 | $0.00992 | $0.00245 | $0.01970 |
+| **RemoveTokenSpend** | AA Sponsored | 109,201 | $0.05959 | $0.00976 | $0.00650 | $0.01998 |
+| **RemoveTokenSpend** | AA Sponsored ERC20 | 137,881 | $0.07523 | $0.01004 | $0.00821 | $0.02010 |
+| **RemoveCanCall** | Direct | 35,547 | $0.01939 | $0.00991 | $0.00212 | $0.01968 |
+| **RemoveCanCall** | AA Sponsored | 107,678 | $0.05876 | $0.00974 | $0.00641 | $0.01997 |
+| **RemoveCanCall** | AA Sponsored ERC20 | 136,371 | $0.07441 | $0.01003 | $0.00812 | $0.02010 |
+
+#### WebAuthn MasterKey Account Actions
+
+| Operation | Mode | Gas Used | Ethereum | Base | Polygon | Optimism |
+|-----------|------|----------|----------|------|---------|----------|
+| **RegisterKeySelf** | AA Sponsored | 565,397 | $0.30850 | $0.01299 | $0.03363 | $0.02285 |
+| **RegisterKeySelf** | AA Sponsored ERC20 | 604,914 | $0.33006 | $0.01325 | $0.03598 | $0.02302 |
+| **RegisterKeyCustodial** | AA Sponsored | 622,032 | $0.33937 | $0.01335 | $0.03700 | $0.02314 |
+| **RegisterKeyCustodial** | AA Sponsored ERC20 | 646,970 | $0.35298 | $0.01361 | $0.03848 | $0.02331 |
+| **SetTokenSpend** | AA Sponsored | 548,449 | $0.29925 | $0.01291 | $0.03262 | $0.02277 |
+| **SetTokenSpend** | AA Sponsored ERC20 | 580,505 | $0.31673 | $0.01317 | $0.03453 | $0.02294 |
+| **SetCanCall** | AA Sponsored | 508,681 | $0.27754 | $0.01272 | $0.03026 | $0.02259 |
+| **SetCanCall** | AA Sponsored ERC20 | 529,203 | $0.28873 | $0.01286 | $0.03148 | $0.02267 |
+| **UpdateKeyData** | AA Sponsored | 485,299 | $0.26478 | $0.01259 | $0.02887 | $0.02250 |
+| **UpdateKeyData** | AA Sponsored ERC20 | 507,962 | $0.27714 | $0.01273 | $0.03022 | $0.02258 |
+| **UpdateTokenSpend** | AA Sponsored | 481,900 | $0.26292 | $0.01257 | $0.02867 | $0.02249 |
+| **UpdateTokenSpend** | AA Sponsored ERC20 | 521,581 | $0.28455 | $0.01283 | $0.03103 | $0.02266 |
+| **RevokeKeySelf** | AA Sponsored | 483,801 | $0.26396 | $0.01258 | $0.02878 | $0.02249 |
+| **RevokeKeySelf** | AA Sponsored ERC20 | 510,758 | $0.27874 | $0.01275 | $0.03039 | $0.02259 |
+| **RemoveTokenSpend** | AA Sponsored | 488,185 | $0.26635 | $0.01261 | $0.02904 | $0.02251 |
+| **RemoveTokenSpend** | AA Sponsored ERC20 | 512,526 | $0.27970 | $0.01276 | $0.03049 | $0.02260 |
+| **RemoveCanCall** | AA Sponsored | 465,906 | $0.25420 | $0.01251 | $0.02771 | $0.02242 |
+| **RemoveCanCall** | AA Sponsored ERC20 | 500,911 | $0.27327 | $0.01270 | $0.02979 | $0.02256 |
 
 **Key Insights**:
-- Account upgrades are relatively cheap (39k-182k gas)
-- Adding owners costs more than simple operations but less than swaps
-- WebAuthn MasterKey operations cost ~4.6x more than RootKey equivalents
-- Polygon offers best value for account management operations
+- **RootKey operations**: Most expensive are key registration (126k-278k gas), cheapest are permission removal (30k-158k gas)
+- **WebAuthn MasterKey operations**: All operations range from 465k-647k gas, adding ~366k-444k gas overhead vs RootKey
+- **Network costs**:
+  - Ethereum: $0.017-$0.353 (highest)
+  - Base: $0.010-$0.014 (most consistent, L1 fee dominates)
+  - Polygon: $0.002-$0.038 (lowest for most operations)
+  - Optimism: $0.020-$0.023 (L1 fee floor dominates)
+- **Best network**: Polygon for infrequent admin operations, Base for frequent WebAuthn operations
 
 ---
 
@@ -286,6 +330,20 @@ Using the Ecotone formula with estimated UserOperation size of 500 bytes:
 3. **Optimism**: $0.02213
 4. **Ethereum**: $0.21317 (9.2x more than Polygon)
 
+#### Account Management - RootKey (RegisterKeySelf Direct)
+1. **Polygon**: $0.00751 ✓ Cheapest
+2. **Base**: $0.00987
+3. **Optimism**: $0.02006
+4. **Ethereum**: $0.06894 (9.2x more than Polygon)
+
+#### Account Management - WebAuthn MasterKey (RegisterKeySelf AA Sponsored)
+1. **Base**: $0.01299 ✓ Cheapest
+2. **Optimism**: $0.02285
+3. **Polygon**: $0.03363
+4. **Ethereum**: $0.30850 (23.7x more than Base)
+
+**Note**: For high-gas WebAuthn operations, Base's fixed L1 fee makes it most cost-effective despite Polygon's lower gas price.
+
 ### Cost Efficiency Ratios
 
 **Ethereum as baseline (1.00x):**
@@ -298,12 +356,15 @@ Using the Ecotone formula with estimated UserOperation size of 500 bytes:
 | Batch (10 calls) | 1.00x | 0.12x | 0.11x | 0.24x |
 | UniswapV2 Swap | 1.00x | 0.10x | 0.11x | 0.19x |
 | WebAuthn Empty | 1.00x | 0.06x | 0.11x | 0.10x |
+| RootKey Account Mgmt | 1.00x | 0.14x | 0.11x | 0.29x |
+| WebAuthn Account Mgmt | 1.00x | 0.04x | 0.11x | 0.07x |
 
 **Key Findings**:
-- **Polygon** consistently offers ~11% of Ethereum costs (9x cheaper)
-- **Base** ranges from 6-19% of Ethereum costs, better for complex operations
-- **Optimism** ranges from 10-39% of Ethereum costs
+- **Polygon** consistently offers ~11% of Ethereum costs (9x cheaper) for low-to-medium gas operations
+- **Base** ranges from 4-19% of Ethereum costs, excels for high-gas WebAuthn operations
+- **Optimism** ranges from 7-39% of Ethereum costs
 - L2s show greatest advantage for high-gas operations where L1 data fee is proportionally smaller
+- **WebAuthn account management**: Base offers 96% cost savings vs Ethereum (25x cheaper)
 
 ---
 

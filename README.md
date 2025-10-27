@@ -93,7 +93,7 @@ Empty `execute()` calls - baseline overhead measurement.
 
 ### Full Benchmark Report
 
-[Benchmark Results](/test/report/Benchmark_Results.md) | [Full Report]() | [Network Costs](/test/report/Network_Costs.md)
+[Benchmark Results](/test/report/Benchmark_Results.md) | [Account Management](/test/report/Account_Actions.md) | [Network Costs](/test/report/Network_Costs.md)
 
 ---
 
