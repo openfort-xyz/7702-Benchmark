@@ -91,6 +91,10 @@ Empty `execute()` calls - baseline overhead measurement.
 | **WebAuthn SessionKey (Custodial)** | - | 515,583 | 524,012 | 552,445 |
 | **WebAuthn MasterKey** | - | 469,222 | 477,142 | 505,524 |
 
+### Full Benchmark Report
+
+[Benchmark Results](/test/report/Benchmark_Results.md) | [Full Report]() | [Network Costs](/test/report/Network_Costs.md)
+
 ---
 
 ## Comparative Analysis

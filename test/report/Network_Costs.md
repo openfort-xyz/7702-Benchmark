@@ -2,63 +2,17 @@
 
 ## Overview
 
-This document provides a comprehensive cost analysis of EIP-7702 account operations across four major networks:
+A comprehensive cost analysis of EIP-7702 account operations across four major networks:
 - **Ethereum** (L1)
 - **Base** (OP Stack L2)
-- **Polygon** (L1 sidechain)
+- **Polygon** (L1)
 - **Optimism** (OP Stack L2)
 
 All costs are calculated using real gas consumption from benchmarks and current network pricing data captured on **2025-10-27**.
 
 ---
 
-## Pricing Methodology
-
-### L1 Networks (Ethereum, Polygon)
-
-For traditional L1 networks, the cost calculation is straightforward:
-
-```
-Transaction Cost (USD) = gasUsed × gasPrice × tokenPrice
-```
-
-Where:
-- `gasUsed`: Measured via `vm.snapshotGasLastCall()` on `entryPoint.handleOps()`
-- `gasPrice`: Current network gas price in gwei
-- `tokenPrice`: Current price of network native token in USD
-
-### OP Stack L2 Networks (Base, Optimism)
-
-OP Stack chains have a two-component fee structure:
-
-```
-Total Cost = L2 Execution Fee + L1 Data Fee
-```
-
-#### L2 Execution Fee
-Standard gas cost for executing the transaction on the L2:
-```
-L2 Fee = gasUsed × l2GasPrice × ethPrice
-```
-
-#### L1 Data Fee (Ecotone Formula)
-Cost of posting transaction data to Ethereum L1:
-```
-tx_compressed_size = (zeroBytes × 4 + nonZeroBytes × 16) / 16
-weighted_gas_price = (16 × baseFeeScalar × l1BaseFee + blobBaseFeeScalar × blobBaseFee) / 1e6
-l1_data_fee = tx_compressed_size × weighted_gas_price
-```
-
-**Transaction Size Estimation**:
-- Typical UserOperation: ~500 bytes total
-- Estimated compression: ~100 zero bytes, ~400 non-zero bytes
-- Compressed size: ~425 gas equivalent
-
-**Reference**: [Optimism Fee Documentation](https://docs.optimism.io/concepts/transactions/fees)
-
----
-
-## Price Assumptions
+## Price Report
 
 **Snapshot Date**: 2025-10-27 10:04:31 UTC
 
