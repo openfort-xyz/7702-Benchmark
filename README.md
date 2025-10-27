@@ -138,11 +138,11 @@ foundryup
 forge install
 
 # Run all benchmarks
-forge test
+forge test --isolate
 
 # Run specific categories
-forge test --match-contract "BenchmarksRootKey*"
-forge test --match-contract "BenchmarksWebAuthnSessionKey*"
+forge test --mc "BenchmarksRootKey*"  --isolate
+forge test --mc "BenchmarksWebAuthnSessionKey*"  --isolate
 ```
 
 ---
