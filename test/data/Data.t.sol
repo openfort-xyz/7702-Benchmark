@@ -9,6 +9,7 @@ import { GasPolicy } from "src/utils/GasPolicy.sol";
 import { WebAuthnHelper } from "./WebAuthnHelper.t.sol";
 import { SocialRecoveryManager } from "src/utils/SocialRecover.sol";
 import { WebAuthnVerifierV2 } from "src/utils/WebAuthnVerifierV2.sol";
+import { WebAuthnVerifier } from "src/utils/WebAuthnVerifier.sol";
 import { OPFPaymasterV3 as Paymaster } from "src/PaymasterV3/OPFPaymasterV3.sol";
 import { EntryPoint } from "lib/account-abstraction/contracts/core/EntryPoint.sol";
 import { IUniswapV2Router, MockPaymentToken } from "test/helpers/UniswapV2Helper.t.sol";
@@ -24,6 +25,7 @@ abstract contract Data is WebAuthnHelper, IKey {
     GasPolicy internal gasPolicy;
     IEntryPoint public entryPoint;
     WebAuthnVerifierV2 internal webAuthn;
+    WebAuthnVerifier internal webAuthnSolady;
     SocialRecoveryManager internal socialRecoveryManager;
     MockERC20 internal erc20;
     Paymaster internal pm;
@@ -91,6 +93,7 @@ abstract contract Data is WebAuthnHelper, IKey {
         vm.label(ENTRY_POINT_V8, "EntryPointV8");
         entryPoint = IEntryPoint(payable(ENTRY_POINT_V8));
         webAuthn = new WebAuthnVerifierV2();
+        webAuthnSolady = new WebAuthnVerifier();
         gasPolicy = new GasPolicy(DEFAULT_PVG, DEFAULT_VGL, DEFAULT_CGL, DEFAULT_PMV, DEFAULT_PO);
         socialRecoveryManager =
             new SocialRecoveryManager(RECOVERY_PERIOD, LOCK_PERIOD, SECURITY_PERIOD, SECURITY_WINDOW);
