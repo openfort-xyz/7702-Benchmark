@@ -68,9 +68,9 @@ All benchmarks use consistent warming to ensure accurate measurements:
 | Mode | Paymaster | Gas Payment |
 |------|-----------|-------------|
 | **Direct** | None | Sender pays ETH |
-| **DirectAA** | None | Account pays ETH |
-| **AASponsored** | Native | Paymaster pays ETH |
-| **AASponsoredERC20** | ERC20 | User refunds ERC20 |
+| **ERC4337** | None | Account pays ETH |
+| **ERC4337 Sponsored** | Native | Paymaster pays ETH |
+| **ERC4337 Sponsored ERC20** | ERC20 |  Paymaster pays ERC20 |
 
 ---
 
@@ -80,7 +80,7 @@ All benchmarks use consistent warming to ensure accurate measurements:
 
 Empty `execute()` calls - baseline overhead measurement.
 
-| Key Type | Direct | DirectAA | AASponsored | AASponsoredERC20 |
+| Key Type | Direct | ERC4337 | ERC4337 Sponsored | ERC4337 Sponsored ERC20 |
 |----------|--------|----------|-------------|------------------|
 | **RootKey** | 31,679 | 92,983 (+193.5%) | 104,059 (+11.9%) | 132,743 (+27.6%) |
 | **EOA SessionKey** | - | 124,418 | 135,508 (+8.9%) | 164,196 (+21.2%) |

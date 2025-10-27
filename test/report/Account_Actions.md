@@ -29,7 +29,7 @@ This report provides comprehensive gas consumption measurements for account mana
 
 Account management operations using ECDSA RootKey signature.
 
-| Action | Direct | AASponsored | AASponsoredERC20 |
+| Action | Direct | ERC4337 Sponsored | ERC4337 Sponsored ERC20 |
 |--------|--------|-------------|------------------|
 | RegisterKeySelf | 126,410 | 198,751 (+57.2%) | 227,458 (+14.4%) |
 | RegisterKeyCustodial | 177,450 | 249,779 (+40.8%) | 278,498 (+11.5%) |
@@ -54,7 +54,7 @@ Account management operations using ECDSA RootKey signature.
 
 Account management operations using WebAuthn P256 MasterKey signature.
 
-| Action | AASponsored | AASponsoredERC20 |
+| Action | ERC4337 Sponsored | ERC4337 Sponsored ERC20 |
 |--------|-------------|------------------|
 | RegisterKeySelf | 565,397 | 604,914 (+7.0%) |
 | RegisterKeyCustodial | 622,032 | 646,970 (+4.0%) |
@@ -99,7 +99,7 @@ Comparing WebAuthn MasterKey vs RootKey signature costs:
 
 #### RootKey Paymaster Overhead
 
-| Operation | Direct→AASponsored | AASponsored→ERC20 |
+| Operation | Direct→ERC4337 Sponsored| AASponsored→ERC4337 Sponsored ERC20 |
 |-----------|-------------------|-------------------|
 | RegisterKeySelf | +72,341 gas | +28,707 gas |
 | RegisterKeyCustodial | +72,329 gas | +28,719 gas |
@@ -115,7 +115,7 @@ Comparing WebAuthn MasterKey vs RootKey signature costs:
 
 #### WebAuthn MasterKey Paymaster Overhead
 
-| Operation | AASponsored→ERC20 |
+| Operation | ERC4337 Sponsored→ERC4337 Sponsored ERC20 |
 |-----------|-------------------|
 | RegisterKeySelf | +39,517 gas |
 | RegisterKeyCustodial | +24,938 gas |
