@@ -10,7 +10,6 @@
 
 pragma solidity ^0.8.29;
 
-import { P256 } from "src/libs/P256.sol";
 import { WebAuthn } from "lib/webauthn-sol/src/WebAuthn.sol";
 
 /**
@@ -20,6 +19,10 @@ import { WebAuthn } from "lib/webauthn-sol/src/WebAuthn.sol";
  * @dev Uses Solady's WebAuthn and P256 libraries for verification.
  */
 contract WebAuthnVerifierV2 {
+    uint256 constant P256_N_DIV_2 =
+        57896044605178124381348723474703786764998477612067880171211129530534256022184;
+
+    address constant VERIFIER = 0xc2b78104907F722DABAc4C69f826a522B2754De4;
     /**
      * @notice Verifies a WebAuthn signature using the Solady library
      * @param challenge The challenge that was signed
@@ -81,17 +84,37 @@ contract WebAuthnVerifierV2 {
      */
     function verifyP256Signature(
         bytes32 hash,
-        bytes32 r,
-        bytes32 s,
-        bytes32 x,
-        bytes32 y
+        uint256 r,
+        uint256 s,
+        uint256 x,
+        uint256 y
     )
         external
         view
         returns (bool isValid)
     {
-        return P256.verifySignature(hash, r, s, x, y);
+         if (s > P256_N_DIV_2) {
+            return false;
+        }
+        bytes memory args = abi.encode(hash, r, s, x, y);
+        (bool success, bytes memory ret) = VERIFIER.staticcall(args);
+        assert(success); // never reverts, always returns 0 or 1
+
+        return abi.decode(ret, (uint256)) == 1;
     }
+    // function verifyP256Signature(
+    //     bytes32 hash,
+    //     bytes32 r,
+    //     bytes32 s,
+    //     bytes32 x,
+    //     bytes32 y
+    // )
+    //     external
+    //     view
+    //     returns (bool isValid)
+    // {
+    //     return P256.verifySignature(hash, r, s, x, y);
+    // }
 
     /**
      * @dev Converts a fixed-size challenge to dynamic bytes for the verifier.
