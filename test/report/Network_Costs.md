@@ -57,21 +57,21 @@ Using the Ecotone formula with estimated UserOperation size of 500 bytes:
 | **RootKey ERC4337** | 92,983 | $0.05073 | $0.00963 | $0.00553 | $0.01992 |
 | **RootKey ERC4337 Sponsored** | 104,059 | $0.05677 | $0.00970 | $0.00619 | $0.01996 |
 | **RootKey ERC4337 Sponsored ERC20** | 132,743 | $0.07243 | $0.00994 | $0.00790 | $0.02008 |
-| **EOA SessionKey ERC4337** | 103,835 | $0.05664 | $0.00970 | $0.00618 | $0.01996 |
-| **EOA SessionKey ERC4337 Sponsored** | 114,899 | $0.06267 | $0.00977 | $0.00684 | $0.02001 |
-| **EOA SessionKey ERC4337 Sponsored ERC20** | 143,595 | $0.07834 | $0.01001 | $0.00854 | $0.02013 |
-| **P256 SessionKey ERC4337** | 304,406 | $0.16609 | $0.01767 | $0.00181 | $0.02080 |
-| **P256 SessionKey ERC4337 Sponsored** | 313,124 | $0.17085 | $0.01791 | $0.00186 | $0.02083 |
-| **P256 SessionKey ERC4337 Sponsored ERC20** | 345,087 | $0.18829 | $0.01882 | $0.00205 | $0.02097 |
-| **WebAuthn SessionKey ERC4337** | 316,628 | $0.17276 | $0.01801 | $0.00188 | $0.02085 |
-| **WebAuthn SessionKey ERC4337 Sponsored** | 329,085 | $0.17956 | $0.01836 | $0.00195 | $0.02090 |
-| **WebAuthn SessionKey ERC4337 Sponsored ERC20** | 350,660 | $0.19133 | $0.01897 | $0.00208 | $0.02099 |
 | **WebAuthn MasterKey ERC4337** | 281,888 | $0.15381 | $0.01703 | $0.00167 | $0.02070 |
 | **WebAuthn MasterKey ERC4337 Sponsored** | 293,898 | $0.16036 | $0.01737 | $0.00174 | $0.02075 |
 | **WebAuthn MasterKey ERC4337 Sponsored ERC20** | 323,601 | $0.17656 | $0.01821 | $0.00192 | $0.02088 |
+| **EOA SessionKey ERC4337** | 103,835 | $0.05664 | $0.00970 | $0.00618 | $0.01996 |
 | **EOA SessionKey Custodial ERC4337** | 107,691 | $0.05874 | $0.00973 | $0.00641 | $0.01998 |
-| **P256 SessionKey Custodial ERC4337** | 319,930 | $0.17456 | $0.01811 | $0.00190 | $0.02086 |
+| **EOA SessionKey ERC4337 Sponsored** | 114,899 | $0.06267 | $0.00977 | $0.00684 | $0.02001 |
+| **EOA SessionKey ERC4337 Sponsored ERC20** | 143,595 | $0.07834 | $0.01001 | $0.00854 | $0.02013 |
+| **WebAuthn SessionKey ERC4337** | 316,628 | $0.17276 | $0.01801 | $0.00188 | $0.02085 |
 | **WebAuthn SessionKey Custodial ERC4337** | 332,259 | $0.18129 | $0.01845 | $0.00197 | $0.02091 |
+| **WebAuthn SessionKey ERC4337 Sponsored** | 329,085 | $0.17956 | $0.01836 | $0.00195 | $0.02090 |
+| **WebAuthn SessionKey ERC4337 Sponsored ERC20** | 350,660 | $0.19133 | $0.01897 | $0.00208 | $0.02099 |
+| **P256 SessionKey ERC4337** | 304,406 | $0.16609 | $0.01767 | $0.00181 | $0.02080 |
+| **P256 SessionKey Custodial ERC4337** | 319,930 | $0.17456 | $0.01811 | $0.00190 | $0.02086 |
+| **P256 SessionKey ERC4337 Sponsored** | 313,124 | $0.17085 | $0.01791 | $0.00186 | $0.02083 |
+| **P256 SessionKey ERC4337 Sponsored ERC20** | 345,087 | $0.18829 | $0.01882 | $0.00205 | $0.02097 |
 
 **Key Insights**:
 - Polygon offers lowest costs for RootKey operations ($0.00188)
@@ -91,21 +91,21 @@ Using the Ecotone formula with estimated UserOperation size of 500 bytes:
 | **RootKey ERC4337** | 99,383 | $0.05422 | $0.00966 | $0.00591 | $0.01994 |
 | **RootKey ERC4337 Sponsored** | 110,459 | $0.06026 | $0.00973 | $0.00657 | $0.01998 |
 | **RootKey ERC4337 Sponsored ERC20** | 139,143 | $0.07593 | $0.00996 | $0.00828 | $0.02010 |
-| **EOA SessionKey ERC4337** | 110,235 | $0.06014 | $0.00973 | $0.00656 | $0.01998 |
-| **EOA SessionKey ERC4337 Sponsored** | 121,299 | $0.06617 | $0.00981 | $0.00722 | $0.02002 |
-| **EOA SessionKey ERC4337 Sponsored ERC20** | 149,995 | $0.08184 | $0.01004 | $0.00892 | $0.02015 |
-| **P256 SessionKey ERC4337** | 357,784 | $0.19522 | $0.01917 | $0.00212 | $0.02102 |
-| **P256 SessionKey ERC4337 Sponsored** | 368,463 | $0.20104 | $0.01947 | $0.00219 | $0.02106 |
-| **P256 SessionKey ERC4337 Sponsored ERC20** | 395,399 | $0.21574 | $0.02023 | $0.00235 | $0.02118 |
-| **WebAuthn SessionKey ERC4337** | 367,753 | $0.20066 | $0.01945 | $0.00218 | $0.02106 |
-| **WebAuthn SessionKey ERC4337 Sponsored** | 378,071 | $0.20629 | $0.01975 | $0.00224 | $0.02110 |
-| **WebAuthn SessionKey ERC4337 Sponsored ERC20** | 407,968 | $0.22260 | $0.02059 | $0.00242 | $0.02123 |
 | **WebAuthn MasterKey ERC4337** | 290,850 | $0.15870 | $0.01729 | $0.00173 | $0.02074 |
 | **WebAuthn MasterKey ERC4337 Sponsored** | 300,658 | $0.16405 | $0.01756 | $0.00179 | $0.02078 |
 | **WebAuthn MasterKey ERC4337 Sponsored ERC20** | 329,706 | $0.17990 | $0.01838 | $0.00196 | $0.02090 |
+| **EOA SessionKey ERC4337** | 110,235 | $0.06014 | $0.00973 | $0.00656 | $0.01998 |
 | **EOA SessionKey Custodial ERC4337** | 114,091 | $0.06224 | $0.00977 | $0.00679 | $0.02001 |
-| **P256 SessionKey Custodial ERC4337** | 373,308 | $0.20369 | $0.01961 | $0.00222 | $0.02108 |
+| **EOA SessionKey ERC4337 Sponsored** | 121,299 | $0.06617 | $0.00981 | $0.00722 | $0.02002 |
+| **EOA SessionKey ERC4337 Sponsored ERC20** | 149,995 | $0.08184 | $0.01004 | $0.00892 | $0.02015 |
+| **WebAuthn SessionKey ERC4337** | 367,753 | $0.20066 | $0.01945 | $0.00218 | $0.02106 |
 | **WebAuthn SessionKey Custodial ERC4337** | 383,367 | $0.20917 | $0.01989 | $0.00228 | $0.02113 |
+| **WebAuthn SessionKey ERC4337 Sponsored** | 378,071 | $0.20629 | $0.01975 | $0.00224 | $0.02110 |
+| **WebAuthn SessionKey ERC4337 Sponsored ERC20** | 407,968 | $0.22260 | $0.02059 | $0.00242 | $0.02123 |
+| **P256 SessionKey ERC4337** | 357,784 | $0.19522 | $0.01917 | $0.00212 | $0.02102 |
+| **P256 SessionKey Custodial ERC4337** | 373,308 | $0.20369 | $0.01961 | $0.00222 | $0.02108 |
+| **P256 SessionKey ERC4337 Sponsored** | 368,463 | $0.20104 | $0.01947 | $0.00219 | $0.02106 |
+| **P256 SessionKey ERC4337 Sponsored ERC20** | 395,399 | $0.21574 | $0.02023 | $0.00235 | $0.02118 |
 
 **Key Insights**:
 - Native transfers add ~6,400 gas vs empty calls
@@ -126,20 +126,20 @@ Using the Ecotone formula with estimated UserOperation size of 500 bytes:
 | **RootKey ERC4337 Sponsored** | 133,759 | $0.07298 | $0.00989 | $0.00796 | $0.02011 |
 | **RootKey ERC4337 Sponsored ERC20** | 162,443 | $0.08865 | $0.01012 | $0.00967 | $0.02022 |
 | **EOA SessionKey ERC4337** | 133,535 | $0.07286 | $0.00988 | $0.00795 | $0.02010 |
+| **EOA SessionKey Custodial ERC4337** | 137,391 | $0.07496 | $0.00992 | $0.00818 | $0.02013 |
 | **EOA SessionKey ERC4337 Sponsored** | 144,599 | $0.07889 | $0.00995 | $0.00861 | $0.02015 |
 | **EOA SessionKey ERC4337 Sponsored ERC20** | 173,295 | $0.09456 | $0.01019 | $0.01031 | $0.02027 |
-| **P256 SessionKey ERC4337** | 364,955 | $0.19913 | $0.01938 | $0.00217 | $0.02105 |
-| **P256 SessionKey ERC4337 Sponsored** | 376,970 | $0.20568 | $0.01971 | $0.00224 | $0.02110 |
-| **P256 SessionKey ERC4337 Sponsored ERC20** | 395,304 | $0.21569 | $0.02023 | $0.00235 | $0.02118 |
-| **WebAuthn SessionKey ERC4337** | 377,164 | $0.20579 | $0.01972 | $0.00224 | $0.02110 |
-| **WebAuthn SessionKey ERC4337 Sponsored** | 385,205 | $0.21018 | $0.01995 | $0.00229 | $0.02113 |
-| **WebAuthn SessionKey ERC4337 Sponsored ERC20** | 409,698 | $0.22354 | $0.02064 | $0.00243 | $0.02124 |
 | **WebAuthn MasterKey ERC4337** | 296,884 | $0.16199 | $0.01746 | $0.00176 | $0.02077 |
 | **WebAuthn MasterKey ERC4337 Sponsored** | 308,916 | $0.16855 | $0.01780 | $0.00183 | $0.02082 |
 | **WebAuthn MasterKey ERC4337 Sponsored ERC20** | 329,824 | $0.17996 | $0.01839 | $0.00196 | $0.02090 |
-| **EOA SessionKey Custodial ERC4337** | 137,391 | $0.07496 | $0.00992 | $0.00818 | $0.02013 |
-| **P256 SessionKey Custodial ERC4337** | 380,479 | $0.20760 | $0.01981 | $0.00226 | $0.02111 |
+| **WebAuthn SessionKey ERC4337** | 377,164 | $0.20579 | $0.01972 | $0.00224 | $0.02110 |
 | **WebAuthn SessionKey Custodial ERC4337** | 392,797 | $0.21432 | $0.02016 | $0.00233 | $0.02117 |
+| **WebAuthn SessionKey ERC4337 Sponsored** | 385,205 | $0.21018 | $0.01995 | $0.00229 | $0.02113 |
+| **WebAuthn SessionKey ERC4337 Sponsored ERC20** | 409,698 | $0.22354 | $0.02064 | $0.00243 | $0.02124 |
+| **P256 SessionKey ERC4337** | 364,955 | $0.19913 | $0.01938 | $0.00217 | $0.02105 |
+| **P256 SessionKey Custodial ERC4337** | 380,479 | $0.20760 | $0.01981 | $0.00226 | $0.02111 |
+| **P256 SessionKey ERC4337 Sponsored** | 376,970 | $0.20568 | $0.01971 | $0.00224 | $0.02110 |
+| **P256 SessionKey ERC4337 Sponsored ERC20** | 395,304 | $0.21569 | $0.02023 | $0.00235 | $0.02118 |
 
 **Key Insights**:
 - ERC20 transfers add ~23k gas overhead vs native transfers
@@ -159,21 +159,21 @@ Using the Ecotone formula with estimated UserOperation size of 500 bytes:
 | **RootKey ERC4337** | 153,883 | $0.08396 | $0.01013 | $0.00916 | $0.02027 |
 | **RootKey ERC4337 Sponsored** | 164,959 | $0.09000 | $0.01020 | $0.00982 | $0.02032 |
 | **RootKey ERC4337 Sponsored ERC20** | 193,643 | $0.10567 | $0.01043 | $0.01152 | $0.02044 |
-| **EOA SessionKey ERC4337** | 164,735 | $0.08988 | $0.01020 | $0.00980 | $0.02032 |
-| **EOA SessionKey ERC4337 Sponsored** | 175,799 | $0.09591 | $0.01028 | $0.01046 | $0.02036 |
-| **EOA SessionKey ERC4337 Sponsored ERC20** | 204,495 | $0.11158 | $0.01051 | $0.01217 | $0.02048 |
-| **P256 SessionKey ERC4337** | 500,664 | $0.27318 | $0.02320 | $0.00297 | $0.02161 |
-| **P256 SessionKey ERC4337 Sponsored** | 509,609 | $0.27806 | $0.02345 | $0.00303 | $0.02165 |
-| **P256 SessionKey ERC4337 Sponsored ERC20** | 531,263 | $0.28987 | $0.02406 | $0.00315 | $0.02174 |
-| **WebAuthn SessionKey ERC4337** | 512,884 | $0.27984 | $0.02354 | $0.00305 | $0.02166 |
-| **WebAuthn SessionKey ERC4337 Sponsored** | 523,777 | $0.28579 | $0.02385 | $0.00311 | $0.02171 |
-| **WebAuthn SessionKey ERC4337 Sponsored ERC20** | 543,872 | $0.29675 | $0.02442 | $0.00323 | $0.02179 |
 | **WebAuthn MasterKey ERC4337** | 355,629 | $0.19404 | $0.01911 | $0.00211 | $0.02101 |
 | **WebAuthn MasterKey ERC4337 Sponsored** | 369,203 | $0.20145 | $0.01950 | $0.00219 | $0.02107 |
 | **WebAuthn MasterKey ERC4337 Sponsored ERC20** | 390,152 | $0.21288 | $0.02009 | $0.00232 | $0.02115 |
+| **EOA SessionKey ERC4337** | 164,735 | $0.08988 | $0.01020 | $0.00980 | $0.02032 |
 | **EOA SessionKey Custodial ERC4337** | 168,591 | $0.09198 | $0.01024 | $0.01003 | $0.02034 |
-| **P256 SessionKey Custodial ERC4337** | 516,359 | $0.28174 | $0.02364 | $0.00307 | $0.02168 |
+| **EOA SessionKey ERC4337 Sponsored** | 175,799 | $0.09591 | $0.01028 | $0.01046 | $0.02036 |
+| **EOA SessionKey ERC4337 Sponsored ERC20** | 204,495 | $0.11158 | $0.01051 | $0.01217 | $0.02048 |
+| **WebAuthn SessionKey ERC4337** | 512,884 | $0.27984 | $0.02354 | $0.00305 | $0.02166 |
 | **WebAuthn SessionKey Custodial ERC4337** | 528,631 | $0.28843 | $0.02399 | $0.00314 | $0.02173 |
+| **WebAuthn SessionKey ERC4337 Sponsored** | 523,777 | $0.28579 | $0.02385 | $0.00311 | $0.02171 |
+| **WebAuthn SessionKey ERC4337 Sponsored ERC20** | 543,872 | $0.29675 | $0.02442 | $0.00323 | $0.02179 |
+| **P256 SessionKey ERC4337** | 500,664 | $0.27318 | $0.02320 | $0.00297 | $0.02161 |
+| **P256 SessionKey Custodial ERC4337** | 516,359 | $0.28174 | $0.02364 | $0.00307 | $0.02168 |
+| **P256 SessionKey ERC4337 Sponsored** | 509,609 | $0.27806 | $0.02345 | $0.00303 | $0.02165 |
+| **P256 SessionKey ERC4337 Sponsored ERC20** | 531,263 | $0.28987 | $0.02406 | $0.00315 | $0.02174 |
 
 **Key Insights**:
 - Batch operations show best per-call efficiency
@@ -193,21 +193,21 @@ Using the Ecotone formula with estimated UserOperation size of 500 bytes:
 | **RootKey ERC4337** | 198,783 | $0.10846 | $0.01044 | $0.01183 | $0.02046 |
 | **RootKey ERC4337 Sponsored** | 209,859 | $0.11450 | $0.01052 | $0.01249 | $0.02051 |
 | **RootKey ERC4337 Sponsored ERC20** | 238,543 | $0.13017 | $0.01075 | $0.01420 | $0.02063 |
-| **EOA SessionKey ERC4337** | 209,635 | $0.11438 | $0.01051 | $0.01248 | $0.02051 |
-| **EOA SessionKey ERC4337 Sponsored** | 220,699 | $0.12041 | $0.01059 | $0.01313 | $0.02055 |
-| **EOA SessionKey ERC4337 Sponsored ERC20** | 249,395 | $0.13608 | $0.01082 | $0.01484 | $0.02067 |
-| **P256 SessionKey ERC4337** | 374,364 | $0.20426 | $0.01964 | $0.00222 | $0.02109 |
-| **P256 SessionKey ERC4337 Sponsored** | 383,854 | $0.20944 | $0.01991 | $0.00228 | $0.02113 |
-| **P256 SessionKey ERC4337 Sponsored ERC20** | 414,734 | $0.22629 | $0.02078 | $0.00246 | $0.02126 |
-| **WebAuthn SessionKey ERC4337** | 385,648 | $0.21042 | $0.01996 | $0.00229 | $0.02114 |
-| **WebAuthn SessionKey ERC4337 Sponsored** | 396,941 | $0.21658 | $0.02028 | $0.00236 | $0.02118 |
-| **WebAuthn SessionKey ERC4337 Sponsored ERC20** | 426,014 | $0.23244 | $0.02110 | $0.00253 | $0.02130 |
 | **WebAuthn MasterKey ERC4337** | 355,404 | $0.19392 | $0.01911 | $0.00211 | $0.02101 |
 | **WebAuthn MasterKey ERC4337 Sponsored** | 367,606 | $0.20058 | $0.01945 | $0.00218 | $0.02106 |
 | **WebAuthn MasterKey ERC4337 Sponsored ERC20** | 390,494 | $0.21306 | $0.02010 | $0.00232 | $0.02116 |
+| **EOA SessionKey ERC4337** | 209,635 | $0.11438 | $0.01051 | $0.01248 | $0.02051 |
 | **EOA SessionKey Custodial ERC4337** | 213,491 | $0.11649 | $0.01055 | $0.01271 | $0.02053 |
-| **P256 SessionKey Custodial ERC4337** | 389,887 | $0.21273 | $0.02008 | $0.00231 | $0.02115 |
+| **EOA SessionKey ERC4337 Sponsored** | 220,699 | $0.12041 | $0.01059 | $0.01313 | $0.02055 |
+| **EOA SessionKey ERC4337 Sponsored ERC20** | 249,395 | $0.13608 | $0.01082 | $0.01484 | $0.02067 |
+| **WebAuthn SessionKey ERC4337** | 385,648 | $0.21042 | $0.01996 | $0.00229 | $0.02114 |
 | **WebAuthn SessionKey Custodial ERC4337** | 401,261 | $0.21894 | $0.02040 | $0.00238 | $0.02120 |
+| **WebAuthn SessionKey ERC4337 Sponsored** | 396,941 | $0.21658 | $0.02028 | $0.00236 | $0.02118 |
+| **WebAuthn SessionKey ERC4337 Sponsored ERC20** | 426,014 | $0.23244 | $0.02110 | $0.00253 | $0.02130 |
+| **P256 SessionKey ERC4337** | 374,364 | $0.20426 | $0.01964 | $0.00222 | $0.02109 |
+| **P256 SessionKey Custodial ERC4337** | 389,887 | $0.21273 | $0.02008 | $0.00231 | $0.02115 |
+| **P256 SessionKey ERC4337 Sponsored** | 383,854 | $0.20944 | $0.01991 | $0.00228 | $0.02113 |
+| **P256 SessionKey ERC4337 Sponsored ERC20** | 414,734 | $0.22629 | $0.02078 | $0.00246 | $0.02126 |
 
 **Key Insights**:
 - Complex DeFi operations show gas costs 3-5x higher than simple transfers
