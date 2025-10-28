@@ -1,5 +1,5 @@
 {
-  "test_SendUniswapV2CallWithP256SessionKeyAASponsored": "387728",
-  "test_SendUniswapV2CallWithP256SessionKeyAASponsoredERC20": "415128",
-  "test_SendUniswapV2CallWithP256SessionKeyDirectAA": "375208"
+  "test_SendUniswapV2CallWithP256SessionKeyAASponsored": "383854",
+  "test_SendUniswapV2CallWithP256SessionKeyAASponsoredERC20": "414734",
+  "test_SendUniswapV2CallWithP256SessionKeyDirectAA": "374364"
 }

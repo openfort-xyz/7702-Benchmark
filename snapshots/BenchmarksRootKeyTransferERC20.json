@@ -1,6 +1,6 @@
 {
   "test_TransferERC20CallWithRootKeyDirect": "45275",
   "test_TransferERC20CallWithRootKeyDirectAA": "106677",
-  "test_TransferERC20CallWithRootKeyDirectAASponsored": "117775",
-  "test_TransferERC20CallWithRootKeyDirectAASponsoredERC20": "139183"
+  "test_TransferERC20CallWithRootKeyDirectAASponsored": "117787",
+  "test_TransferERC20CallWithRootKeyDirectAASponsoredERC20": "139195"
 }

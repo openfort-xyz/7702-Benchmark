@@ -1,5 +1,5 @@
 {
-  "test_SendBatch10CallWithWebAuthnSessionKeyCustodialDirectAA": "713106",
-  "test_SendBatch10CallWithWebAuthnSessionKeyCustodialDirectAASponsored": "738375",
-  "test_SendBatch10CallWithWebAuthnSessionKeyCustodialDirectAASponsoredERC20": "744505"
+  "test_SendBatch10CallWithWebAuthnSessionKeyCustodialDirectAA": "528631",
+  "test_SendBatch10CallWithWebAuthnSessionKeyCustodialDirectAASponsored": "540007",
+  "test_SendBatch10CallWithWebAuthnSessionKeyCustodialDirectAASponsoredERC20": "560111"
 }

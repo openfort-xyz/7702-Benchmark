@@ -1,5 +1,5 @@
 {
-  "test_SendTransferERC20CallWithWebAuthnMasterKeyDirectAA": "480365",
-  "test_SendTransferERC20CallWithWebAuthnMasterKeyDirectAASponsored": "489905",
-  "test_SendTransferERC20CallWithWebAuthnMasterKeyDirectAASponsoredERC20": "523287"
+  "test_SendTransferERC20CallWithWebAuthnMasterKeyDirectAA": "296884",
+  "test_SendTransferERC20CallWithWebAuthnMasterKeyDirectAASponsored": "308916",
+  "test_SendTransferERC20CallWithWebAuthnMasterKeyDirectAASponsoredERC20": "329824"
 }

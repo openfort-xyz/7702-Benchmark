@@ -1,5 +1,5 @@
 {
-  "test_SendBatch10CallWithP256SessionKeyCustodialAASponsored": "528578",
-  "test_SendBatch10CallWithP256SessionKeyCustodialAASponsoredERC20": "550908",
-  "test_SendBatch10CallWithP256SessionKeyCustodialDirectAA": "516753"
+  "test_SendBatch10CallWithP256SessionKeyCustodialAASponsored": "525797",
+  "test_SendBatch10CallWithP256SessionKeyCustodialAASponsoredERC20": "547460",
+  "test_SendBatch10CallWithP256SessionKeyCustodialDirectAA": "516359"
 }

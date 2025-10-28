@@ -19,9 +19,9 @@ Direct P256 (secp256r1) signature verification without WebAuthn overhead.
 
 | Implementation | Gas Used | vs Solady | Rank |
 |----------------|----------|-----------|------|
-| **Solady** | 174,848 | Baseline | 1st |
-| **Daimo** | 341,743 | +95.4% (+166,895 gas) | 2nd |
-| **OpenZeppelin** | 371,652 | +112.5% (+196,804 gas) | 3rd |
+| **Solady** | 173,972 | Baseline | 1st |
+| **Daimo** | 347,292 | +99.6% (+173,320 gas) | 2nd |
+| **OpenZeppelin** | 369,358 | +112.3% (+195,386 gas) | 3rd |
 
 **Key Finding**: Solady is **2x more efficient** than Daimo and OpenZeppelin for P256 verification.
 
@@ -33,11 +33,11 @@ Full WebAuthn signature verification including authenticator data parsing.
 
 | Implementation | Gas Used | vs Solady | Rank |
 |----------------|----------|-----------|------|
-| **Solady** | 178,496 | Baseline | 1st |
-| **Daimo** | 363,695 | +103.7% (+185,199 gas) | 2nd |
-| **OpenZeppelin** | 376,998 | +111.2% (+198,502 gas) | 3rd |
+| **Solady** | 176,306 | Baseline | 1st |
+| **Daimo** | 354,448 | +101.0% (+178,142 gas) | 2nd |
+| **OpenZeppelin** | 371,263 | +110.6% (+194,957 gas) | 3rd |
 
-**Key Finding**: Solady maintains **2x efficiency** for WebAuthn verification, offering ~185k-198k gas savings per signature.
+**Key Finding**: Solady maintains **2x efficiency** for WebAuthn verification, offering ~178k-195k gas savings per signature.
 
 ---
 
@@ -49,9 +49,9 @@ Gas costs converted to USD across four major networks.
 
 | Implementation | Gas Used | Ethereum | Base | Polygon | Optimism |
 |----------------|----------|----------|------|---------|----------|
-| **Solady** | 174,848 | $0.09540 | $0.01402 | $0.00104 | $0.02026 |
-| **Daimo** | 341,743 | $0.18646 | $0.01872 | $0.00203 | $0.02095 |
-| **OpenZeppelin** | 371,652 | $0.20278 | $0.01956 | $0.00221 | $0.02108 |
+| **Solady** | 173,972 | $0.09492 | $0.01399 | $0.00103 | $0.02025 |
+| **Daimo** | 347,292 | $0.18949 | $0.01888 | $0.00206 | $0.02098 |
+| **OpenZeppelin** | 369,358 | $0.20153 | $0.01950 | $0.00219 | $0.02107 |
 
 **Savings vs OpenZeppelin**:
 - Ethereum: $0.107/signature (53% cheaper)
@@ -65,13 +65,13 @@ Gas costs converted to USD across four major networks.
 
 | Implementation | Gas Used | Ethereum | Base | Polygon | Optimism |
 |----------------|----------|----------|------|---------|----------|
-| **Solady** | 178,496 | $0.09739 | $0.01412 | $0.00106 | $0.02027 |
-| **Daimo** | 363,695 | $0.19844 | $0.01934 | $0.00216 | $0.02104 |
-| **OpenZeppelin** | 376,998 | $0.20570 | $0.01972 | $0.00224 | $0.02110 |
+| **Solady** | 176,306 | $0.09620 | $0.01406 | $0.00105 | $0.02026 |
+| **Daimo** | 354,448 | $0.19340 | $0.01908 | $0.00210 | $0.02101 |
+| **OpenZeppelin** | 371,263 | $0.20257 | $0.01955 | $0.00220 | $0.02108 |
 
 **Savings vs OpenZeppelin**:
-- Ethereum: $0.108/signature (53% cheaper)
-- Base: $0.006/signature (28% cheaper)
+- Ethereum: $0.106/signature (53% cheaper)
+- Base: $0.005/signature (28% cheaper)
 - Polygon: $0.001/signature (53% cheaper)
 - Optimism: $0.001/signature (4% cheaper)
 
@@ -85,11 +85,11 @@ Comparing overhead between implementations (WebAuthn test):
 
 | Implementation | Gas Used | Overhead vs Solady | % Increase |
 |----------------|----------|--------------------|------------|
-| Solady | 178,496 | Baseline | 0% |
-| Daimo | 363,695 | +185,199 gas | +103.7% |
-| OpenZeppelin | 376,998 | +198,502 gas | +111.2% |
+| Solady | 176,306 | Baseline | 0% |
+| Daimo | 354,448 | +178,142 gas | +101.0% |
+| OpenZeppelin | 371,263 | +194,957 gas | +110.6% |
 
-**Insight**: OpenZeppelin has 13k more overhead than Daimo (~7% additional cost over Daimo).
+**Insight**: OpenZeppelin has 17k more overhead than Daimo (~9% additional cost over Daimo).
 
 ---
 
@@ -99,11 +99,11 @@ Additional gas for WebAuthn authenticator data parsing:
 
 | Implementation | P256 Gas | WebAuthn Gas | WebAuthn Overhead |
 |----------------|----------|--------------|-------------------|
-| **Solady** | 174,848 | 178,496 | +3,648 gas (+2.1%) |
-| **Daimo** | 341,743 | 363,695 | +21,952 gas (+6.4%) |
-| **OpenZeppelin** | 371,652 | 376,998 | +5,346 gas (+1.4%) |
+| **Solady** | 173,972 | 176,306 | +2,334 gas (+1.3%) |
+| **Daimo** | 347,292 | 354,448 | +7,156 gas (+2.1%) |
+| **OpenZeppelin** | 369,358 | 371,263 | +1,905 gas (+0.5%) |
 
-**Insight**: All implementations have relatively low WebAuthn parsing overhead (1.4-6.4%), with Daimo having the highest overhead.
+**Insight**: All implementations have relatively low WebAuthn parsing overhead (0.5-2.1%), with Daimo having the highest overhead.
 
 ### Source:
 

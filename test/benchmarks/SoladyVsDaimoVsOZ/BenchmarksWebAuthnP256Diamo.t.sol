@@ -19,10 +19,10 @@ contract BenchmarksWebAuthnP256Diamo is DeployAccount {
     }
 
     function test_WebAuthn() external {
-        bytes32 challenge = 0x4d565978a82a98ccf6e2c5c4ed19645fd05339c2b2fdb9659ceacb76464c8616;
+        bytes32 challenge = 0x19f15de2bdee93bd00abcbb19fa12d777d27e08c163c3341ae1034ef70665341;
         _populateWebAuthn("WebAuthnMasterKey.json", ".empty.DirectAA");
         vm.prank(owner7702);
-        bool isValid = webAuthn.verifySignature(
+        bool isValid = webAuthnDaimo.verifySignature(
             challenge,
             DEF_WEBAUTHN.UVR,
             DEF_WEBAUTHN.AUTHENTICATOR_DATA,
@@ -39,14 +39,14 @@ contract BenchmarksWebAuthnP256Diamo is DeployAccount {
     }
 
     function test_P256() external {
-        bytes32 challenge = EfficientHashLib.sha2(0x4d565978a82a98ccf6e2c5c4ed19645fd05339c2b2fdb9659ceacb76464c8616);
+        bytes32 challenge = EfficientHashLib.sha2(0x19f15de2bdee93bd00abcbb19fa12d777d27e08c163c3341ae1034ef70665341);
         _populateP256NON("P256SessionKey.json", ".empty.DirectAA.result2");
         uint256 rUint = uint256(DEF_P256.R);
         uint256 sUint = uint256(DEF_P256.S);
         uint256 xUint = uint256(DEF_P256.X);
         uint256 yUint = uint256(DEF_P256.Y);
         vm.prank(owner7702);
-        bool isValid = webAuthn.verifyP256Signature(challenge, rUint, sUint, xUint, yUint);
+        bool isValid = webAuthnDaimo.verifyP256Signature(challenge, rUint, sUint, xUint, yUint);
         vm.snapshotGasLastCall("test_P256");
         assertTrue(isValid);
     }

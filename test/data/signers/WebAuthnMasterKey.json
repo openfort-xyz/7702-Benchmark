@@ -1,251 +1,251 @@
 {
     "empty": {
         "DirectAA": {
-            "challenge": "0x4d565978a82a98ccf6e2c5c4ed19645fd05339c2b2fdb9659ceacb76464c8616",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0x19f15de2bdee93bd00abcbb19fa12d777d27e08c163c3341ae1034ef70665341",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"TVZZeKgqmMz24sXE7RlkX9BTOcKy_bllnOrLdkZMhhY\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"GfFd4r3uk70Aq8uxn6Etd30n4IwWPDNBrhA073BmU0E\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0x7b6f8bce92e5d87b4409aff948d63881c723deb064dd9e23ab11f4aea30a7450",
-                "s": "0x091c5173708551e73d808133f093842a6981041890ec97890f96aa5b0cb614f8"
+                "r": "0xf0a6877d12a792f771540a85ff03c48eb4aea3d68c0290ac1cb2b228bd5899a1",
+                "s": "0x0f7974961f0fd8c99bd46202700eb727d58e1ded99d564fff38b33862f8cc11d"
             }
         },
         "AASponsored": {
-            "challenge": "0x12a21cc574af878ab4e3f88617fab16cd3f04d7e6809561c55560a9a78f98e19",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0xcc80bd094a1dddd1250e96c5e42a2b6f8c7677531ce3808b04a2429c799ebbc5",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"EqIcxXSvh4q04_iGF_qxbNPwTX5oCVYcVVYKmnj5jhk\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"zIC9CUod3dElDpbF5Corb4x2d1Mc44CLBKJCnHmeu8U\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0x3681735021b629d1c63abce70361be02d900aee580adbf854086c0a60a3878bc",
-                "s": "0x74c90e1693c30b8b1c66ed7ca339ecb0ebab4f493102199fa9ba75bcf956d58f"
+                "r": "0x7f885f0ade0f9b71ad5cdd10824a4650e84450c42fc6a16928f7dd52b1b8e1c0",
+                "s": "0x25caaa39e5ddac8fefd0e74e79c029ff638b1cb81e44493b5570d5abfebfe703"
             }
         },
         "AASponsoredERC20": {
-            "challenge": "0xafa14c650f61237a062678e802fcab8721b4895d5750efa414fba40822eb1975",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0x13e8c9d00bad45c65a9a43d7cee2adc65aafc2e341dc7a01e5d48b26e517f6d2",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"r6FMZQ9hI3oGJnjoAvyrhyG0iV1XUO-kFPukCCLrGXU\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false,\"other_keys_can_be_added_here\":\"do not compare clientDataJSON against a template. See https://goo.gl/yabPex\"}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"E-jJ0AutRcZamkPXzuKtxlqvwuNB3HoB5dSLJuUX9tI\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0xc2c380a3daf9c26028834233ac6b28200129435c26453f88d61c8e07239031ee",
-                "s": "0x09a4ab9f26bdf359a480f1ec6e8b909c108f14279629d2f96d560589c4a2b2b6"
+                "r": "0xf7f76c259d5bd5d914b411e17ac734d81d5a9df8bb82399372638b3bb44e11f3",
+                "s": "0x72005d11c529a201112c07a00b559fb121d741d8fbd654d9ec543660d2f3cc26"
             }
         }
     },
     "native": {
         "DirectAA": {
-            "challenge": "0x7fc6bbb0eb16079439e1bde52bcd52208986c5a725a64e9a8058a4eeda9606e5",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0xe8ea5100ff36855e5246cfb8229d21f1c938bd59ab1145e23ad40a5aa5e8fa5e",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"f8a7sOsWB5Q54b3lK81SIImGxaclpk6agFik7tqWBuU\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"6OpRAP82hV5SRs-4Ip0h8ck4vVmrEUXiOtQKWqXo-l4\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0x435f1fc8dd759003c86d7814765201e04931c22e0ba4008e8b0824f763901b84",
-                "s": "0x60694e7ea4ab3b0c6fbb12cb573ede76e965998ab0f9aad86c7cde858e328448"
+                "r": "0x247e9169bb86544c119e4aa3c7da5cc2dff2fd3cc7b60b49ec5d87c9ef232c47",
+                "s": "0x6c31e062eab07f5f9d2cc62a84eb1fddf2ab1ea6c8e993b5b7ba5ea96c7a7f99"
             }
         },
         "AASponsored": {
-            "challenge": "0xc9948ee94fb703091bfc81999a261065f985e9091fbf52e4b654c4c6c75e5264",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0x8af5d79b0b4b6fcd23d37bb0fa51341b8cf9c2af3e5e3a594b830da6d7b604a4",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"yZSO6U-3Awkb_IGZmiYQZfmF6Qkfv1LktlTExsdeUmQ\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"ivXXmwtLb80j03uw-lE0G4z5wq8-XjpZS4MNpte2BKQ\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0xae13688c32937fe5b70832b7607ee19e41a4be644447eaeb511140bff81f4f08",
-                "s": "0x023f7b6bf17dce3bc7cd7db66a9b7006b2456611b4268bda8feab53f970de0d4"
+                "r": "0xf355a88f5f528eedd7d7ecaeac4c0a078c9739f7f24e21c10b54d2c30f4a59e7",
+                "s": "0x411ec0d9eee201f8eb009568b00e5bb699fb5c3e1e8a358719c088068332b7dc"
             }
         },
         "AASponsoredERC20": {
-            "challenge": "0x8870174cacea0ff1255f4a485f19b3e81f883273593e1782e7bd15e303ef2841",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0xfab8476d9fe2aa8782848f9a9cdc68f99828c02b9eb732d43fb436422545655d",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"iHAXTKzqD_ElX0pIXxmz6B-IMnNZPheC570V4wPvKEE\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"-rhHbZ_iqoeChI-anNxo-ZgowCuetzLUP7Q2QiVFZV0\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0x6e8544010e0b5f427a8dd8f878e32db7266d2294c47ea42bd832896e09827dc9",
-                "s": "0x05f0e388c92f638f61772cc7bfb499f7ae69022e8707e3ad88f42adc292dcd07"
+                "r": "0x4d1a8297a300d03dc6de5731ba752f5785f6df489a779855d8bf222800133892",
+                "s": "0x200aa2edd2fb69221619fb8fe97503a5386ac28e4d343cd44fd2ad0c32c36981"
             }
         }
     },
     "transferERC20": {
         "DirectAA": {
-            "challenge": "0x4bc65629eb07d6adcc1b3d696917a3f4fc5b0128de954b759be986c0a2e9a9be",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0xc89c1968b0009dc2c4f3ec7fce0a547d3257cdc46b680286214a69b5520dd051",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"S8ZWKesH1q3MGz1paRej9PxbASjelUt1m-mGwKLpqb4\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"yJwZaLAAncLE8-x_zgpUfTJXzcRraAKGIUpptVIN0FE\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0xd38d35ed262b2d1892979d0ff3654b22210f2ea8ff9539fbab7af977c229f465",
-                "s": "0x1ca7cf53dd064872ae201f31aa5387f69766e7f58def0ad3323bab943b55997b"
+                "r": "0x4579679c8b81ce3f0e3befa4b5826b40de9c954eb67895f6ac021073a8609732",
+                "s": "0x5df19da394bf5e95cdf36c183ad7825a25274f9e5579ad6822ba1bb3107da19d"
             }
         },
         "AASponsored": {
-            "challenge": "0x27d5f1041ab460b6748b57fffd953340bb66707e5afda7682df6247c988f8741",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0x3f8567199f37a454e6595de15c92b9b90ab7f276d3a3c958abf878bb8093f79e",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"J9XxBBq0YLZ0i1f__ZUzQLtmcH5a_adoLfYkfJiPh0E\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"P4VnGZ83pFTmWV3hXJK5uQq38nbTo8lYq_h4u4CT954\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0xf1604f87dba6443ec36c9458b8db97e6c82db364df3e9b599f2e3520bbf1e1d4",
-                "s": "0x74a2c0271caf5698719fb40db73fbce4bdb4e8d5761fac91a0264e41a139ffaa"
+                "r": "0x2b7be20e819a71fa37049f080979d482a23bc9372ffdcea27159a0438193d686",
+                "s": "0x23175502c444b5bc2c7c01ce506544732522edc22893f97e87a52882ebcf4bc6"
             }
         },
         "AASponsoredERC20": {
-            "challenge": "0x0e03cc23cab90812eb228d302fdc0bf702dd3344481aa04d3904147576a72599",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0xfe8e6bbff59dd38c2e8ef9d926f56c0be6f471c7d7efdcca20ffb24c11078ab5",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"DgPMI8q5CBLrIo0wL9wL9wLdM0RIGqBNOQQUdXanJZk\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"_o5rv_Wd04wujvnZJvVsC-b0ccfX79zKIP-yTBEHirU\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0xd675a220079f50125e6cef534a2f854712ebe27539c0a11a779578eed641b3fc",
-                "s": "0x46dcd3b4ef5c4827c45d97abc42bd79bd87cfb126d3d52d753f7a62f81120b67"
+                "r": "0xde3f8e9aad9dc53b23332c040ad07180fc00b1cea87dd6a4bbb7862e384f6a31",
+                "s": "0x2680589c81ce21b23da3dc89e3092fe936f65337a46b27163b89699a8416f4ed"
             }
         }
     },
     "batch10": {
         "DirectAA": {
-            "challenge": "0x104e70524d439547c45b21b71bebf925315e8b621a325de9cfb002ac5008288b",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0x8c52ebfa2f7f4ecce1b7948de9ae3078d790fe3bd0770eecd0a028d42c4008c6",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"EE5wUk1DlUfEWyG3G-v5JTFei2IaMl3pz7ACrFAIKIs\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"jFLr-i9_Tszht5SN6a4weNeQ_jvQdw7s0KAo1CxACMY\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0xf8682bb586d810653ad3ddccd47c7314de26ad2b5e763442f1adcde7194da862",
-                "s": "0x026816273e522f4be023a8d4fd471814d3eac2b48ca23d667b674c4482746fdd"
+                "r": "0x5448df09712de655514942a3c3594e40d939c94019f489260a4e9a82d20cd777",
+                "s": "0x5cea87d861d21ca6bdc3168c3896d10676590fea0afa4b7d9027c892e9e1a676"
             }
         },
         "AASponsored": {
-            "challenge": "0xebffeddb404273172f69c75dca688430e775cb502f3d9682bac7bc7a02d1fa42",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0xd03bef0297cd9405c39914dbf08d0f0480eb4e66632f31e48b83f9799f07ffc7",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"6__t20BCcxcvacddymiEMOd1y1AvPZaCuse8egLR-kI\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false,\"other_keys_can_be_added_here\":\"do not compare clientDataJSON against a template. See https://goo.gl/yabPex\"}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"0DvvApfNlAXDmRTb8I0PBIDrTmZjLzHki4P5eZ8H_8c\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0xaaa9158d8d8c9041272e54de5215ed66b1cc744f2a622666b9368a6e0d7d3ac5",
-                "s": "0x2ff6664f27115540e25a9e2403b462ccbfecfe6f543ebc945f07de654cb111ab"
+                "r": "0x8d64c8f6fa01feff85f21dd56307dc78ad0b931a3118a42840ce3bffd5a90de4",
+                "s": "0x4e189c3bcbb9a8212083ed3f4451503c634583aca6e5322d4c745f83b4cde58e"
             }
         },
         "AASponsoredERC20": {
-            "challenge": "0x0eaa9160b7e290aed1cb981d5bccdc1198b02df797bd374446e1376804633dfe",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0x47903c9c5c6c922d65cec275c555c19e6b2f7b920eab3fa069cfc372cbf260ce",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"DqqRYLfikK7Ry5gdW8zcEZiwLfeXvTdERuE3aARjPf4\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"R5A8nFxski1lzsJ1xVXBnmsve5IOqz-gac_DcsvyYM4\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0x28631620f0ad266d1e387f4266ecc539ed742dd119c7f5a6b416c18ca4a9dc62",
-                "s": "0x5424d47a64a994ad61ebfbe2e52470791ecf85efa8af18713d1a03c56a4f29ef"
+                "r": "0xd80348e68def78ada3d4e7210390e6d014e2f57bc3d781345fd141f49c9deddc",
+                "s": "0x19d658d9a2a50f6d501618deb8a01402c32728dc7452814026f01d909058f86d"
             }
         }
     },
     "uniswapV2": {
         "DirectAA": {
-            "challenge": "0xbbb702b4bcd4939eddc0b8a34d21c726ded22d2c7579c95e24355582038ad33f",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0x0385e1cc6eda1408f26675a63b4469588c8a5f2ead80131a53b8145a67918309",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"u7cCtLzUk57dwLijTSHHJt7SLSx1ecleJDVVggOK0z8\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"A4XhzG7aFAjyZnWmO0RpWIyKXy6tgBMaU7gUWmeRgwk\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0x55c031f93821a1d0fb059175d51af7167b587b7a2da1360ef1cf0ad9017a1acc",
-                "s": "0x20ad165ba785d4b789beff43ae9b3b2dfafde3b8969cdb35c86e7d0df68b6934"
+                "r": "0xd309d7570af566f6e90b2b2bf7f80b731355a715ecf5e19e801c0df8f7829880",
+                "s": "0x4796a6b699ce7136715332277bdc77c70fe936a6c5326c626f0a502ae98e9de0"
             }
         },
         "AASponsored": {
-            "challenge": "0x771d16b9cabaa624ca2fbdf2b0a5dc9a2893a611cdfd07293e955820a0c34415",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0x59f49396acbe4c7ebb7d1176850db1a7f0d04a52c1e0c18e08cc1443cc7b6d17",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"dx0Wucq6piTKL73ysKXcmiiTphHN_QcpPpVYIKDDRBU\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"WfSTlqy-TH67fRF2hQ2xp_DQSlLB4MGOCMwUQ8x7bRc\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false,\"other_keys_can_be_added_here\":\"do not compare clientDataJSON against a template. See https://goo.gl/yabPex\"}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0x7ad4e39e80f3389a292f352d920ac75e7de47a34b82564a5b6de2eaa3e2875f3",
-                "s": "0x5aaaeb15a48cdf4485014aefd6113d4a0ff02d954ce9a52b78e6dea200bb15ad"
+                "r": "0x253921062b6e6bb6fce8bad1e47f77af6c863dde880b07648bd9a1588861e0b5",
+                "s": "0x58401e570d4141a19633299386ed2fa5c88f88b36c2f7d69211ebd70f278e6f5"
             }
         },
         "AASponsoredERC20": {
-            "challenge": "0xddbad98c3e18d981913eb41f2b21a5c82b72f721df4f107615fcb2a05888be61",
-            "x": "0x9f1e5306907d688a18cd00dd1e18a9343be858fd3b43ebb201cd1022220fd1a2",
-            "y": "0xff02f03c4746c2cf1e5884acd61d62c00fbea3dfe4b2c9a33fe6d8d3be26e7eb",
+            "challenge": "0xd79109004414ec7e6a60353dad3f9bd26ff243f26a4e53cad9e5d24c8dfc060e",
+            "x": "0x99bca35c8fe04b023a05c0f4c0c5562f7ab71de8744504cff503618107a1a632",
+            "y": "0x0df8a1cc47c4c41e75cab9f18d9a75791ac2b56bdecfbc4090f152214e39bd74",
             "metadata": {
                 "authenticatorData": "0x49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97631d00000000",
-                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"3brZjD4Y2YGRPrQfKyGlyCty9yHfTxB2FfyyoFiIvmE\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
+                "clientDataJSON": "{\"type\":\"webauthn.get\",\"challenge\":\"15EJAEQU7H5qYDU9rT-b0m_yQ_JqTlPK2eXSTI38Bg4\",\"origin\":\"http://localhost:5173\",\"crossOrigin\":false}",
                 "challengeIndex": 23,
                 "typeIndex": 1,
                 "userVerificationRequired": true
             },
             "signature": {
-                "r": "0x703daf832186b6ea14543f4fcc3393a406c5438625b6784b5f753488232d4798",
-                "s": "0x1ea5e3469c48335ee8552536381e997c1d2b3e09a5638f6d107bcd684d6fbd10"
+                "r": "0x173251bb8b144e33c4bb716025aa2901aca55601602e4aed24df9b6b9cffa19c",
+                "s": "0x4872607d83e2a779b148f2ecbc96bec752202a35fcc02bf3b7df10c0c42a53fe"
             }
         }
     }

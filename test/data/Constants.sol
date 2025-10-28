@@ -7,6 +7,7 @@ import { UserOperationLib } from "lib/account-abstraction/contracts/core/UserOpe
 abstract contract Constants {
     /// --------------------------------------------------------------------------------- Constants
     address internal constant ENTRY_POINT_V8 = 0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108;
+    address internal constant P256_VERIFIER = 0x000000000000D01eA45F9eFD5c54f037Fa57Ea1a;
 
     /// --------------------------------------------------------------------------------- Can Call
     address internal constant ANY_TARGET = 0x3232323232323232323232323232323232323232;

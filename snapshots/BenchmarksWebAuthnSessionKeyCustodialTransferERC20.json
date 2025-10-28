@@ -1,5 +1,5 @@
 {
-  "test_SendTransferERC20CallWithWebAuthnSessionKeyCustodialDirectAA": "573582",
-  "test_SendTransferERC20CallWithWebAuthnSessionKeyCustodialDirectAASponsored": "583632",
-  "test_SendTransferERC20CallWithWebAuthnSessionKeyCustodialDirectAASponsoredERC20": "617054"
+  "test_SendTransferERC20CallWithWebAuthnSessionKeyCustodialDirectAA": "392797",
+  "test_SendTransferERC20CallWithWebAuthnSessionKeyCustodialDirectAASponsored": "401329",
+  "test_SendTransferERC20CallWithWebAuthnSessionKeyCustodialDirectAASponsoredERC20": "425860"
 }

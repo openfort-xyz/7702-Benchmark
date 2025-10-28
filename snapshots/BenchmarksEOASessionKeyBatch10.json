@@ -1,5 +1,5 @@
 {
   "test_SendBatch10CallWithEOASessionKeyDirectAA": "281105",
-  "test_SendBatch10CallWithEOASessionKeyDirectAASponsored": "293310",
-  "test_SendBatch10CallWithEOASessionKeyDirectAASponsoredERC20": "314743"
+  "test_SendBatch10CallWithEOASessionKeyDirectAASponsored": "293334",
+  "test_SendBatch10CallWithEOASessionKeyDirectAASponsoredERC20": "314779"
 }

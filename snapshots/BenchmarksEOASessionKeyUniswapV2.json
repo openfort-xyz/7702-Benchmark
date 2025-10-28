@@ -1,5 +1,5 @@
 {
   "test_SendUniswapV2CallWithEOASessionKeyDirectAA": "194813",
-  "test_SendUniswapV2CallWithEOASessionKeyDirectAASponsored": "206016",
-  "test_SendUniswapV2CallWithEOASessionKeyDirectAASponsoredERC20": "234730"
+  "test_SendUniswapV2CallWithEOASessionKeyDirectAASponsored": "206040",
+  "test_SendUniswapV2CallWithEOASessionKeyDirectAASponsoredERC20": "234742"
 }

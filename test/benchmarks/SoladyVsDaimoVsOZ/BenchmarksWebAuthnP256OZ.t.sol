@@ -19,7 +19,7 @@ contract BenchmarksWebAuthnP256OZ is DeployAccount {
     }
 
     function test_WebAuthn() external {
-        bytes32 challenge = 0x4d565978a82a98ccf6e2c5c4ed19645fd05339c2b2fdb9659ceacb76464c8616;
+        bytes32 challenge = 0x19f15de2bdee93bd00abcbb19fa12d777d27e08c163c3341ae1034ef70665341;
         _populateWebAuthn("WebAuthnMasterKey.json", ".empty.DirectAA");
         vm.prank(owner7702);
         bool isValid = webAuthnOz.verifySignature(
@@ -38,7 +38,7 @@ contract BenchmarksWebAuthnP256OZ is DeployAccount {
     }
 
     function test_P256() external {
-        bytes32 challenge = EfficientHashLib.sha2(0x4d565978a82a98ccf6e2c5c4ed19645fd05339c2b2fdb9659ceacb76464c8616);
+        bytes32 challenge = EfficientHashLib.sha2(0x19f15de2bdee93bd00abcbb19fa12d777d27e08c163c3341ae1034ef70665341);
         _populateP256NON("P256SessionKey.json", ".empty.DirectAA.result2");
         vm.prank(owner7702);
         bool isValid = webAuthnOz.verifyP256Signature(challenge, DEF_P256.R, DEF_P256.S, DEF_P256.X, DEF_P256.Y);
