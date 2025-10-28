@@ -8,14 +8,14 @@ optimizer = true
 optimizer_runs = 5
 
 fs_permissions = [
-    { access = "read", path = "test/Data" },
-    { access = "read", path = "test/Data/" },
-    { access = "read", path = "./test/Data" },
-    { access = "read", path = "./test/Data/" },
-    { access = "write", path = "test/Output" },
-    { access = "write", path = "test/Output/" },
-    { access = "write", path = "./test/Output" },
-    { access = "write", path = "./test/Output/" }
+  { access = "read", path = "test/Data" },
+  { access = "read", path = "test/Data/" },
+  { access = "read", path = "./test/Data" },
+  { access = "read", path = "./test/Data/" },
+  { access = "write", path = "test/Output" },
+  { access = "write", path = "test/Output/" },
+  { access = "write", path = "./test/Output" },
+  { access = "write", path = "./test/Output/" }
 ]
 
 [fmt]
@@ -32,3 +32,23 @@ wrap_comments = true
 lint_on_build = false
 
 gas_snapshot_check = true
+
+[profile.ci]
+# keep only build/test settings here (inherits fmt from [profile.default])
+solc_version = '0.8.29'
+src = "src"
+out = "out"
+libs = ["lib"]
+via-ir = true
+optimizer = true
+optimizer_runs = 5
+
+[profile.ci.fmt]
+bracket_spacing = true
+int_types = "long"
+line_length = 120
+multiline_func_header = "all"
+number_underscore = "thousands"
+quote_style = "double"
+tab_width = 4
+wrap_comments = true

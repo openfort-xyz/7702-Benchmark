@@ -43,7 +43,7 @@ contract BenchmarksWebAuthnSessionKeyCustodialEmpty is DeployAccount {
         bytes32 userOpHash = _getUserOpHash(userOp);
         console.log("userOpHash:", vm.toString(userOpHash));
 
-        _populateWebAuthn("WebAuthnMasterKey.json", ".empty.DirectAA");
+        _populateWebAuthn("WebAuthnSessionKey.json", ".empty.DirectAA");
         pK_SK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
         userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK_SK);
@@ -51,7 +51,7 @@ contract BenchmarksWebAuthnSessionKeyCustodialEmpty is DeployAccount {
         _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnSessionKeyCustodialDirectAA");
     }
 
-    function test_SendEmptyCallWithWebAuthnSessionKeyCustodialAASponsored() external {
+    function test_SendEmptyCallWithWebAuthnSessionKeyCustodialDirectAASponsored() external {
         Call[] memory calls = _getCalls(1, reciver, 0 ether, hex"");
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
@@ -73,15 +73,15 @@ contract BenchmarksWebAuthnSessionKeyCustodialEmpty is DeployAccount {
         bytes32 userOpHash = _getUserOpHash(userOp);
         console.log("userOpHash:", vm.toString(userOpHash));
 
-        _populateWebAuthn("WebAuthnMasterKey.json", ".empty.AASponsored");
+        _populateWebAuthn("WebAuthnSessionKey.json", ".empty.AASponsored");
         pK_SK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
         userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK_SK);
 
-        _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnSessionKeyCustodialAASponsored");
+        _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnSessionKeyCustodialDirectAASponsored");
     }
 
-    function test_SendEmptyCallWithWebAuthnSessionKeyCustodialAASponsoredERC20() external {
+    function test_SendEmptyCallWithWebAuthnSessionKeyCustodialDirectAASponsoredERC20() external {
         Call[] memory calls = _getCalls(1, reciver, 0 ether, hex"");
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
@@ -103,12 +103,12 @@ contract BenchmarksWebAuthnSessionKeyCustodialEmpty is DeployAccount {
         bytes32 userOpHash = _getUserOpHash(userOp);
         console.log("userOpHash:", vm.toString(userOpHash));
 
-        _populateWebAuthn("WebAuthnMasterKey.json", ".empty.AASponsoredERC20");
+        _populateWebAuthn("WebAuthnSessionKey.json", ".empty.AASponsoredERC20");
         pK_SK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
         userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK_SK);
 
-        _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnSessionKeyCustodialAASponsoredERC20");
+        _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnSessionKeyCustodialDirectAASponsoredERC20");
     }
 
     function _relayUserOp(PackedUserOperation memory _userOp, string memory _testName) internal {

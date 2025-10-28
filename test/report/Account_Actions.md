@@ -56,22 +56,22 @@ Account management operations using WebAuthn P256 MasterKey signature.
 
 | Action | ERC4337 Sponsored | ERC4337 Sponsored ERC20 |
 |--------|-------------|------------------|
-| RegisterKeySelf | 565,397 | 604,914 (+7.0%) |
-| RegisterKeyCustodial | 622,032 | 646,970 (+4.0%) |
-| SetTokenSpend | 548,449 | 580,505 (+5.8%) |
-| SetCanCall | 508,681 | 529,203 (+4.0%) |
-| UpdateKeyData | 485,299 | 507,962 (+4.7%) |
-| UpdateTokenSpend | 481,900 | 521,581 (+8.2%) |
-| RevokeKeySelf | 483,801 | 510,758 (+5.6%) |
-| RemoveTokenSpend | 488,185 | 512,526 (+5.0%) |
-| RemoveCanCall | 465,906 | 500,911 (+7.5%) |
+| RegisterKeySelf | 389,880 | 417,637 (+7.1%) |
+| RegisterKeyCustodial | 440,056 | 468,030 (+6.4%) |
+| SetTokenSpend | 367,581 | 395,349 (+7.5%) |
+| SetCanCall | 320,500 | 349,570 (+9.1%) |
+| UpdateKeyData | 293,270 | 322,364 (+9.9%) |
+| UpdateTokenSpend | 309,703 | 335,743 (+8.4%) |
+| RevokeKeySelf | 307,412 | 333,864 (+8.6%) |
+| RemoveTokenSpend | 304,338 | 331,207 (+8.8%) |
+| RemoveCanCall | 300,120 | 327,945 (+9.3%) |
 
 ### WebAuthn MasterKey Insights
 
-- **Most Expensive Operations**: Key registration operations (565k-622k gas)
-- **Least Expensive Operations**: Permission removal and updates (465k-508k gas)
-- **ERC20 Paymaster Overhead**: Consistent 4-8% overhead (~25k-40k gas)
-- **WebAuthn Overhead vs RootKey**: ~366k-444k gas additional cost
+- **Most Expensive Operations**: Key registration operations (390k-440k gas)
+- **Least Expensive Operations**: Permission removal and updates (293k-320k gas)
+- **ERC20 Paymaster Overhead**: Consistent 7-10% overhead (~26k-29k gas)
+- **WebAuthn Overhead vs RootKey**: ~190k-195k gas additional cost
 
 ---
 
@@ -83,17 +83,17 @@ Comparing WebAuthn MasterKey vs RootKey signature costs:
 
 | Operation | RootKey | WebAuthn | Overhead |
 |-----------|---------|----------|----------|
-| RegisterKeySelf | 198,751 | 565,397 | +184% (366,646 gas) |
-| RegisterKeyCustodial | 249,779 | 622,032 | +149% (372,253 gas) |
-| SetTokenSpend | 175,565 | 548,449 | +212% (372,884 gas) |
-| SetCanCall | 129,810 | 508,681 | +292% (378,871 gas) |
-| UpdateKeyData | 102,568 | 485,299 | +373% (382,731 gas) |
-| UpdateTokenSpend | 116,859 | 481,900 | +312% (365,041 gas) |
-| RevokeKey | 115,408 | 483,801 | +319% (368,393 gas) |
-| RemoveTokenSpend | 109,201 | 488,185 | +347% (378,984 gas) |
-| RemoveCanCall | 107,678 | 465,906 | +333% (358,228 gas) |
+| RegisterKeySelf | 198,751 | 389,880 | +96% (191,129 gas) |
+| RegisterKeyCustodial | 249,779 | 440,056 | +76% (190,277 gas) |
+| SetTokenSpend | 175,565 | 367,581 | +109% (192,016 gas) |
+| SetCanCall | 129,810 | 320,500 | +147% (190,690 gas) |
+| UpdateKeyData | 102,568 | 293,270 | +186% (190,702 gas) |
+| UpdateTokenSpend | 116,859 | 309,703 | +165% (192,844 gas) |
+| RevokeKey | 115,408 | 307,412 | +166% (192,004 gas) |
+| RemoveTokenSpend | 109,201 | 304,338 | +179% (195,137 gas) |
+| RemoveCanCall | 107,678 | 300,120 | +179% (192,442 gas) |
 
-**Key Finding**: WebAuthn signature verification adds **~366k-383k gas** overhead for account management operations, representing **150-375%** increase over ECDSA.
+**Key Finding**: WebAuthn signature verification adds **~190k-195k gas** overhead for account management operations, representing **76-186%** increase over ECDSA.
 
 ### Paymaster Mode Overhead
 
@@ -117,15 +117,15 @@ Comparing WebAuthn MasterKey vs RootKey signature costs:
 
 | Operation | ERC4337 Sponsored→ERC4337 Sponsored ERC20 |
 |-----------|-------------------|
-| RegisterKeySelf | +39,517 gas |
-| RegisterKeyCustodial | +24,938 gas |
-| SetTokenSpend | +32,056 gas |
-| SetCanCall | +20,522 gas |
-| UpdateKeyData | +22,663 gas |
-| UpdateTokenSpend | +39,681 gas |
-| RevokeKeySelf | +26,957 gas |
-| RemoveTokenSpend | +24,341 gas |
-| RemoveCanCall | +35,005 gas |
+| RegisterKeySelf | +27,757 gas |
+| RegisterKeyCustodial | +27,974 gas |
+| SetTokenSpend | +27,768 gas |
+| SetCanCall | +29,070 gas |
+| UpdateKeyData | +29,094 gas |
+| UpdateTokenSpend | +26,040 gas |
+| RevokeKeySelf | +26,452 gas |
+| RemoveTokenSpend | +26,869 gas |
+| RemoveCanCall | +27,825 gas |
 
 **Average**: ~29k gas for ERC20 paymaster (consistent with RootKey)
 
@@ -133,29 +133,29 @@ Comparing WebAuthn MasterKey vs RootKey signature costs:
 
 #### Most Expensive Operations (AASponsored)
 
-1. **RegisterKeyCustodial** (RootKey: 249,779 | WebAuthn: 622,032)
+1. **RegisterKeyCustodial** (RootKey: 249,779 | WebAuthn: 440,056)
    - Requires additional storage for custodial relationship
    - Highest gas consumption in both key types
 
-2. **RegisterKeySelf** (RootKey: 198,751 | WebAuthn: 565,397)
+2. **RegisterKeySelf** (RootKey: 198,751 | WebAuthn: 389,880)
    - New key registration with storage writes
    - Second highest gas consumption
 
-3. **SetTokenSpend** (RootKey: 175,565 | WebAuthn: 548,449)
+3. **SetTokenSpend** (RootKey: 175,565 | WebAuthn: 367,581)
    - Configure token spending permissions
    - Complex permission logic
 
 #### Least Expensive Operations (AASponsored)
 
-1. **UpdateKeyData** (RootKey: 102,568 | WebAuthn: 485,299)
+1. **UpdateKeyData** (RootKey: 102,568 | WebAuthn: 293,270)
    - Metadata update without permission changes
    - Lowest gas consumption
 
-2. **RemoveCanCall** (RootKey: 107,678 | WebAuthn: 465,906)
+2. **RemoveCanCall** (RootKey: 107,678 | WebAuthn: 300,120)
    - Simple permission removal
    - Minimal storage changes
 
-3. **RemoveTokenSpend** (RootKey: 109,201 | WebAuthn: 488,185)
+3. **RemoveTokenSpend** (RootKey: 109,201 | WebAuthn: 304,338)
    - Token permission removal
    - Low complexity operation
 
@@ -171,7 +171,7 @@ Comparing WebAuthn MasterKey vs RootKey signature costs:
 
 ### For WebAuthn MasterKey Operations
 
-1. **Cost Consideration**: Account for ~370k additional gas vs ECDSA
+1. **Cost Consideration**: Account for ~190k additional gas vs ECDSA
 2. **UX Priority**: WebAuthn provides superior UX (biometric auth, no seed phrases)
 3. **Network Selection**: Deploy on L2s to reduce absolute costs
 4. **Batch Operations**: Critical for amortizing WebAuthn overhead
@@ -180,8 +180,8 @@ Comparing WebAuthn MasterKey vs RootKey signature costs:
 
 - **Key Registration**: Most expensive - plan gas budget accordingly
 - **Permission Updates**: Relatively cheap - can be done frequently
-- **Custodial Mode**: Adds 40-56k gas - evaluate trade-offs
-- **ERC20 Paymaster**: Consistent ~29k overhead - acceptable for gasless UX
+- **Custodial Mode**: Adds 28k-50k gas - evaluate trade-offs
+- **ERC20 Paymaster**: Consistent ~27k-29k overhead - acceptable for gasless UX
 
 ---
 

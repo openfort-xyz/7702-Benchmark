@@ -1,5 +1,5 @@
 {
-  "test_SendTransferERC20CallWithP256SessionKeyCustodialAASponsored": "391195",
-  "test_SendTransferERC20CallWithP256SessionKeyCustodialAASponsoredERC20": "413940",
-  "test_SendTransferERC20CallWithP256SessionKeyCustodialDirectAA": "377819"
+  "test_SendTransferERC20CallWithP256SessionKeyCustodialAASponsored": "393003",
+  "test_SendTransferERC20CallWithP256SessionKeyCustodialAASponsoredERC20": "411356",
+  "test_SendTransferERC20CallWithP256SessionKeyCustodialDirectAA": "380479"
 }

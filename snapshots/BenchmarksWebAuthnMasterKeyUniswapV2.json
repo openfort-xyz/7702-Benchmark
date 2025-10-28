@@ -1,5 +1,5 @@
 {
-  "test_SendUniswapV2CallWithWebAuthnMasterKeyDirectAA": "536930",
-  "test_SendUniswapV2CallWithWebAuthnMasterKeyDirectAASponsored": "545457",
-  "test_SendUniswapV2CallWithWebAuthnMasterKeyDirectAASponsoredERC20": "576274"
+  "test_SendUniswapV2CallWithWebAuthnMasterKeyDirectAA": "355404",
+  "test_SendUniswapV2CallWithWebAuthnMasterKeyDirectAASponsored": "367606",
+  "test_SendUniswapV2CallWithWebAuthnMasterKeyDirectAASponsoredERC20": "390494"
 }

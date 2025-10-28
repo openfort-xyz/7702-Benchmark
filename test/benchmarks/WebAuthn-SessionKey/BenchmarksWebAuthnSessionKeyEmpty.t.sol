@@ -43,7 +43,7 @@ contract BenchmarksWebAuthnSessionKeyEmpty is DeployAccount {
         bytes32 userOpHash = _getUserOpHash(userOp);
         console.log("userOpHash:", vm.toString(userOpHash));
 
-        _populateWebAuthn("WebAuthnMasterKey.json", ".empty.DirectAA");
+        _populateWebAuthn("WebAuthnSessionKey.json", ".empty.DirectAA");
         pK_SK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
         userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK_SK);
@@ -51,7 +51,7 @@ contract BenchmarksWebAuthnSessionKeyEmpty is DeployAccount {
         _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnSessionKeyDirectAA");
     }
 
-    function test_SendEmptyCallWithWebAuthnSessionKeyAASponsored() external {
+    function test_SendEmptyCallWithWebAuthnSessionKeyDirectAASponsored() external {
         Call[] memory calls = _getCalls(1, reciver, 0 ether, hex"");
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
@@ -73,15 +73,15 @@ contract BenchmarksWebAuthnSessionKeyEmpty is DeployAccount {
         bytes32 userOpHash = _getUserOpHash(userOp);
         console.log("userOpHash:", vm.toString(userOpHash));
 
-        _populateWebAuthn("WebAuthnMasterKey.json", ".empty.AASponsored");
+        _populateWebAuthn("WebAuthnSessionKey.json", ".empty.AASponsored");
         pK_SK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
         userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK_SK);
 
-        _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnSessionKeyAASponsored");
+        _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnSessionKeyDirectAASponsored");
     }
 
-    function test_SendEmptyCallWithWebAuthnSessionKeyAASponsoredERC20() external {
+    function test_SendEmptyCallWithWebAuthnSessionKeyDirectAASponsoredERC20() external {
         Call[] memory calls = _getCalls(1, reciver, 0 ether, hex"");
 
         PackedUserOperation memory userOp = _getFreshUserOp(owner7702);
@@ -103,12 +103,12 @@ contract BenchmarksWebAuthnSessionKeyEmpty is DeployAccount {
         bytes32 userOpHash = _getUserOpHash(userOp);
         console.log("userOpHash:", vm.toString(userOpHash));
 
-        _populateWebAuthn("WebAuthnMasterKey.json", ".empty.AASponsoredERC20");
+        _populateWebAuthn("WebAuthnSessionKey.json", ".empty.AASponsoredERC20");
         pK_SK = PubKey({ x: DEF_WEBAUTHN.X, y: DEF_WEBAUTHN.Y });
 
         userOp.signature = _getSignedUserOpByWebAuthn(DEF_WEBAUTHN, pK_SK);
 
-        _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnSessionKeyAASponsoredERC20");
+        _relayUserOp(userOp, "test_SendEmptyCallWithWebAuthnSessionKeyDirectAASponsoredERC20");
     }
 
     function _relayUserOp(PackedUserOperation memory _userOp, string memory _testName) internal {

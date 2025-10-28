@@ -20,7 +20,7 @@ import { WebAuthn } from "lib/webauthn-sol/src/WebAuthn.sol";
  */
 contract WebAuthnVerifierV2 {
     uint256 constant P256_N_DIV_2 =
-        57896044605178124381348723474703786764998477612067880171211129530534256022184;
+        57_896_044_605_178_124_381_348_723_474_703_786_764_998_477_612_067_880_171_211_129_530_534_256_022_184;
 
     address constant VERIFIER = 0xc2b78104907F722DABAc4C69f826a522B2754De4;
     /**
@@ -37,6 +37,7 @@ contract WebAuthnVerifierV2 {
      * @param y The y-coordinate of the public key
      * @return isValid Whether the signature is valid
      */
+
     function verifySignature(
         bytes32 challenge,
         bool requireUserVerification,
@@ -93,7 +94,7 @@ contract WebAuthnVerifierV2 {
         view
         returns (bool isValid)
     {
-         if (s > P256_N_DIV_2) {
+        if (s > P256_N_DIV_2) {
             return false;
         }
         bytes memory args = abi.encode(hash, r, s, x, y);
