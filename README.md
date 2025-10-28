@@ -83,13 +83,13 @@ Empty `execute()` calls - baseline overhead measurement.
 | Key Type | Direct | ERC4337 | ERC4337 Sponsored | ERC4337 Sponsored ERC20 |
 |----------|--------|----------|-------------|------------------|
 | **RootKey** | 31,679 | 92,995 (+193.5%) | 104,083 (+11.9%) | 132,755 (+27.5%) |
+| **WebAuthn MasterKey** | - | 281,888 | 293,898 (+4.3%) | 323,601 (+10.1%) |
 | **EOA SessionKey** | - | 124,430 | 135,508 (+8.9%) | 164,184 (+21.1%) |
 | **EOA SessionKey (Custodial)** | - | 139,941 | 151,528 (+8.3%) | 180,223 (+18.9%) |
-| **P256 SessionKey** | - | 304,406 | 313,124 (+2.9%) | 345,087 (+10.2%) |
-| **P256 SessionKey (Custodial)** | - | 319,930 | 329,157 (+2.9%) | 361,138 (+9.7%) |
 | **WebAuthn SessionKey** | - | 316,628 | 329,085 (+3.9%) | 350,660 (+6.6%) |
 | **WebAuthn SessionKey (Custodial)** | - | 332,259 | 345,226 (+3.9%) | 366,803 (+6.2%) |
-| **WebAuthn MasterKey** | - | 281,888 | 293,898 (+4.3%) | 323,601 (+10.1%) |
+| **P256 SessionKey** | - | 304,406 | 313,124 (+2.9%) | 345,087 (+10.2%) |
+| **P256 SessionKey (Custodial)** | - | 319,930 | 329,157 (+2.9%) | 361,138 (+9.7%) |
 
 ### Full Benchmark Report
 
@@ -106,10 +106,10 @@ Comparing signature verification costs (AASponsored, empty operation):
 | Signature Type | Gas Cost | Overhead vs ECDSA |
 |----------------|----------|-------------------|
 | ECDSA (RootKey) | 104,083 | Baseline |
-| ECDSA (EOA SessionKey) | 135,508 | +30% |
-| P256 (SessionKey) | 313,124 | +201% |
-| WebAuthn (SessionKey) | 329,085 | +216% |
 | WebAuthn (MasterKey) | 293,898 | +182% |
+| ECDSA (EOA SessionKey) | 135,508 | +30% |
+| WebAuthn (SessionKey) | 329,085 | +216% |
+| P256 (SessionKey) | 313,124 | +201% |
 
 **Insight**: P256 signature verification adds ~209k gas overhead. WebAuthn adds ~189k-225k gas overhead - a **40% improvement** over previous implementations due to optimizations.
 
@@ -120,8 +120,8 @@ Comparing self-custody vs third-party custody (AASponsored, empty):
 | Key Type | Self-Custody | Third-Party | Overhead |
 |----------|--------------|-------------|----------|
 | EOA SessionKey | 135,508 | 151,528 | +12% (16,020 gas) |
-| P256 SessionKey | 313,124 | 329,157 | +5% (16,033 gas) |
 | WebAuthn SessionKey | 329,085 | 345,226 | +5% (16,141 gas) |
+| P256 SessionKey | 313,124 | 329,157 | +5% (16,033 gas) |
 
 **Insight**: Custodial overhead is consistent (~16k gas) across signature types.
 
