@@ -2,8 +2,8 @@
 
 pragma solidity 0.8.29;
 
-import {P256} from "lib/openzeppelin-contracts/contracts/utils/cryptography/P256.sol";
-import {WebAuthn} from "lib/openzeppelin-contracts/contracts/utils/cryptography/WebAuthn.sol";
+import { P256 } from "lib/openzeppelin-contracts/contracts/utils/cryptography/P256.sol";
+import { WebAuthn } from "lib/openzeppelin-contracts/contracts/utils/cryptography/WebAuthn.sol";
 
 contract WenAuthnVerifierOz {
     function verifySignature(
