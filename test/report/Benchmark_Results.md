@@ -7,13 +7,13 @@ Empty `execute()` calls - baseline overhead measurement.
 | Key Type | Direct | ERC4337 | ERC4337 Sponsored | ERC4337 Sponsored ERC20 |
 |----------|--------|----------|-------------|------------------|
 | **RootKey** | 31,679 | 92,995 (+193.5%) | 104,083 (+11.9%) | 132,755 (+27.5%) |
+| **WebAuthn MasterKey** | - | 281,888 | 293,898 (+4.3%) | 323,601 (+10.1%) |
 | **EOA SessionKey** | - | 124,430 | 135,508 (+8.9%) | 164,184 (+21.1%) |
 | **EOA SessionKey (Custodial)** | - | 139,941 | 151,528 (+8.3%) | 180,223 (+18.9%) |
-| **P256 SessionKey** | - | 304,406 | 313,124 (+2.9%) | 345,087 (+10.2%) |
-| **P256 SessionKey (Custodial)** | - | 319,930 | 329,157 (+2.9%) | 361,138 (+9.7%) |
 | **WebAuthn SessionKey** | - | 316,628 | 329,085 (+3.9%) | 350,660 (+6.6%) |
 | **WebAuthn SessionKey (Custodial)** | - | 332,259 | 345,226 (+3.9%) | 366,803 (+6.2%) |
-| **WebAuthn MasterKey** | - | 281,888 | 293,898 (+4.3%) | 323,601 (+10.1%) |
+| **P256 SessionKey** | - | 304,406 | 313,124 (+2.9%) | 345,087 (+10.2%) |
+| **P256 SessionKey (Custodial)** | - | 319,930 | 329,157 (+2.9%) | 361,138 (+9.7%) |
 
 ### Native Transfers
 
@@ -22,13 +22,13 @@ Transfer 0.1 ETH to recipient.
 | Key Type | Direct | ERC4337 | ERC4337 Sponsored | ERC4337 Sponsored ERC20 |
 |----------|--------|----------|-------------|------------------|
 | **RootKey** | 38,451 | 99,755 (+159.4%) | 110,855 (+11.1%) | 139,539 (+25.9%) |
+| **WebAuthn MasterKey** | - | 290,850 | 300,658 (+3.4%) | 329,706 (+9.7%) |
 | **EOA SessionKey** | - | 140,030 | 151,132 (+7.9%) | 179,808 (+19.0%) |
 | **EOA SessionKey (Custodial)** | - | 155,541 | 167,152 (+7.5%) | 195,847 (+17.2%) |
-| **P256 SessionKey** | - | 357,784 | 368,463 (+3.0%) | 395,399 (+7.3%) |
-| **P256 SessionKey (Custodial)** | - | 373,308 | 384,496 (+3.0%) | 411,450 (+7.0%) |
 | **WebAuthn SessionKey** | - | 367,753 | 378,071 (+2.8%) | 407,968 (+7.9%) |
 | **WebAuthn SessionKey (Custodial)** | - | 383,367 | 394,212 (+2.8%) | 424,111 (+7.6%) |
-| **WebAuthn MasterKey** | - | 290,850 | 300,658 (+3.4%) | 329,706 (+9.7%) |
+| **P256 SessionKey** | - | 357,784 | 368,463 (+3.0%) | 395,399 (+7.3%) |
+| **P256 SessionKey (Custodial)** | - | 373,308 | 384,496 (+3.0%) | 411,450 (+7.0%) |
 
 ### ERC20 Transfers
 
@@ -37,13 +37,13 @@ Transfer ERC20 tokens to recipient.
 | Key Type | Direct | ERC4337 | ERC4337 Sponsored | ERC4337 Sponsored ERC20 |
 |----------|--------|----------|-------------|------------------|
 | **RootKey** | 45,275 | 106,677 (+135.6%) | 117,787 (+10.4%) | 139,195 (+18.2%) |
+| **WebAuthn MasterKey** | - | 296,884 | 308,916 (+4.1%) | 329,824 (+6.8%) |
 | **EOA SessionKey** | - | 147,628 | 158,764 (+7.5%) | 180,176 (+13.5%) |
 | **EOA SessionKey (Custodial)** | - | 163,139 | 174,784 (+7.1%) | 196,215 (+12.3%) |
-| **P256 SessionKey** | - | 364,955 | 376,970 (+3.3%) | 395,304 (+4.9%) |
-| **P256 SessionKey (Custodial)** | - | 380,479 | 393,003 (+3.3%) | 411,356 (+4.7%) |
 | **WebAuthn SessionKey** | - | 377,164 | 385,205 (+2.1%) | 409,698 (+6.4%) |
 | **WebAuthn SessionKey (Custodial)** | - | 392,797 | 401,329 (+2.2%) | 425,860 (+6.1%) |
-| **WebAuthn MasterKey** | - | 296,884 | 308,916 (+4.1%) | 329,824 (+6.8%) |
+| **P256 SessionKey** | - | 364,955 | 376,970 (+3.3%) | 395,304 (+4.9%) |
+| **P256 SessionKey (Custodial)** | - | 380,479 | 393,003 (+3.3%) | 411,356 (+4.7%) |
 
 ### Batch Operations (10 Calls)
 
@@ -52,13 +52,13 @@ Execute 10 empty calls in single transaction.
 | Key Type | Direct | ERC4337 | ERC4337 Sponsored | ERC4337 Sponsored ERC20 |
 |----------|--------|----------|-------------|------------------|
 | **RootKey** | 102,673 | 165,855 (+61.5%) | 178,058 (+7.4%) | 199,511 (+12.0%) |
+| **WebAuthn MasterKey** | - | 355,629 | 369,203 (+3.8%) | 390,152 (+5.7%) |
 | **EOA SessionKey** | - | 281,105 | 293,334 (+4.3%) | 314,779 (+7.3%) |
 | **EOA SessionKey (Custodial)** | - | 296,789 | 309,511 (+4.3%) | 330,965 (+6.9%) |
-| **P256 SessionKey** | - | 500,664 | 509,609 (+1.8%) | 531,263 (+4.2%) |
-| **P256 SessionKey (Custodial)** | - | 516,359 | 525,797 (+1.8%) | 547,460 (+4.1%) |
 | **WebAuthn SessionKey** | - | 512,884 | 523,777 (+2.1%) | 543,872 (+3.8%) |
 | **WebAuthn SessionKey (Custodial)** | - | 528,631 | 540,007 (+2.2%) | 560,111 (+3.7%) |
-| **WebAuthn MasterKey** | - | 355,629 | 369,203 (+3.8%) | 390,152 (+5.7%) |
+| **P256 SessionKey** | - | 500,664 | 509,609 (+1.8%) | 531,263 (+4.2%) |
+| **P256 SessionKey (Custodial)** | - | 516,359 | 525,797 (+1.8%) | 547,460 (+4.1%) |
 
 ### UniswapV2 Swaps
 
@@ -67,13 +67,13 @@ Token swap via UniswapV2 router.
 | Key Type | Direct | ERC4337 | ERC4337 Sponsored | ERC4337 Sponsored ERC20 |
 |----------|--------|----------|-------------|------------------|
 | **RootKey** | 101,032 | 162,568 (+60.9%) | 173,758 (+6.9%) | 202,469 (+16.5%) |
+| **WebAuthn MasterKey** | - | 355,404 | 367,606 (+3.4%) | 390,494 (+6.2%) |
 | **EOA SessionKey** | - | 194,813 | 206,016 (+5.8%) | 234,730 (+13.9%) |
 | **EOA SessionKey (Custodial)** | - | 210,324 | 222,036 (+5.6%) | 250,769 (+12.9%) |
-| **P256 SessionKey** | - | 374,364 | 383,854 (+2.5%) | 414,734 (+8.0%) |
-| **P256 SessionKey (Custodial)** | - | 389,887 | 399,886 (+2.6%) | 430,785 (+7.7%) |
 | **WebAuthn SessionKey** | - | 385,648 | 396,941 (+2.9%) | 426,014 (+7.3%) |
 | **WebAuthn SessionKey (Custodial)** | - | 401,261 | 413,084 (+2.9%) | 442,156 (+7.0%) |
-| **WebAuthn MasterKey** | - | 355,404 | 367,606 (+3.4%) | 390,494 (+6.2%) |
+| **P256 SessionKey** | - | 374,364 | 383,854 (+2.5%) | 414,734 (+8.0%) |
+| **P256 SessionKey (Custodial)** | - | 389,887 | 399,886 (+2.6%) | 430,785 (+7.7%) |
 
 ### Account Management Actions
 
@@ -130,10 +130,10 @@ Comparing signature verification costs (AASponsored, empty operation):
 | Signature Type | Gas Cost | Overhead vs ECDSA |
 |----------------|----------|-------------------|
 | ECDSA (RootKey) | 104,083 | Baseline |
-| ECDSA (EOA SessionKey) | 135,508 | +30% |
-| P256 (SessionKey) | 313,124 | +201% |
-| WebAuthn (SessionKey) | 329,085 | +216% |
 | WebAuthn (MasterKey) | 293,898 | +182% |
+| ECDSA (EOA SessionKey) | 135,508 | +30% |
+| WebAuthn (SessionKey) | 329,085 | +216% |
+| P256 (SessionKey) | 313,124 | +201% |
 
 **Insight**: P256 signature verification adds ~209k gas overhead. WebAuthn adds ~190k-225k gas overhead - a significant improvement over previous implementations due to optimizations.
 
@@ -144,8 +144,8 @@ Comparing self-custody vs third-party custody (AASponsored, empty):
 | Key Type | Self-Custody | Third-Party | Overhead |
 |----------|--------------|-------------|----------|
 | EOA SessionKey | 135,508 | 151,528 | +12% (16,020 gas) |
-| P256 SessionKey | 313,124 | 329,157 | +5% (16,033 gas) |
 | WebAuthn SessionKey | 329,085 | 345,226 | +5% (16,141 gas) |
+| P256 SessionKey | 313,124 | 329,157 | +5% (16,033 gas) |
 
 **Insight**: Custodial overhead is consistent (~16k gas) across signature types.
 
