@@ -1,0 +1,10 @@
+{
+  "test_SendERC20Transfer_Batch10_CoinbaseSmartWallet_DirectAA": "166780",
+  "test_SendERC20Transfer_Batch10_CoinbaseSmartWallet_DirectAAERC20": "166242",
+  "test_SendERC20Transfer_CoinbaseSmartWallet_DirectAA": "106888",
+  "test_SendERC20Transfer_CoinbaseSmartWallet_DirectAAERC20": "106132",
+  "test_SendNativeTransfer_CoinbaseSmartWallet_DirectAA": "100068",
+  "test_SendNativeTransfer_CoinbaseSmartWallet_DirectAAERC20": "99279",
+  "test_SendUniswapV2Swap_CoinbaseSmartWallet_DirectAA": "166321",
+  "test_SendUniswapV2Swap_CoinbaseSmartWallet_DirectAAERC20": "165572"
+}
